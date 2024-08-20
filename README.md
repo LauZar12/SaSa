@@ -1,4 +1,4 @@
-}78### Proyecto Sasa
+### Proyecto Sasa
 
 ## ¡¿Estás list@ para ayudar a salvar el planeta y ahorrar dinero?!
 
