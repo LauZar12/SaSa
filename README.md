@@ -1,6 +1,6 @@
-### Proyecto Sasa
+}78### Proyecto Sasa
 
-##¡¿Estás list@ para ayudar a salvar el planeta y ahorrar dinero?!
+## ¡¿Estás list@ para ayudar a salvar el planeta y ahorrar dinero?!
 
 Sasa es una página web donde diferentes establecimientos de alimentos, como restaurantes, panaderías, supermercados, y tiendas, pueden vender a un precio reducido la comida que de otro modo se desperdiciaría, salvando alimentos que de otro modo se perderían y generando ganancias adicionales.
 
