@@ -1,7 +1,12 @@
-export default function App() {
-  return (
-    <h1 className="text-3xl font-bold">
-      sasa project coming soon...
-    </h1>
-  )
+import Auth from "./sections/Auth"
+import { Route, Routes} from "react-router-dom"
+
+export default function App(){
+    return(
+        <>
+            <Routes>
+                <Route path="/" element={<Auth/>} />
+             </Routes>
+        </>
+    );
 }
