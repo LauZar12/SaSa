@@ -1,7 +1,14 @@
-import dynamoose from "dynamoose"
+import AWS from 'aws-sdk';
 
-dynamoose.aws.sdk.config.update({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    region: process.env.AWS_DEFAULT_REGION,
-})
+// Configura AWS SDK
+AWS.config.update({
+    region: 'us-east-2',
+    accessKeyId: '',
+    secretAccessKey: ''
+});
+
+// Crea una instancia de DynamoDB DocumentClient
+const DocumentClient = new AWS.DynamoDB.DocumentClient();
+
+// Exporta el cliente para usarlo en otras partes de tu aplicación
+export default DocumentClient;
