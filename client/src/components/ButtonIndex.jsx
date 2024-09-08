@@ -12,7 +12,7 @@ export default function ButtonIndex({ children, width, marginTop, type = 'button
                 color: '#F2F6FC',            // Font color
                 borderRadius: '50px',         // Round only the left and right corners (pill shape)
                 minWidth: 0,                  // Removes default min width
-                padding: '8px 24px',          // Adjust padding as needed
+                padding: '7px 22px',          // Adjust padding as needed
                 width: width || 'auto',       // Use the width prop or default to auto
                 marginTop: marginTop || 0,    // Apply the marginTop prop or default to 0
                 '&:hover': {
@@ -20,7 +20,7 @@ export default function ButtonIndex({ children, width, marginTop, type = 'button
                 },
                 fontWeight: 'bold',           // Bold font weight
                 textTransform: 'none',        // Prevents text from being transformed to uppercase
-                fontSize: "17px"
+                fontSize: "16px"
             }}
         >
             {children}
