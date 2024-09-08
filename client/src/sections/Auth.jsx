@@ -354,22 +354,38 @@ export default function Auth() {
 
                 {activeStep === steps.length ? (
                   <React.Fragment>
-                    <Typography sx={{ mt: 2, mb: 1 }}>
-                      All steps completed, click on the following button to
-                      finish the Registration
-                    </Typography>
+                    <Typography
+                    variant="body1"
+                    component="div"
+                    sx={{
+                      mt: 2,
+                      mb: 1,
+                      mr: 5,
+                      ml: 5,
+                      fontSize: { xs: "0.875rem", sm: "1rem" }, // Responsive font size
+                      fontFamily: "Roboto",
+                      fontWeight: "bold",
+                      textAlign: "center",
+                      color: "#212121",
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    Todos los pasos completados, dale al boton de Finalizar
+                    para completar el registro
+                  </Typography>
                     <Button
                         color="inherit"
                         onClick={handleRegister}
                         sx={{
-                          mr: 0,
+                          mt: 1,
+                          ml: 1,
                           backgroundColor: "#418441", // Background color
                           color: "#F2F6FC", // Font color
                           borderRadius: "50px", // Round only the left and right corners (pill shape)
                           minWidth: 0, // Removes default min width
                           padding: "8px 24px", // Adjust padding as needed
                           width: "auto", // Use the width prop or default to auto
-                          marginTop: 0, // Apply the marginTop prop or default to 0
+                          marginTop: 2, // Apply the marginTop prop or default to 0
                           "&:hover": {
                             backgroundColor: "#357a38", // Slightly darker green on hover (optional)
                           },
@@ -380,7 +396,27 @@ export default function Auth() {
                       >
                       Finalizar
                     </Button>
-                    <Button onClick={handleReset} sx={{ mt: 1 }}>
+                    <Button
+                        color="inherit"
+                        onClick={handleReset}
+                        sx={{
+                          mt: 1,
+                          ml: 1,
+                          backgroundColor: "#418441", // Background color
+                          color: "#F2F6FC", // Font color
+                          borderRadius: "50px", // Round only the left and right corners (pill shape)
+                          minWidth: 0, // Removes default min width
+                          padding: "8px 24px", // Adjust padding as needed
+                          width: "auto", // Use the width prop or default to auto
+                          marginTop: 2, // Apply the marginTop prop or default to 0
+                          "&:hover": {
+                            backgroundColor: "#357a38", // Slightly darker green on hover (optional)
+                          },
+                          fontWeight: "bold", // Bold font weight
+                          textTransform: "none", // Prevents text from being transformed to uppercase
+                          fontSize: "18px",
+                        }}
+                      >
                       Reiniciar Formulario
                     </Button>
                   </React.Fragment>
@@ -538,6 +574,7 @@ export default function Auth() {
                     </Box>
                   </React.Fragment>
                 )}
+                <br/>
                 <Button
                   onClick={toggleForm}
                   variant="text"
