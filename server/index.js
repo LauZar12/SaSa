@@ -1,16 +1,31 @@
-import app from './app.js'
+import express from 'express';
+import dotenv from 'dotenv';
 
-import bodyParser from 'body-parser';
-import cors from 'cors';
-import dotenv from 'dotenv'
-dotenv.config()
+import docClient from './ddbClient.js';
+import dynamoose from 'dynamoose';
+import SasaSTModel from './models/singleTableModel.js';
+import { testConnection } from './ddbClient.js';
 
-app.use(bodyParser.json({ limit: "30mb", extended:true }));
-app.use(bodyParser.urlencoded({ limit: "30mb", extended:true }));
-app.use(cors());
+dynamoose.aws.ddb.set(docClient);
 
-app.listen(process.env.PORT)
-console.log(`Server running on port: ${process.env.PORT}`)
+dotenv.config();
+const app = express();
+
+app.get('/businesses', async (req, res) => {
+  try {
+    const businesses = await SasaSTModel.scan().filter('GS1_PK');
+    res.status(200).json(businesses);
+    console.log('hehe')
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching businesses' });
+  }
+});
 
 
+const PORT = process.env.PORT;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
 
+console.log(testConnection());
