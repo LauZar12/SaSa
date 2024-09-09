@@ -1,0 +1,54 @@
+.donation-card {
+    display: flex;
+    align-items: center;
+    background-color: #4CAF50; /* Color verde de fondo */
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-picture img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+  }
+  
+  .donation-info {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+  }
+  
+  .donation-info h2 {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+  
+  .donation-item {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+  }
+  
+  .donation-item .icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+  }
+  
+  .details-button button {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .details-button button:hover {
+    background-color: #45a049;
+  }
+  
