@@ -1,4 +1,5 @@
 import * as React from "react";
+import createThemeNoVars from '@mui/material/styles/createThemeNoVars';
 import {
   Button,
   Container,
@@ -9,12 +10,16 @@ import {
   StepLabel,
   Typography,
   Card,
+  Select,
+  InputLabel,
+  MenuItem,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useState } from "react";
 import TextFieldIndex from "../components/TextFieldIndex";
 import ButtonIndex from "../components/ButtonIndex";
-import '../index.css'
+import SelectFieldIndex from "../components/SelectFieldIndex";
+import '../index.css';
 
 export default function Auth() {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -30,6 +35,12 @@ export default function Auth() {
     passwordError: false,
     message: "",
   });
+
+  const [businessType, setBusinessType] = React.useState('');
+
+  const handleBusinessTypeChange = (event) => {
+    setBusinessType(event.target.value);
+  };
 
   const [isLogin, setIsLogin] = useState(true); // Estado para alternar entre Login y Registro
 
@@ -115,6 +126,12 @@ export default function Auth() {
   };
 
   const handleRegister = () => {
+    console.log("Email: " + email);
+    console.log("Username: " + username);
+    console.log("Password: " + password);
+    console.log("Business Name: " + businessName);
+    console.log("Business Type: " + businessType);
+
     if (businessName) {
       setIsBusiness(true);
       console.log("Registered as a business");
@@ -155,6 +172,8 @@ export default function Auth() {
     setUsername("");
     setPassword("");
     setEmail("");
+    setBusinessName("");
+    setBusinessType("");
     handleReset();
     setIsLogin(!isLogin);
   };
@@ -486,22 +505,41 @@ export default function Auth() {
                         />
                       )}
                       {activeStep === 2 && (
-                        <TextFieldIndex
-                          id="businessName"
-                          label="Nombre del Negocio"
-                          type="text"
-                          variant="outlined"
-                          size="small" // Makes the TextField smaller
-                          topText="Nombre del Negocio"
-                          width="100%"
-                          sx={{ mt: 2, mb: 2 }} // Adjusting margins to be a bit smaller
-                          inputProps={{ style: { fontSize: 14 } }} // font size of input text
-                          InputLabelProps={{ style: { fontSize: 15 } }} // font size of input label
-                          fullWidth
-                          helperText="Dejar vacio si no te estas registrando como un negocio"
-                          value={businessName}
-                          onChange={(e) => setBusinessName(e.target.value)}
-                        />
+                        <div>
+                          <TextFieldIndex
+                            id="businessName"
+                            label="Nombre del Negocio"
+                            type="text"
+                            variant="outlined"
+                            size="small" // Makes the TextField smaller
+                            topText="Nombre del Negocio"
+                            width="100%"
+                            sx={{ mt: 2, mb: 2 }} // Adjusting margins to be a bit smaller
+                            inputProps={{ style: { fontSize: 14 } }} // font size of input text
+                            InputLabelProps={{ style: { fontSize: 15 } }} // font size of input label
+                            fullWidth
+                            helperText="Dejar vacio si no te estas registrando como un negocio"
+                            value={businessName}
+                            onChange={(e) => setBusinessName(e.target.value)}
+                          />
+                          <SelectFieldIndex
+                            label="Tipo de Negocio"
+                            size="small"
+                            topText="Seleccione el tipo de negocio"
+                            width="100%"
+                            required
+                            value={businessType}
+                            onChange={handleBusinessTypeChange}
+                            options={[
+                                { value: '', label: 'Ninguna' },
+                                { value: 0, label: 'Empresa' },
+                                { value: 1, label: 'Granja o Sector agro' },
+                                { value: 2, label: 'Entidad sin animo de lucro' },
+                            ]}
+                            helperText={error.businessTypeError ? error.message : ""}
+                            error={error.businessTypeError}
+                          />
+                        </div>
                       )}
                     </Box>
 
@@ -534,7 +572,7 @@ export default function Auth() {
                           },
                         }}
                       >
-                        Back
+                        Atrás
                       </Button>
                       <Box sx={{ flex: "1 1 auto" }} />
                       {isStepOptional(activeStep) && (
