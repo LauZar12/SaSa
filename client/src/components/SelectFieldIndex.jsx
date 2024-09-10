@@ -70,6 +70,9 @@ export default function SelectFieldIndex({
                         borderColor: "#738763",  // Border color on focus
                         borderWidth: "2px",
                     },
+                    "& .MuiSelect-root": {
+                        padding: "6px 10px", // Reduce padding for smaller size
+                    },
                 }}
             >
                 {options.map((option) => (

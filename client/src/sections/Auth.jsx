@@ -36,7 +36,13 @@ export default function Auth() {
     message: "",
   });
 
-  const [businessType, setBusinessType] = React.useState('');
+  const [businessType, setBusinessType] = React.useState(0);
+  const businessOptions = [
+    { value: 0, label: 'Ninguna' },
+    { value: 1, label: 'Empresa' },
+    { value: 2, label: 'Granja o Sector agro' },
+    { value: 3, label: 'Entidad sin animo de lucro' },
+];
 
   const handleBusinessTypeChange = (event) => {
     setBusinessType(event.target.value);
@@ -126,6 +132,10 @@ export default function Auth() {
   };
 
   const handleRegister = () => {
+    if (businessType == '') {
+      setBusinessType(0);
+    }
+    
     console.log("Email: " + email);
     console.log("Username: " + username);
     console.log("Password: " + password);
@@ -530,12 +540,7 @@ export default function Auth() {
                             required
                             value={businessType}
                             onChange={handleBusinessTypeChange}
-                            options={[
-                                { value: '', label: 'Ninguna' },
-                                { value: 0, label: 'Empresa' },
-                                { value: 1, label: 'Granja o Sector agro' },
-                                { value: 2, label: 'Entidad sin animo de lucro' },
-                            ]}
+                            options={businessOptions}
                             helperText={error.businessTypeError ? error.message : ""}
                             error={error.businessTypeError}
                           />
