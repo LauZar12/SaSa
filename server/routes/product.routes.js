@@ -11,7 +11,7 @@ router.get('/admin/businesses/:businessId/products', getBusinessProducts)
 router.post('/admin/businesses/:businessId/products/create-product', createProduct) //create product
 router.put('/admin/businesses/:businessId/products/:productId/edit-product', editProduct); // update product
 router.get('/admin/businesses/:businessId/products/:productId', getProductInfo); // get a single product info
-router.delete('/admin/businesses/:businessId/products/:productId/delete-product', deleteProduct);
+router.delete('/admin/businesses/:businessId/products/:productId/delete-product', deleteProduct); // delete product from db
 
 
 export default router;

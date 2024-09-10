@@ -38,6 +38,8 @@ export const getAllProductsFromBusinessV2 = async (req, res) => {
   
   }
 
+// falta agregar editBusinessInfo de admin
+
   export const getProductInfo = async (req, res) => {
     try{
       const businessId = req.params.businessId;  
