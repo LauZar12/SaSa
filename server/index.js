@@ -20,6 +20,7 @@ app.get('/all', getAllStuff)
 app.get('/businesses', businessRoutes);
 app.get('/businesses/ola', businessRoutes)
 app.get('/products', productRoutes)
+app.get('/productsV2', productRoutes)
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
