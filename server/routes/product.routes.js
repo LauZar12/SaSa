@@ -1,11 +1,11 @@
 import { Router } from 'express';
 //import bodyParser from 'body-parser';
 
-import { getAllProductsFromBusiness, getAllProductsFromBusinessV2 } from "../controllers/product.controllers.js"
+import { getAllProductsFromBusinessV2 } from "../controllers/product.controllers.js"
 
 const router = Router();
 
-router.get("/products", getAllProductsFromBusiness)
-router.get("/productsV2", getAllProductsFromBusinessV2)
+
+router.get('/businesses/:businessId', getAllProductsFromBusinessV2);
 
 export default router;

@@ -16,3 +16,9 @@ export const ola = async (req, res) => {
   const result = "haroooou";
   res.status(200).json(result);
 }
+
+export const getBusinessById = async (req, res) => {
+  
+}
+
+
