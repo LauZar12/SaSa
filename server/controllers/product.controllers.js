@@ -38,6 +38,22 @@ export const getAllProductsFromBusinessV2 = async (req, res) => {
   
   }
 
+  export const getProductInfo = async (req, res) => {
+    try{
+      const businessId = req.params.businessId;  
+      const productId = req.params.productId; 
+      const result = await SasaModel.query("PK").eq(businessId)
+      .filter('GS3_PK').eq(productId)
+      .attributes(['Product_Name', 'Product_Description', 'ExpirationDate', 'Price', 'Discount'])
+      .exec();
+      res.status(200).json(result);
+    } catch(error){
+      console.error('Error fetching business info', error);
+      res.status(500).json({ message: 'Error fetching biz info' });
+    }
+
+}
+
 
   export const createProduct = async (req, res) => {
     try {
