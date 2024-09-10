@@ -167,7 +167,7 @@ export default function Auth() {
       setIsBusiness(true);
 
       try {
-        const response = await axios.post('http://localhost:5000/register', adminData, {
+        const response = await axios.post('http://localhost:5000/auth/register', adminData, {
           headers: {
             'Content-Type': 'application/json',
           }
@@ -181,7 +181,7 @@ export default function Auth() {
       setIsBusiness(false);
 
       try {
-        const response = await axios.post('http://localhost:5000/register', clientData, {
+        const response = await axios.post('http://localhost:5000/auth/register', clientData, {
           headers: {
             'Content-Type': 'application/json',
           }
