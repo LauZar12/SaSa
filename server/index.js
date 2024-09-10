@@ -21,11 +21,8 @@ app.get('/all', getAllStuff);
 app.get('/businesses', businessRoutes);
 
 app.get('/businesses/:businessId', productRoutes);
-
-
 app.get('/businesses/ola', businessRoutes);
-app.get('/products', productRoutes);
-app.get('/productsV2', productRoutes);
+//app.get('/admin/businesses/:businessId', productRoutes);
 app.get('/users', userRoutes);
 
 // Use CORS middleware
