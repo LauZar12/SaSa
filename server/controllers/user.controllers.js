@@ -21,7 +21,6 @@ export const addUser = async (req, res) => {
         return res.status(400).json({ message: 'Missing required fields' });
       }
   
-      // Generate PK based on the user email
       const PK = `user#${uuidv4()}`;
   
       // Base user object
@@ -39,25 +38,37 @@ export const addUser = async (req, res) => {
         if (!Business_Name) {
           return res.status(400).json({ message: 'Business_Name is required for admin users' });
         }
-  
-        const businessID = uuidv4();
 
-        newUser.Business_Name = Business_Name;
-        newUser.Busin
+        const businessID = uuidv4();
+        let newBusiness = {
+          PK: `business#${businessID}`,
+          SK: `business#${businessID}${PK}`
+        };
+
         newUser.GS1_PK = `business#${businessID}`;
         newUser.SK = `${PK}business#${businessID}`;
-        newUser.Business_City = Business_City;
-        newUser.Business_Address = Business_Address;
-        newUser.Business_Hours = Business_Hours;
-        newUser.Business_Type = Business_Type;
-        newUser.Business_Localization = Business_Localization;
+
+        newBusiness.Business_Name = Business_Name;
+        newBusiness.Business_City = Business_City;
+        newBusiness.Business_Address = Business_Address;
+        newBusiness.Business_Hours = Business_Hours;
+        newBusiness.Business_Type = Business_Type;
+        newBusiness.Business_Localization = Business_Localization;
+
+        const businessModel = new SasaModel(newBusiness);
+        const businessResult = await businessModel.save();
+        const userModel = new SasaModel(newUser);
+        const userResult = await userModel.save();
+
+        res.status(201).json({ message: 'User / Business added successfully', user: userResult, business: businessResult });
+
+        return;
       }
-  
+      
       // Save the user to DynamoDB using Dynamoose
       const userModel = new SasaModel(newUser);
-      const result = await userModel.save();
-  
-      res.status(201).json({ message: 'User added successfully', user: result });
+      const userResult = await userModel.save();
+      res.status(201).json({ message: 'User added successfully', user: userResult });
     } catch (error) {
       console.error('Error adding user:', error);
       res.status(500).json({ message: 'Error adding user' });
