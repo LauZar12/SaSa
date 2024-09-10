@@ -1,4 +1,5 @@
 import { ListTablesCommand } from '@aws-sdk/client-dynamodb';
+import SasaModel from './models/singleTableModel.js';
 import dynamoose from 'dynamoose'
 import dotenv from 'dotenv';
 
@@ -29,7 +30,15 @@ export async function testConnection() {
 }
 
 
-
+export const getAllStuff = async (req, res) => {
+    try{
+        const result = await SasaModel.scan().exec();
+        res.status(200).json(result);
+    } catch (error){
+        console.error("ola fallo el getAll xd", error);
+        res.status(500).json({ message: 'Error fetching data' })
+    }
+}
 
 
 

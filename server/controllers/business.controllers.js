@@ -1,7 +1,6 @@
 import SasaModel from "../models/singleTableModel.js";
 
 
-
 export const getAllBusinesses = async (req, res) =>{  
   try {
         const result = await SasaModel.scan().filter("GS2_PK").beginsWith("user#").attributes(["Business_Name", "Business_City","Business_Address", "Business_Hours"]).exec();
@@ -15,5 +14,5 @@ export const getAllBusinesses = async (req, res) =>{
 
 export const ola = async (req, res) => {
   const result = "haroooou";
-  res.status(200).json(result)
+  res.status(200).json(result);
 }
