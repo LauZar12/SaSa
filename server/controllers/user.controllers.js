@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import SasaModel from "../models/singleTableModel.js";
 
 export const getAllUsers = async (req, res) =>{  
@@ -13,7 +14,7 @@ export const getAllUsers = async (req, res) =>{
 
 export const addUser = async (req, res) => {
     try {
-      const { User_Name, Email, Password, Role, Business_Name } = req.body;
+      const { User_Name, Email, Password, Role, Business_Name, Business_City, Business_Address, Business_Hours, Business_Type, Business_Localization} = req.body;
   
       // Check if all required fields are provided
       if (!User_Name || !Email || !Password || !Role) {
@@ -21,12 +22,12 @@ export const addUser = async (req, res) => {
       }
   
       // Generate PK based on the user email
-      const PK = `user#${Email}`;
+      const PK = `user#${uuidv4()}`;
   
       // Base user object
       let newUser = {
         PK,
-        SK: PK,  // Customize SK as needed
+        SK: PK,
         User_Name,
         Email,
         Password,
@@ -39,8 +40,17 @@ export const addUser = async (req, res) => {
           return res.status(400).json({ message: 'Business_Name is required for admin users' });
         }
   
+        const businessID = uuidv4();
+
         newUser.Business_Name = Business_Name;
-        newUser.GS1_PK = `business#${Business_Name}`;
+        newUser.Busin
+        newUser.GS1_PK = `business#${businessID}`;
+        newUser.SK = `${PK}business#${businessID}`;
+        newUser.Business_City = Business_City;
+        newUser.Business_Address = Business_Address;
+        newUser.Business_Hours = Business_Hours;
+        newUser.Business_Type = Business_Type;
+        newUser.Business_Localization = Business_Localization;
       }
   
       // Save the user to DynamoDB using Dynamoose

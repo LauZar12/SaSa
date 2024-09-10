@@ -1,6 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
-
+import cors from 'cors';
 
 import ddb from './ddbClient.js';
 import dynamoose from 'dynamoose'
@@ -23,6 +23,11 @@ app.get('/businesses/ola', businessRoutes);
 app.get('/products', productRoutes);
 app.get('/productsV2', productRoutes);
 app.get('/users', userRoutes);
+
+// Use CORS middleware
+app.use(cors({
+  origin: 'http://localhost:5173', // Allow requests from this origin
+}));
 
 app.use(express.json());
 app.post('/register', userRoutes);

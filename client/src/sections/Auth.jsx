@@ -1,4 +1,5 @@
 import * as React from "react";
+import axios from 'axios';
 import createThemeNoVars from '@mui/material/styles/createThemeNoVars';
 import {
   Button,
@@ -74,6 +75,13 @@ export default function Auth() {
     return password.length >= 6;
   };
 
+  // Prevent default form submission on "Go" or similar actions
+  const handleFormSubmit = (event) => {
+    console.log("AA");
+    event.preventDefault(); // Prevent form submission
+    handleNext(); // Move to the next step
+  };
+
   const handleNext = () => {
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
@@ -131,23 +139,58 @@ export default function Auth() {
     setActiveStep(0);
   };
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     if (businessType == '') {
       setBusinessType(0);
     }
-    
-    console.log("Email: " + email);
-    console.log("Username: " + username);
-    console.log("Password: " + password);
-    console.log("Business Name: " + businessName);
-    console.log("Business Type: " + businessType);
+
+    const clientData = {
+      User_Name: username,
+      Email: email,
+      Password: password,
+      Role: 'client',
+    };
+    const adminData = {
+      User_Name: username,
+      Email: email,
+      Password: password,
+      Role: 'admin',
+      Business_Name: isBusiness ? businessName : undefined,
+      Business_Type: isBusiness ? businessType : undefined,
+      Business_City: isBusiness ? 'None' : undefined,
+      Business_Address: isBusiness ? 'None' : undefined,
+      Business_Hours: isBusiness ? 'None' : undefined,
+      Business_Localization: isBusiness ? 'None' : undefined
+    };
 
     if (businessName) {
       setIsBusiness(true);
-      console.log("Registered as a business");
+
+      try {
+        const response = await axios.post('http://localhost:5000/register', adminData, {
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+  
+        console.log('User registered successfully:', response.data);
+      } catch (error) {
+        console.error('Error registering user:', error.response ? error.response.data : error.message);
+      }
     } else {
       setIsBusiness(false);
-      console.log("Registered as client");
+
+      try {
+        const response = await axios.post('http://localhost:5000/register', clientData, {
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+  
+        console.log('User registered successfully:', response.data);
+      } catch (error) {
+        console.error('Error registering user:', error.response ? error.response.data : error.message);
+      }
     }
   };
 
@@ -451,7 +494,7 @@ export default function Auth() {
                   </React.Fragment>
                 ) : (
                   <React.Fragment>
-                    <Box component="form" sx={{ mt: 3 }}>
+                    <Box component="form" onSubmit={handleFormSubmit} sx={{ mt: 3 }}>
                       {activeStep === 0 && (
                         <div>
                           <TextFieldIndex
