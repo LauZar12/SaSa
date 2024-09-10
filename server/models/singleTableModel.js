@@ -43,5 +43,3 @@ const SasaModel = dynamoose.model('SasaST', SasaSchema, {
 // console.log(SasaModel.name);
 
 export default SasaModel;
-
-
