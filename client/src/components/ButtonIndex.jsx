@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '@mui/material/Button';
 
-export default function ButtonIndex({ children, width, marginTop, type = 'button', padding, fontSize, borderRadius, justifyContent, textAlign, backgroundColor, ...props }) {
+export default function ButtonIndex({ children, width, marginTop, type = 'button', padding, fontSize, borderRadius, justifyContent, textAlign, backgroundColor, fontFamily, ...props }) {
     return (
         <Button
             {...props}
@@ -19,6 +19,7 @@ export default function ButtonIndex({ children, width, marginTop, type = 'button
                     backgroundColor: '#3E7958', // Slightly darker green on hover (optional)
                 },
                 fontWeight: 'bold',           // Bold font weight
+                fontFamily: fontFamily || 'Roboto',
                 textTransform: 'none',        // Prevents text from being transformed to uppercase
                 fontSize: fontSize || "16px",
                 justifyContent: justifyContent || 'center',

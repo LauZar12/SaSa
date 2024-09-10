@@ -4,7 +4,7 @@ import ButtonIndex from '../components/ButtonIndex';
 import '../index.css';
 
 // Import your logo image
-import Logo from '../assets/images/logo.png'; // Adjust the path to your logo image
+import Logo from '../assets/images/Logo Sasa-1.png'; // Adjust the path to your logo image
 import Help from '../assets/images/HELP.png';
 import Porvenir from '../assets/images/ContactImages/Donations/El Porvenir.webp';
 
@@ -25,7 +25,7 @@ export default function Home() {
             {/* Top bar */}
             <Box
                 sx={{
-                    bgcolor: '#4C956C',
+                    bgcolor: '#418441',
                     height: '50px',
                     width: '120%',
                     ml: '-10%',
@@ -93,6 +93,7 @@ export default function Home() {
                         mb: 0,
                         color: '#4AD66D',
                         fontWeight: 'bold',
+                        fontFamily: 'Epilogue',
                         fontSize: { xs: '44px', sm: '62px', md: '76px', lg: '78px', xl: '86px' },
                         justifyContent: {
                             xs: 'center',
@@ -119,8 +120,10 @@ export default function Home() {
                             mb: 1,
                             color: '#737373',
                             fontWeight: 'bold',
+                            fontFamily: 'Epilogue',
                             fontSize: { xs: '14px', sm: '20px', md: '24px', lg: '24px', xl: '30px' },
                             fontStyle: 'italic',
+                            fontFamily: 'Epilogue',
                             lineHeight: 1.2,
                             display: 'flex',
                             justifyContent: {
@@ -140,7 +143,7 @@ export default function Home() {
                             width: '100%'
                         }}
                     >
-                        S me olvidó el slogan
+                        Salvar con sabor
                     </Typography>
 
                     <Box sx={{
@@ -163,6 +166,7 @@ export default function Home() {
                             mb: 7,
                             color: '#737373',
                             fontWeight: 'normal',
+                            fontFamily: 'Epilogue',
                             fontSize: { xs: '15px', sm: '15px', md: '19px', lg: '19px', xl: '25px' },
                             lineHeight: 1.2,
                             display: 'flex',
@@ -196,13 +200,16 @@ export default function Home() {
                     <Typography variant="h6" sx={{ mt: 10, mb: 2, color: '#4C956C', fontWeight: 'bold', fontSize: { xs: '14px', sm: '20px', md: '24px', lg: '24px', xl: '30px' } }}>
                         ¡Haz click para cambiar el mundo!
                     </Typography> */}
-                    <ButtonIndex variant="contained" padding="12px 20px" fontSize="24px" borderRadius="50px" backgroundColor="#737373"
+                    <ButtonIndex variant="contained" padding="12px 20px" borderRadius="50px" backgroundColor="#4C956C" fontFamily='Epilogue'
                         width={{
                             xs: '100%',
                             sm: '100%',
                             md: '60%',
                             lg: '50%',
                             xl: '40%',
+                        }}
+                        fontSize={{
+                            xs: '15px', sm: '15px', md: '19px', lg: '19px', xl: '25px'
                         }}
                         sx={{
                             justifyContent: {
@@ -220,7 +227,37 @@ export default function Home() {
                                 xl: 'left',
                             },
                         }}>
-                        COMENZAR
+                        INICIAR SESIÓN
+                    </ButtonIndex>
+                    <br />
+                    <ButtonIndex variant="contained" padding="12px 20px" borderRadius="50px" backgroundColor="#737373" fontFamily='Epilogue'
+                        width={{
+                            xs: '100%',
+                            sm: '100%',
+                            md: '60%',
+                            lg: '50%',
+                            xl: '40%',
+                        }}
+                        fontSize={{
+                            xs: '15px', sm: '15px', md: '19px', lg: '19px', xl: '25px'
+                        }}
+                        sx={{
+                            justifyContent: {
+                                xs: 'center',
+                                sm: 'center',
+                                md: 'left',
+                                lg: 'left',
+                                xl: 'left',
+                            },
+                            textAlign: {
+                                xs: 'center',
+                                sm: 'center',
+                                md: 'left',
+                                lg: 'left',
+                                xl: 'left',
+                            },
+                        }}>
+                        VER RESTAURANTES
                     </ButtonIndex>
 
                 </Box>
@@ -229,7 +266,7 @@ export default function Home() {
             {/* Bottom bar */}
             <Box
                 sx={{
-                    bgcolor: '#4C956C',
+                    bgcolor: '#418441',
                     height: '50px',
                     width: '120%',
                     bottom: 0, // Position at the bottom of the page
