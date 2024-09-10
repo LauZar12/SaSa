@@ -11,18 +11,21 @@ import businessRoutes from './routes/business.routes.js'
 import productRoutes from './routes/product.routes.js'
 import userRoutes from './routes/user.routes.js'
 
+
 dynamoose.aws.ddb.set(ddb);
 
 dotenv.config();
 
 const app = express();
 
+
 app.get('/all', getAllStuff);
 app.get('/businesses', businessRoutes);
 
 app.get('/businesses/:businessId', productRoutes);
 app.get('/businesses/ola', businessRoutes);
-//app.get('/admin/businesses/:businessId', productRoutes);
+app.get('/admin/businesses/:businessId/products', productRoutes); // para ver los productos del negocio
+app.get("/admin/businesses/:businessId", businessRoutes)
 app.get('/users', userRoutes);
 
 // Use CORS middleware
@@ -32,6 +35,7 @@ app.use(cors({
 
 app.use(express.json());
 app.post('/register', userRoutes);
+app.post('/admin/businesses/:businessId/products/create-product', productRoutes)
 
 
 app.listen(process.env.PORT, () => {

@@ -17,36 +17,18 @@ export const ola = async (req, res) => {
   res.status(200).json(result);
 }
 
-export const getBusinessById = async (req, res) => {
-  
-}
-
 
 export const getBusinessInfo = async (req, res) => {
-    // try{
-    //   const businessId = req.params.businessId;
-    //   const result = await SasaModel.query("PK").eq(businessId)
-    //   .attributes(['Business_Name', 'Business_Address', 'Business_City', 'Business_Country'])
-    //   .exec();
-    //   res.status(200).json(result);
-    // } catch(error){
-    //   console.error('Error fetching business info', error);
-    //   res.status(500).json({ message: 'Error fetching biz info' });
-    // }
-
-    try {
+    try{
       const businessId = req.params.businessId;
-      console.log(businessId);
       const result = await SasaModel.query("PK").eq(businessId)
-        .filter('GS3_PK').beginsWith('product#')
-        .attributes(['Product_Name', 'Product_Description', 'Price', 'Discount', 'ExpirationDate', 'Product_Quantity', 'Available_Quantity'])
-        .exec();
-  
-      console.log(result);
+      .filter('GS2_PK').beginsWith('user#')
+      .attributes(['Business_Name', 'Business_Address', 'Business_City', 'Business_Country', 'Business_Localization', 'Business_Hours'])
+      .exec();
       res.status(200).json(result);
-    } catch (error) {
-      console.error('Error fetching products:', error);
-      res.status(500).json({ message: 'Error fetching products' });
+    } catch(error){
+      console.error('Error fetching business info', error);
+      res.status(500).json({ message: 'Error fetching biz info' });
     }
 
 }
