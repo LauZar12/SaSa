@@ -8,6 +8,7 @@ const router = Router();
 
 router.get("/businesses", getAllBusinesses)
 router.get("/businesses/ola", ola)
+router.get("/admin/businesses/:businessId", getBusinessInfo)
 
 
 export default router;
