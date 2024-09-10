@@ -451,7 +451,7 @@ export default function Auth() {
                         sx={{
                           mt: 1,
                           ml: 1,
-                          backgroundColor: "#418441", // Background color
+                          backgroundColor: "#4C956C", // Background color
                           color: "#F2F6FC", // Font color
                           borderRadius: "50px", // Round only the left and right corners (pill shape)
                           minWidth: 0, // Removes default min width
@@ -474,7 +474,7 @@ export default function Auth() {
                         sx={{
                           mt: 1,
                           ml: 1,
-                          backgroundColor: "#418441", // Background color
+                          backgroundColor: "#4C956C", // Background color
                           color: "#F2F6FC", // Font color
                           borderRadius: "50px", // Round only the left and right corners (pill shape)
                           minWidth: 0, // Removes default min width
@@ -599,7 +599,7 @@ export default function Auth() {
                         sx={{
                           mr: 0,
                           backgroundColor:
-                            activeStep === 0 ? "#d3d3d3" : "#418441", // Disabled color vs. normal color
+                            activeStep === 0 ? "#d3d3d3" : "#4C956C", // Disabled color vs. normal color
                           color: activeStep === 0 ? "#a9a9a9" : "#F2F6FC", // Disabled text color vs. normal text color
                           borderRadius: "50px",
                           minWidth: 0,
@@ -638,7 +638,7 @@ export default function Auth() {
                         onClick={handleNext}
                         sx={{
                           mr: 0,
-                          backgroundColor: "#418441", // Background color
+                          backgroundColor: "#4C956C", // Background color
                           color: "#F2F6FC", // Font color
                           borderRadius: "50px", // Round only the left and right corners (pill shape)
                           minWidth: 0, // Removes default min width

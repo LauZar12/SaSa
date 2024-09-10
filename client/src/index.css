@@ -2,6 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.circular-image-container {
+    position: absolute;
+    top: -120px;
+    right: -100px;
+    width: 500px;
+    height: 500px;
+    overflow: hidden;
+  }
+  .bottom-left-circular-image-container {
+    position: absolute;
+    bottom: -120px;
+    left: -80px;
+    width: 600px;
+    height: 600px;
+    overflow: hidden;
+  }
+  
+  .circular-image-container img,
+  .bottom-left-circular-image-container img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
 
 @keyframes hero-gradient-animation {
     0% {
