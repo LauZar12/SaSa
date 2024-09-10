@@ -126,3 +126,32 @@ export const getAllProductsFromBusinessV2 = async (req, res) => {
     }
   };
   
+
+  export const deleteProduct = async (req, res) => {
+    try {
+      const businessId = req.params.businessId; // Clave de partición (PK)
+      const productId = req.params.productId;   // Esto será el valor de GS3_PK (product#...)
+      
+      if (!businessId || !productId) {
+        return res.status(400).json({ message: 'Missing required parameters' });
+      }
+  
+      // El SK es la combinación del businessId y el productId
+      const SK = `${businessId}${productId}`;
+      
+      // Definir las claves para identificar el producto a eliminar
+      const key = {
+        PK: businessId, // Clave de partición (PK)
+        SK: SK          // Clave de ordenación (SK)
+      };
+  
+      // Eliminar el producto de la tabla
+      await SasaModel.delete(key);
+  
+      res.status(200).json({ message: 'Product deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting product', error);
+      res.status(500).json({ message: 'Failed to delete product' });
+    }
+  };
+  
