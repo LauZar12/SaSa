@@ -36,6 +36,7 @@ app.use(cors({
 app.use(express.json());
 app.post('/register', userRoutes);
 app.post('/admin/businesses/:businessId/products/create-product', productRoutes)
+app.put('/admin/businesses/:businessId/products/:productId', productRoutes);
 
 
 app.listen(process.env.PORT, () => {

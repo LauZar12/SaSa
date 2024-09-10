@@ -77,3 +77,36 @@ export const getAllProductsFromBusinessV2 = async (req, res) => {
     }
   }
 
+  export const editProduct = async (req, res) => {
+    try {
+      const businessId = req.params.businessId;  
+      const productId = req.params.productId;    
+      console.log(businessId, productId);
+  
+      const { Product_Name, Product_Description, ExpirationDate, Price, Discount } = req.body;
+  
+      if (!Product_Name && !Price && !Discount) {
+        return res.status(400).json({ message: 'No fields to update' });
+      }
+  
+
+      const updateData = {};
+      if (Product_Name) updateData.Product_Name = Product_Name;
+      if (Product_Description) updateData.Product_Description = Product_Description;
+      if (ExpirationDate) updateData.ExpirationDate = ExpirationDate;
+      if (Price) updateData.Price = Price;
+      if (Discount) updateData.Discount = Discount;
+  
+      const PK = businessId;  
+      const SK = `${businessId}${productId}`;  
+  
+      
+      const updatedProduct = await SasaModel.update({ PK, SK }, updateData);
+  
+      res.status(200).json({ message: 'Product updated successfully', product: updatedProduct });
+    } catch (error) {
+      console.error('Error updating product:', error);
+      res.status(500).json({ message: 'Failed product update' });
+    }
+  };
+  
