@@ -22,7 +22,10 @@ app.get('/businesses', businessRoutes);
 app.get('/businesses/ola', businessRoutes);
 app.get('/products', productRoutes);
 app.get('/productsV2', productRoutes);
-app.get('users', userRoutes);
+app.get('/users', userRoutes);
+
+app.use(express.json());
+app.post('/register', userRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
