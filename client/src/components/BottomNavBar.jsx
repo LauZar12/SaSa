@@ -60,6 +60,7 @@ export default function BottomNavBar() {
         onChange={(event, newValue) => {
           setValue(newValue);
         }}
+        sx={{ bgcolor: '#4C956C'}}
       >
         <BottomNavigationAction label="Restaurantes" icon={<FastfoodIcon />} />
         <BottomNavigationAction label="Mapa" icon={<MapOutlinedIcon />} />

@@ -12,7 +12,6 @@ createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <FullScreenButton />
       <App />
-      <BottomNavBar />
     </BrowserRouter>
   </StrictMode>,
 )

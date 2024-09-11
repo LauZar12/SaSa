@@ -18,6 +18,10 @@ dotenv.config();
 
 const app = express();
 
+// Use CORS middleware
+app.use(cors({
+  origin: 'http://localhost:5173', // Allow requests from this origin
+}));
 
 app.get('/all', getAllStuff);
 app.get('/businesses', businessRoutes);
@@ -28,10 +32,7 @@ app.get('/admin/businesses/:businessId/products', productRoutes); // para ver lo
 app.get("/admin/businesses/:businessId", businessRoutes)
 app.get('/users', userRoutes);
 
-// Use CORS middleware
-app.use(cors({
-  origin: 'http://localhost:5173', // Allow requests from this origin
-}));
+
 
 app.use(express.json());
 app.post('/auth/register', userRoutes);
