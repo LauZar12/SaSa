@@ -13,11 +13,12 @@ import '../index.css';
 export default function BusinessCard({ image, title, location, rating, schedule, onClick, width = '400px' }) {
     return (
         <ButtonBase sx={{ display: 'block', textAlign: 'inherit', width, borderRadius: '20px' }} onClick={onClick}>
-          <Card sx={{ width: '100%', backgroundColor: '#4C956C' }}>
+          <Card sx={{ width: '100%', backgroundColor: '#4C956C', boxShadow: 8 }}>
             <CardMedia
-              sx={{ height: 140 }}
+              sx={{ height: 140, objectFit: 'cover' }}
               image={image}
               title={title}
+              component="img"
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="div" fontFamily='Epilogue' fontWeight='bold' color='#FFFFFF'>

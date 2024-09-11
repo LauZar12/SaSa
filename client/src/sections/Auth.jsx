@@ -22,7 +22,11 @@ import ButtonIndex from "../components/ButtonIndex";
 import SelectFieldIndex from "../components/SelectFieldIndex";
 import '../index.css';
 
+import { useNavigate } from "react-router-dom";
+
 export default function Auth() {
+  const navigate = useNavigate();
+
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const [email, setEmail] = useState("");
@@ -194,10 +198,8 @@ export default function Auth() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log(email);
 
     const isEmailValid = validateEmail(email);
     const isPasswordValid = validatePassword(password);
@@ -208,8 +210,31 @@ export default function Auth() {
         passwordError: false,
         message: "",
       });
-      console.log("Login Successful");
-      // Verificación de usuario y contraseña con DynamoDB se realizará aquí
+      
+      try {
+        // Verifying user email and password with your API
+        const response = await axios.post('http://localhost:5000/auth/login', { Email: email, Password: password });
+  
+        if (response.data) {
+          console.log("Login Successful");
+          navigate('/businesses')
+        } else {
+          setError({
+            emailError: true,
+            passwordError: true,
+            message: "Invalid Email/Password",
+          });
+          console.log(response.data);
+        }
+      } catch (error) {
+        console.error("Login attempt failed:", error);
+        setError({
+          emailError: true,
+          passwordError: true,
+          message: "Login failed, please try again",
+        });
+      }
+
     } else {
       setError({
         emailError: !isEmailValid,

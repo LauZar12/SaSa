@@ -1,12 +1,13 @@
 import React from 'react';
 import Button from '@mui/material/Button';
 
-export default function ButtonIndex({ children, width, marginTop, type = 'button', padding, fontSize, borderRadius, justifyContent, textAlign, backgroundColor, fontFamily, ...props }) {
+export default function ButtonIndex({ children, width, marginTop, type = 'button', padding, fontSize, borderRadius, justifyContent, textAlign, backgroundColor, fontFamily, onClick, ...props }) {
     return (
         <Button
             {...props}
             type={type}  // Pass the type prop to the Button component
             variant="contained"
+            onClick={onClick}
             sx={{
                 backgroundColor: backgroundColor || '#4C956C',  // Background color
                 color: '#F2F6FC',            // Font color
