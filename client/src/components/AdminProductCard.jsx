@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent, CardActions, Typography, Button } from '@mui/material';
 import { Edit, AccessTime, Description, LocalOffer } from '@mui/icons-material';
-import { useNavigate } from '@reach/router';
+import { useNavigate, useParams } from 'react-router-dom'; // Asegúrate de tener React Router
 
 const AdminProductCard = ({ product, onEdit }) => {
   const {

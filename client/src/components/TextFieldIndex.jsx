@@ -12,6 +12,7 @@ export default function TextFieldIndex({
     helperText,
     error,
     value,
+    fontFamily,
     onChange,
     type = 'text' // Default to 'text' if no type is provided
 }) {
@@ -29,7 +30,7 @@ export default function TextFieldIndex({
                         color: "#232521", // Black font color
                         mb: 1, // Margin-bottom for spacing between top text and TextField
                         mt: 1,
-                        fontFamily: "Roboto",
+                        fontFamily: fontFamily || "Roboto",
                         fontWeight: "bold",
                         fontSize: "20px"
                     }}
@@ -54,7 +55,7 @@ export default function TextFieldIndex({
                     "& .MuiOutlinedInput-root": {
                         backgroundColor: "#F2F5F0",  // Background color
                         color: "#232521",  // Text color (you can adjust as needed)
-                        fontFamily: "Roboto",
+                        fontFamily: fontFamily || "Roboto",
                         fontWeight: "normal",  // Adjust if needed
 
                         "& .MuiOutlinedInput-notchedOutline": {
@@ -71,6 +72,7 @@ export default function TextFieldIndex({
                     "& .MuiInputLabel-outlined": {
                         color: "#738763",  // Label color
                         fontWeight: "normal",
+                        fontFamily: fontFamily || "Roboto",
                         "&.Mui-focused": {
                             color: "#738763",  // Label color on focus
                         },

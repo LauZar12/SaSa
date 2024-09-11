@@ -329,6 +329,7 @@ export default function Auth() {
                       size="small" // Makes the TextField smaller
                       topText="Email"
                       width="100%"
+                      fontFamily='Epilogue'
                       sx={{ mt: 2, mb: 2 }} // Adjusting margins to be a bit smaller
                       inputProps={{ style: { fontSize: 15 } }} // font size of input text
                       InputLabelProps={{ style: { fontSize: 16 } }} // font size of input label
@@ -347,6 +348,7 @@ export default function Auth() {
                       size="small" // Makes the TextField smaller
                       topText="Contraseña"
                       width="100%"
+                      fontFamily='Epilogue'
                       sx={{ mt: 2, mb: 2 }} // Adjusting margins to be a bit smaller
                       inputProps={{ style: { fontSize: 15 } }} // font size of input text
                       InputLabelProps={{ style: { fontSize: 16 } }} // font size of input label
@@ -362,8 +364,9 @@ export default function Auth() {
                       variant="outlined"
                       width="100%"
                       marginTop={4}
+                      fontFamily='Epilogue'
                     >
-                      Iniciar Sesion
+                      INICIAR SESIÓN
                     </ButtonIndex>
                   </Box>
                   <Button
@@ -373,6 +376,7 @@ export default function Auth() {
                     sx={{
                       mt: 2,
                       fontWeight: "bold", // Apply bold font weight
+                      fontFamily: 'Epilogue',
                       textDecoration: "underline", // Apply underline to the text
                       textTransform: "none", // Prevent text from being uppercase (default behavior in Material-UI buttons)
                       color: "#000000", // Ensure the text color is black
@@ -415,7 +419,7 @@ export default function Auth() {
                       component="div"
                       sx={{
                         mb: 2,
-                        fontFamily: "Roboto",
+                        fontFamily: "Epilogue",
                         fontWeight: "bold",
                         fontSize: { xs: "1.5rem", sm: "2rem" }, // Responsive font size
                       }}
@@ -427,7 +431,7 @@ export default function Auth() {
                       component="div"
                       sx={{
                         fontSize: { xs: "0.875rem", sm: "1rem" }, // Responsive font size
-                        fontFamily: "Roboto",
+                        fontFamily: "Epilogue",
                         textAlign: "center",
                         lineHeight: 1.5,
                       }}
@@ -498,7 +502,7 @@ export default function Auth() {
                           fontSize: "18px",
                         }}
                       >
-                        Finalizar
+                        FINALIZAR
                       </Button>
                       <Button
                         color="inherit"
@@ -521,7 +525,7 @@ export default function Auth() {
                           fontSize: "18px",
                         }}
                       >
-                        Reiniciar Formulario
+                        REINICIAR FORMULARIO
                       </Button>
                     </React.Fragment>
                   ) : (
@@ -537,6 +541,7 @@ export default function Auth() {
                               size="small" // Makes the TextField smaller
                               topText="Email"
                               width="100%"
+                              fontFamily='Epilogue'
                               sx={{ mt: 2, mb: 2 }} // Adjusting margins to be a bit smaller
                               inputProps={{ style: { fontSize: 15 } }} // font size of input text
                               InputLabelProps={{ style: { fontSize: 16 } }} // font size of input label
@@ -555,6 +560,7 @@ export default function Auth() {
                               size="small" // Makes the TextField smaller
                               topText="Usuario"
                               width="100%"
+                              fontFamily='Epilogue'
                               sx={{ mt: 2, mb: 2 }} // Adjusting margins to be a bit smaller
                               inputProps={{ style: { fontSize: 14 } }} // font size of input text
                               InputLabelProps={{ style: { fontSize: 15 } }} // font size of input label
@@ -578,6 +584,7 @@ export default function Auth() {
                             size="small" // Makes the TextField smaller
                             topText="Contraseña"
                             width="100%"
+                            fontFamily='Epilogue'
                             sx={{ mt: 2, mb: 2 }} // Adjusting margins to be a bit smaller
                             inputProps={{ style: { fontSize: 14 } }} // font size of input text
                             InputLabelProps={{ style: { fontSize: 15 } }} // font size of input label
@@ -599,6 +606,7 @@ export default function Auth() {
                               size="small" // Makes the TextField smaller
                               topText="Nombre del Negocio"
                               width="100%"
+                              fontFamily='Epilogue'
                               sx={{ mt: 2, mb: 2 }} // Adjusting margins to be a bit smaller
                               inputProps={{ style: { fontSize: 14 } }} // font size of input text
                               InputLabelProps={{ style: { fontSize: 15 } }} // font size of input label
@@ -612,6 +620,7 @@ export default function Auth() {
                               size="small"
                               topText="Seleccione el tipo de negocio"
                               width="100%"
+                              fontFamily='Epilogue'
                               required
                               value={businessType}
                               onChange={handleBusinessTypeChange}
@@ -652,7 +661,7 @@ export default function Auth() {
                             },
                           }}
                         >
-                          Atrás
+                          ATRÁS
                         </Button>
                         <Box sx={{ flex: "1 1 auto" }} />
                         {isStepOptional(activeStep) && (
@@ -686,8 +695,8 @@ export default function Auth() {
                           }}
                         >
                           {activeStep === steps.length - 1
-                            ? "Finalizar"
-                            : "Siguiente"}
+                            ? "FINALIZAR"
+                            : "SIGUIENTE"}
                         </Button>
                       </Box>
                     </React.Fragment>
@@ -697,9 +706,11 @@ export default function Auth() {
                     onClick={toggleForm}
                     variant="text"
                     color="black" // Note: 'black' should be lowercase
+                    fontFamily='Epilogue'
                     sx={{
                       mt: 2,
                       fontWeight: "bold", // Apply bold font weight
+                      fontFamily: 'Epilogue',
                       textDecoration: "underline", // Apply underline to the text
                       textTransform: "none", // Prevent text from being uppercase (default behavior in Material-UI buttons)
                       color: "#000000", // Ensure the text color is black
