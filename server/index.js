@@ -32,7 +32,6 @@ app.get('/admin/businesses/:businessId/products', productRoutes); // para ver lo
 app.get("/admin/businesses/:businessId", businessRoutes)
 app.get('/users', userRoutes);
 
-
 app.use(express.json());
 app.post('/auth/register', userRoutes);
 app.post('/admin/businesses/:businessId/products/create-product', productRoutes)
