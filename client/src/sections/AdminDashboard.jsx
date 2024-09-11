@@ -24,7 +24,7 @@ export default function Component() {
     setMobileOpen(!mobileOpen);
   };
 
-  let businessId = 'business%231';
+  let businessId = 'business%232';
 
   useEffect(() => {
     const fetchData = async () => {
