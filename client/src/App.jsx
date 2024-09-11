@@ -3,6 +3,7 @@ import Auth from "./sections/Auth";
 import Home from "./sections/Home";
 import Businesses from "./sections/Businesses";
 import AdminDashboard from "./sections/AdminDashboard"; // Importa tu componente del Admin Dashboard
+import Business from "./sections/Business";
 
 export default function App() {
   // Definir businessId quemado para desarrollo
@@ -14,6 +15,10 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/businesses" element={<Businesses />} />
+        <Route
+          path="/businesses/:businessId"
+          element={<Business businessId={businessId} />} // Pasar el businessId como prop
+        />
         {/* Nueva ruta para el Admin Dashboard */}
         <Route
           path="/admin/businesses/:businessId"

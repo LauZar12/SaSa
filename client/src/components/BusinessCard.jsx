@@ -13,33 +13,33 @@ import '../index.css';
 export default function BusinessCard({ image, title, location, rating, schedule, onClick, width = '400px' }) {
     return (
         <ButtonBase sx={{ display: 'block', textAlign: 'inherit', width, borderRadius: '20px' }} onClick={onClick}>
-          <Card sx={{ width: '100%', backgroundColor: '#4C956C', boxShadow: 8 }}>
-            <CardMedia
-              sx={{ height: 140, objectFit: 'cover' }}
-              image={image}
-              title={title}
-              component="img"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div" fontFamily='Epilogue' fontWeight='bold' color='#FFFFFF'>
-                  {title}
-              </Typography>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <LocationOnIcon sx={{ mr: 1 }} />
-                  <Typography variant="body2" color='#FFFFFF'>{location}</Typography>
-                </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <StarIcon sx={{ mr: 1 }} />
-                  <Typography variant="body2" color='#FFFFFF'>{rating}</Typography>
-                </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <ScheduleIcon sx={{ mr: 1 }} />
-                  <Typography variant="body2" color='#FFFFFF'>{schedule}</Typography>
-                </Box>
-              </Box>
-            </CardContent>
-          </Card>
+            <Card sx={{ width: '100%', backgroundColor: '#4C956C', boxShadow: 8 }}>
+                <CardMedia
+                    sx={{ height: 140, objectFit: 'cover' }}
+                    image={image}
+                    title={title}
+                    component="img"
+                />
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="div" fontFamily='Epilogue' fontWeight='bold' color='#FFFFFF'>
+                        {title}
+                    </Typography>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            <LocationOnIcon sx={{ mr: 1 }} />
+                            <Typography variant="body2" color='#FFFFFF'>{location}</Typography>
+                        </Box>
+                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            <StarIcon sx={{ mr: 1 }} />
+                            <Typography variant="body2" color='#FFFFFF'>{rating}</Typography>
+                        </Box>
+                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            <ScheduleIcon sx={{ mr: 1 }} />
+                            <Typography variant="body2" color='#FFFFFF'>{schedule}</Typography>
+                        </Box>
+                    </Box>
+                </CardContent>
+            </Card>
         </ButtonBase>
     );
 }

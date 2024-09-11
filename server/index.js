@@ -40,7 +40,6 @@ app.get('/admin/businesses/:businessId/products/:productId', productRoutes);
 app.put('/admin/businesses/:businessId/products/:productId/edit-product', productRoutes);
 app.delete('/admin/businesses/:businessId/products/:productId/delete-product', productRoutes);
 
-
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
   console.log(testConnection());
