@@ -1,8 +1,13 @@
 import React from 'react'
+import BottomNavBar from '../components/BottomNavBar';
+import BusinessCard from '../components/BusinessCard';
 
 const Businesses = () => {
   return (
-    <div>Businesses</div>
+    <div>
+      <BusinessCard></BusinessCard>
+      <BottomNavBar></BottomNavBar>
+    </div>
   )
 }
 
