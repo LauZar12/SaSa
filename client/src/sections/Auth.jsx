@@ -180,6 +180,8 @@ export default function Auth() {
         });
 
         console.log('User registered successfully:', response.data);
+        toggleForm();
+
       } catch (error) {
         console.error('Error registering user:', error.response ? error.response.data : error.message);
       }
@@ -194,6 +196,8 @@ export default function Auth() {
         });
 
         console.log('User registered successfully:', response.data);
+        toggleForm();
+
       } catch (error) {
         console.error('Error registering user:', error.response ? error.response.data : error.message);
       }
