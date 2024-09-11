@@ -7,8 +7,8 @@ import Business from "./sections/Business";
 
 export default function App() {
   // Definir businessId quemado para desarrollo
-  const businessId = "business%231"; // Puedes cambiarlo según necesites
-
+  const businessId = "business%232"; // Puedes cambiarlo según necesites
+  const productId = "product%233"
   return (
     <>
       <Routes>
