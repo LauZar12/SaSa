@@ -2,13 +2,16 @@ import * as React from 'react';
 import { Box, Typography, Button, Container, Divider } from '@mui/material';
 import ButtonIndex from '../components/ButtonIndex';
 import '../index.css';
+import { useNavigate } from 'react-router-dom';
 
 // Import your logo image
-import Logo from '../assets/images/Logo Sasa-1.png'; // Adjust the path to your logo image
+import Logo from '../assets/images/Logo Sasa-1.png';
 import Help from '../assets/images/HELP.png';
 import Porvenir from '../assets/images/ContactImages/Donations/El Porvenir.webp';
 
 export default function Home() {
+    const navigate = useNavigate();
+
     return (
         <Container
             maxWidth="100%"
@@ -25,7 +28,7 @@ export default function Home() {
             {/* Top bar */}
             <Box
                 sx={{
-                    bgcolor: '#418441',
+                    bgcolor: '#4C956C',
                     height: '50px',
                     width: '120%',
                     ml: '-10%',
@@ -211,6 +214,7 @@ export default function Home() {
                         fontSize={{
                             xs: '15px', sm: '15px', md: '19px', lg: '19px', xl: '25px'
                         }}
+                        onClick={() => navigate('/auth')}
                         sx={{
                             justifyContent: {
                                 xs: 'center',
@@ -241,6 +245,7 @@ export default function Home() {
                         fontSize={{
                             xs: '15px', sm: '15px', md: '19px', lg: '19px', xl: '25px'
                         }}
+                        onClick={() => navigate('/businesses')}
                         sx={{
                             justifyContent: {
                                 xs: 'center',
@@ -266,7 +271,7 @@ export default function Home() {
             {/* Bottom bar */}
             <Box
                 sx={{
-                    bgcolor: '#418441',
+                    bgcolor: '#4C956C',
                     height: '50px',
                     width: '120%',
                     bottom: 0, // Position at the bottom of the page

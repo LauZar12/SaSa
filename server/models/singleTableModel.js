@@ -27,6 +27,7 @@ const SasaSchema = new dynamoose.Schema({
   "Business_Hours": String,
   "Business_Type": Number,
   "Business_Localization": String,
+  "Business_Logo_Url": String,
 })
 
 const SasaModel = dynamoose.model('SasaST', SasaSchema, {
