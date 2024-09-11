@@ -6,12 +6,20 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-import { LocalOffer, Discount, AttachMoney } from '@mui/icons-material';
+import { LocalOffer, Discount, AttachMoney, Description } from '@mui/icons-material';
 
 const calculateAfterDiscountPrice = (price, discount) => {
   // Assuming discount is in percentage
   const discountValue = (price * discount) / 100;
   return price - discountValue;
+};
+
+const formatPrice = (price) => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'decimal',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(price);
 };
 
 export default function ProductCard({
@@ -24,6 +32,7 @@ export default function ProductCard({
   width = '400px'
 }) {
   const afterDiscountPrice = calculateAfterDiscountPrice(price, discount);
+  
 
   return (
     <ButtonBase sx={{ display: 'block', textAlign: 'inherit', width, borderRadius: '20px' }} onClick={onClick}>
@@ -45,14 +54,14 @@ export default function ProductCard({
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <AttachMoney sx={{ mr: 1 }} />
-              <Typography variant="body2" color='#FFFFFF'>{`$${price.toFixed(2)}`}</Typography>
+              <Typography variant="body2" color='#FFFFFF'>{`$${formatPrice(price.toFixed(2))}`}</Typography>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Discount sx={{ mr: 1 }} />
-              <Typography variant="body2" color='#FFFFFF'>{`$${afterDiscountPrice.toFixed(2)}`}</Typography>
+              <Typography variant="body2" color='#FFFFFF'>{`$${formatPrice(afterDiscountPrice.toFixed(2))}`}</Typography>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Discount sx={{ mr: 1 }} />
+              <Description sx={{ mr: 1 }} />
               <Typography variant="body2" color='#FFFFFF'>{description}</Typography>
             </Box>
           </Box>

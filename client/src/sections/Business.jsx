@@ -10,7 +10,6 @@ import Logo2 from '../assets/images/Logo Sasa-2.png';
 import ProductCard from '../components/ProductCard';
 
 export default function Business() {
-  const navigate = useNavigate();
   const { businessId } = useParams(); // Get businessId from route parameters
 
   const [products, setProducts] = useState([]);

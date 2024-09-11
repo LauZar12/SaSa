@@ -22,6 +22,8 @@ import ButtonIndex from "../components/ButtonIndex";
 import SelectFieldIndex from "../components/SelectFieldIndex";
 import '../index.css';
 
+import Cookies from 'js-cookie';
+
 import { useNavigate } from "react-router-dom";
 
 export default function Auth() {
@@ -217,7 +219,8 @@ export default function Auth() {
 
         if (response.data) {
           console.log("Login Successful");
-          navigate('/businesses')
+          Cookies.set('user', JSON.stringify(response.data), { expires: 1 }); // Cookie expires in 1 day
+          navigate('/businesses');
         } else {
           setError({
             emailError: true,

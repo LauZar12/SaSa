@@ -6,8 +6,15 @@ import FastfoodIcon from '@mui/icons-material/Fastfood';
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
+import { useNavigate } from "react-router-dom";
+
 export default function BottomNavBar() {
   const [value, setValue] = React.useState(0);
+
+  const navigate = useNavigate();
+  const handleNavigation = () => {
+    navigate('/businesses');
+  };
 
   return (
     <Box sx={{ bgcolor: '#4C956C', position: 'fixed', bottom: 0, left: 0, right: 0 }}>
@@ -22,6 +29,7 @@ export default function BottomNavBar() {
         <BottomNavigationAction
           label="Restaurantes"
           icon={<FastfoodIcon />}
+          onClick={handleNavigation}
           sx={{
             color: value === 0 ? 'white' : 'rgba(255, 255, 255, 0.6)', // Selected white, unselected slightly transparent
             '&.Mui-selected': {

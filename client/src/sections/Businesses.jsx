@@ -7,6 +7,8 @@ import Grid from '@mui/material/Grid2';
 import { Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
+import Cookies from 'js-cookie';
+
 import axios from 'axios';
 
 import Logo2 from '../assets/images/Logo Sasa-2.png';
@@ -29,10 +31,19 @@ export default function Businesses() {
   useEffect(() => {
     fetchBusinesses(); // Fetch businesses when the component mounts
   }, []);
+  
 
   const handleBusinessClicked = (event) => {
     // Implement the logic for handling the business click event
     console.log("Business clicked:", event);
+
+    const user = Cookies.get('user');
+    if (user) {
+      const userData = JSON.parse(user);
+      console.log("User Data:", userData);
+    }else{
+      console.log("No user cookies")
+    }
 
     const encodedBusinessId = encodeURIComponent(event.PK);
     navigate('/businesses/' + encodedBusinessId);
