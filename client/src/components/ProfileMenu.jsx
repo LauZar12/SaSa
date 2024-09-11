@@ -4,7 +4,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import SettingsIcon from '@mui/icons-material/Settings';
 import TrackChangesIcon from '@mui/icons-material/TrackChanges'; // Icono para seguimiento de desperdicios
-import '.assets\css\ProfileMenu.css'; // Estilos CSS para el componente
+import '.assets/css/ProfileMenu.css'; // Estilos CSS para el componente
 
 export default function ProfileMenu() {
   return (

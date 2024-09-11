@@ -1,69 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import {
-  AppBar,
-  Box,
-  CssBaseline,
-  Drawer,
-  IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Toolbar,
-  Typography,
+  AppBar, Box, CssBaseline, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography,
 } from '@mui/material';
 import {
-  Menu as MenuIcon,
-  Business as BusinessIcon,
-  Inventory as InventoryIcon,
-  CardGiftcard as CardGiftcardIcon,
+  Menu as MenuIcon, Business as BusinessIcon, Inventory as InventoryIcon, CardGiftcard as CardGiftcardIcon,
 } from '@mui/icons-material';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Asegúrate de tener React Router
+import BusinessCardV2 from '../components/BusinessCardV2';
+import ProductCard from '../components/AdminProductCard'; // Importa tu tarjeta de producto
+
+import Logo2 from '../assets/images/Logo Sasa-2.png';
+import { useParams } from '@reach/router';
 
 const drawerWidth = 240;
 
 export default function Component() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('Business Info');
+  const [selectedOption, setSelectedOption] = useState('Negocio');
   const [content, setContent] = useState(null);
-
-
+  const navigate = useNavigate(); // Hook de React Router para redirigir
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  let businessId = 'business%231'; 
+  let businessId = 'business%231';
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         let response;
-        
-        if (selectedOption === 'Business Info') {
+        if (selectedOption === 'Negocio') {
           response = await axios.get(`http://localhost:5000/admin/businesses/${businessId}`);
-        } else if (selectedOption === 'Products') {
+        } else if (selectedOption === 'Productos') {
           response = await axios.get(`http://localhost:5000/admin/businesses/${businessId}/products`);
         }
-  
-        console.log('Response data:', response.data); // Verifica lo que se recibe
-        setContent(response.data); // Almacena la respuesta en el estado content
+        setContent(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
-        setContent(null); // Resetea el contenido en caso de error
+        setContent(null);
       }
     };
-  
+
     fetchData();
   }, [selectedOption, businessId]);
-  
-  
+
+  // Función para redirigir a la edición de un producto
+  const handleEditProduct = (productId) => {
+    const encodedProductId = encodeURIComponent(productId); // Codifica el ID
+    const businessId = 'business%231'; // Codifica este también si es necesario
+    window.location.href = `/admin/businesses/${businessId}/products/${encodedProductId}/edit-product`;
+  };
 
   const drawer = (
     <div>
       <Toolbar />
       <List>
-        {['Business Info', 'Products', 'Surprise Boxes'].map((text, index) => (
+        {['Negocio', 'Productos', 'Cajas Sorpresa'].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton onClick={() => setSelectedOption(text)}>
               <ListItemIcon>
@@ -79,44 +72,46 @@ export default function Component() {
 
   const renderContent = () => {
     switch (selectedOption) {
-      case 'Business Info':
+      case 'Negocio':
         return (
           <Box p={3}>
             <Typography variant="h4" gutterBottom>
-              Business Information
+              Información del Negocio
             </Typography>
-            <Typography paragraph>
-              {content && content.length > 0 ? ( // Verifica si content no está vacío y tiene datos
-                <pre>{JSON.stringify(content[0], null, 2)}</pre> // Accede al primer elemento del array
-              ) : (
-                'Loading business information...'
-              )}
-            </Typography>
+            {content && content.length > 0 ? (
+              <BusinessCardV2 business={content[0]} />
+            ) : (
+              'Cargando información del negocio...'
+            )}
           </Box>
         );
-      case 'Products':
+      case 'Productos':
         return (
           <Box p={3}>
             <Typography variant="h4" gutterBottom>
-              Products Management
+              Maneja tus productos
             </Typography>
-            <Typography paragraph>
-              {content && content.length > 0 ? (
-                <pre>{JSON.stringify(content, null, 2)}</pre>
-              ) : (
-                'Loading product information...'
-              )}
-            </Typography>
+            <Box display="grid" gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))" gap={2}>
+            
+            {content && content.map((product) => (
+              <ProductCard 
+               key={product.GS3_PK} 
+               product={product} 
+               onEdit={handleEditProduct} 
+               />
+            ))}
+
+            </Box>
           </Box>
         );
-      case 'Surprise Boxes':
+      case 'Cajas Sorpresa':
         return (
           <Box p={3}>
             <Typography variant="h4" gutterBottom>
-              Surprise Boxes
+              Cajas Sorpresa
             </Typography>
             <Typography paragraph>
-              Create and manage surprise box offerings, set contents, and determine pricing for these special packages.
+              Crea y administra ofertas de cajas sorpresa, establece los contenidos y determina los precios de estos paquetes especiales!
             </Typography>
           </Box>
         );
@@ -124,7 +119,6 @@ export default function Component() {
         return null;
     }
   };
-  
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -134,9 +128,10 @@ export default function Component() {
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
+          backgroundColor: '#4C956C',
         }}
       >
-        <Toolbar>
+        {/* <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -146,11 +141,43 @@ export default function Component() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Admin Dashboard
+          <Typography variant="h6" noWrap component="div" sx={{ color: '#fff' }}>
+            Panel de Administrador
           </Typography>
-        </Toolbar>
+        </Toolbar> */}
+
+      <Box
+        sx={{
+          bgcolor: '#4C956C',
+          height: '80px',
+          width: '100%', // Ensure the bar covers the full width of the screen
+          top: 0, // Stick to the top of the screen
+          left: 0, // Stick to the left side
+          p: 0, // Remove padding inside the box
+          overflow: 'hidden',
+          position: 'fixed', // Make it sticky
+          display: 'flex', // Align items horizontally
+          alignItems: 'center', // Vertically center the logo
+          justifyContent: 'center', // Horizontally center the logo (optional)
+          zIndex: 1000 // Ensure it's above other elements
+        }}
+      >
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            display = "left"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { sm: 'none' } }}
+          >
+            <MenuIcon />
+          </IconButton>
+        
+        <img src={Logo2} alt="Logo" style={{ height: '50px' }} /> 
+      </Box>
+
       </AppBar>
+
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
@@ -161,7 +188,7 @@ export default function Component() {
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Mejor rendimiento al abrir en móvil.
+            keepMounted: true,
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
@@ -181,6 +208,7 @@ export default function Component() {
           {drawer}
         </Drawer>
       </Box>
+
       <Box
         component="main"
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
