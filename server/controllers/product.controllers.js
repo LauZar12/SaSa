@@ -46,7 +46,7 @@ export const getAllProductsFromBusinessV2 = async (req, res) => {
       const productId = req.params.productId; 
       const result = await SasaModel.query("PK").eq(businessId)
       .filter('GS3_PK').eq(productId)
-      .attributes(['Product_Name', 'Product_Description', 'ExpirationDate', 'Price', 'Discount'])
+      .attributes(['GS3_PK','Product_Name', 'Product_Description', 'ExpirationDate', 'Price', 'Discount'])
       .exec();
       res.status(200).json(result);
     } catch(error){

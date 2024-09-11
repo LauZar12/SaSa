@@ -19,11 +19,9 @@ export default function App() {
           path="/businesses/:businessId"
           element={<Business businessId={businessId} />} // Pasar el businessId como prop
         />
-        {/* Nueva ruta para el Admin Dashboard */}
-        <Route
-          path="/admin/businesses/:businessId"
-          element={<AdminDashboard businessId={businessId} />} // Pasar el businessId como prop
-        />
+        
+        <Route path="/admin/businesses/:businessId" element={<AdminDashboard businessId={businessId} />} />
+        <Route path="/admin/businesses/:businessId/products/:productId" element={<AdminDashboard productId={productId} />} />
       </Routes>
     </>
   );
