@@ -6,12 +6,11 @@ import {
   Menu as MenuIcon, Business as BusinessIcon, Inventory as InventoryIcon, CardGiftcard as CardGiftcardIcon,
 } from '@mui/icons-material';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Asegúrate de tener React Router
+import { useNavigate, useParams } from 'react-router-dom'; // Asegúrate de tener React Router
 import BusinessCardV2 from '../components/BusinessCardV2';
 import ProductCard from '../components/AdminProductCard'; // Importa tu tarjeta de producto
 
 import Logo2 from '../assets/images/Logo Sasa-2.png';
-import { useParams } from '@reach/router';
 
 const drawerWidth = 240;
 

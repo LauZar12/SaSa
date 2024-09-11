@@ -11,6 +11,7 @@ export default function SelectFieldIndex({
     label,
     size,
     topText,
+    fontFamily,
     width,
     required,
     helperText,
@@ -33,7 +34,7 @@ export default function SelectFieldIndex({
                         color: "#232521", // Black font color
                         mb: 1, // Margin-bottom for spacing between top text and Select
                         mt: 1,
-                        fontFamily: "Roboto",
+                        fontFamily: fontFamily || "Roboto",
                         fontWeight: "bold",
                         fontSize: "20px"
                     }}
@@ -43,6 +44,7 @@ export default function SelectFieldIndex({
             )}
             <InputLabel id={`${label}-label`} sx={{ 
                 color: "#738763", 
+                fontFamily: fontFamily || "Roboto",
                 fontWeight: "normal", 
                 fontSize: "15px",
                 "&.Mui-focused": { color: "#738763" } // Color del label en focus
@@ -60,7 +62,7 @@ export default function SelectFieldIndex({
                     width: width || '100%', // Use the width prop or default to full width
                     backgroundColor: "#F2F5F0",  // Background color
                     color: "#232521",  // Text color (you can adjust as needed)
-                    fontFamily: "Roboto",
+                    fontFamily: fontFamily || "Roboto",
                     fontWeight: "normal",  // Adjust if needed
                     "& .MuiOutlinedInput-notchedOutline": {
                         borderColor: "#738763",  // Border color
