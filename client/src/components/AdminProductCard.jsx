@@ -1,30 +1,49 @@
 import React from 'react';
 import { Card, CardContent, CardActions, Typography, Button } from '@mui/material';
-import { Edit, AccessTime, Description, LocalOffer } from '@mui/icons-material';
-import { useNavigate, useParams } from 'react-router-dom'; // Asegúrate de tener React Router
+import { Edit, AccessTime, Description, LocalOffer  } from '@mui/icons-material';
+import { useNavigate, useParams } from 'react-router-dom';
+import DeleteIcon from '@mui/icons-material/Delete';
+// import axios from 'axios';
+// import toast from 'react-hot-toast';
 
-const AdminProductCard = ({ product, onEdit }) => {
+const AdminProductCard = ({ product, onEdit, onDelete }) => {
+
   const {
+    GS3_PK,
     Price = 0,
     Product_Name = 'Nombre no disponible',
     ExpirationDate = 'Fecha no especificada',
     Product_Description = 'Descripción no disponible',
-    Discount = 0,
-    GS3_PK 
+    Discount = 0
   } = product || {};
+
+  const { businessId } = useParams(); // extrae businessId de la URL
+  const navigate = useNavigate();
+
+  const handleProductClicked = () => {
+    console.log(product);
+    if (!GS3_PK) {
+      console.error("El ID del producto es undefined");
+      return;
+    }
+  
+    // Usamos el callback onEdit para editar el producto
+    if (onEdit) {
+      onEdit(GS3_PK);
+    }
+  };
+  
+
+  const handleProductDeleted = async () => {
+      if(onDelete) {
+        onDelete(GS3_PK);
+      }
+    }
+
 
   const formattedPrice = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(Price);
   const discountedPrice = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(Price * (1 - Discount / 100));
-  const navigate = useNavigate();
 
-  const handleProductClicked = (event) => {
-    // Implement the logic for handling the business click event
-    console.log("Product clicked:", event);
-
-    const encodedProductId = encodeURIComponent(event.GS3_PK);
-    //navigate('/products/' + encodedProductId);
-    navigate('/admin/businesses/:businessId/products/:productId' + encodedProductId);
-  };
   return (
     <Card className="max-w-sm mx-auto shadow-lg">
       <CardContent className="space-y-4">
@@ -66,18 +85,27 @@ const AdminProductCard = ({ product, onEdit }) => {
         )}
       </CardContent>
       <CardActions className="justify-end">
-        <Button 
-            variant="contained" 
-            color="primary" 
-            startIcon={<Edit />}
-            onClick={() => onEdit(GS3_PK)} // Codifica GS3_PK
-            className="bg-blue-500 hover:bg-blue-600"
-        >
-          Editar
-        </Button>
+      <Button 
+        variant="contained" 
+        color="primary" 
+        startIcon={<Edit />}
+        onClick={handleProductClicked} 
+        className="bg-blue-500 hover:bg-blue-600"
+      >
+        Editar
+      </Button>
+      <Button 
+        variant="outlined"
+        startIcon={<DeleteIcon />}
+        color="error" 
+        className="bg-red-500 hover:bg-red-200" 
+        onClick={handleProductDeleted}>
+        Borrar
+      </Button>
       </CardActions>
     </Card>
   );
-};
+}; 
 
 export default AdminProductCard;
+

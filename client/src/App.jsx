@@ -4,24 +4,29 @@ import Home from "./sections/Home";
 import Businesses from "./sections/Businesses";
 import AdminDashboard from "./sections/AdminDashboard"; // Importa tu componente del Admin Dashboard
 import Business from "./sections/Business";
+import EditProduct from "./sections/EditProduct";
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function App() {
-  // Definir businessId quemado para desarrollo
-  const businessId = "business%232"; // Puedes cambiarlo según necesites
-  const productId = "product%233"
   return (
     <>
+      <Toaster />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/businesses" element={<Businesses />} />
         <Route
           path="/businesses/:businessId"
-          element={<Business businessId={businessId} />} // Pasar el businessId como prop
+          element={<Business />} // No pasar el businessId como prop
         />
-        
-        <Route path="/admin/businesses/:businessId" element={<AdminDashboard businessId={businessId} />} />
-        <Route path="/admin/businesses/:businessId/products/:productId" element={<AdminDashboard productId={productId} />} />
+        <Route 
+          path="/admin/businesses/:businessId" 
+          element={<AdminDashboard />} 
+        />
+        <Route 
+          path="/admin/businesses/:businessId/products/:productId/edit-product" 
+          element={<EditProduct />} 
+        />
       </Routes>
     </>
   );

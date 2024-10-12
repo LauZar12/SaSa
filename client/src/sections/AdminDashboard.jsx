@@ -6,24 +6,26 @@ import {
   Menu as MenuIcon, Business as BusinessIcon, Inventory as InventoryIcon, CardGiftcard as CardGiftcardIcon,
 } from '@mui/icons-material';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom'; // Asegúrate de tener React Router
+import { useNavigate, useParams } from 'react-router-dom'; 
 import BusinessCardV2 from '../components/BusinessCardV2';
-import ProductCard from '../components/AdminProductCard'; // Importa tu tarjeta de producto
-
+import Cookies from 'js-cookie'; 
 import Logo2 from '../assets/images/Logo Sasa-2.png';
+import AdminProductCard from '../components/AdminProductCard';
+import toast from 'react-hot-toast';
 
 const drawerWidth = 240;
 
-export default function Component() {
+export default function AdminDashboard() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('Negocio');
   const [content, setContent] = useState(null);
-  const navigate = useNavigate(); // Hook de React Router para redirigir
+  const navigate = useNavigate(); 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  let businessId = 'business%232';
+  const userInfo = Cookies.get('user') ? JSON.parse(Cookies.get('user')) : null;
+  const businessId = userInfo ? encodeURIComponent(userInfo.GS1_PK) : '';
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,14 +43,29 @@ export default function Component() {
       }
     };
 
-    fetchData();
+    if (businessId) {
+      fetchData();
+    }
   }, [selectedOption, businessId]);
 
-  // Función para redirigir a la edición de un producto
+  //Función para redirigir a la edición de un producto
   const handleEditProduct = (productId) => {
-    const encodedProductId = encodeURIComponent(productId); // Codifica el ID
-    const businessId = 'business%231'; // Codifica este también si es necesario
+    const encodedProductId = encodeURIComponent(productId); 
     window.location.href = `/admin/businesses/${businessId}/products/${encodedProductId}/edit-product`;
+  };
+
+  const handleProductDeleted = async (productId) => {
+    try {
+      const encodedProductId = encodeURIComponent(productId); 
+      await axios.delete(`http://localhost:5000/admin/businesses/${businessId}/products/${encodedProductId}/delete-product`);
+      
+      setContent((prevProducts) => prevProducts.filter((product) => product.GS3_PK !== productId));
+      console.log(`Producto ${productId} eliminado con éxito.`);
+      toast.success('Producto eliminado correctamente!')
+    } catch (error) {
+      console.error('Error eliminando el producto:', error);
+      toast.error("Ups, tuvimos problemas para eliminar el producto.")
+    }
   };
 
   const drawer = (
@@ -93,13 +110,13 @@ export default function Component() {
             <Box display="grid" gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))" gap={2}>
             
             {content && content.map((product) => (
-              <ProductCard 
-               key={product.GS3_PK} 
-               product={product} 
-               onEdit={handleEditProduct} 
-               />
+              <AdminProductCard
+                key={product.GS3_PK}
+                product={product}
+                onEdit={handleEditProduct}
+                onDelete={handleProductDeleted}
+              />
             ))}
-
             </Box>
           </Box>
         );
@@ -130,20 +147,7 @@ export default function Component() {
           backgroundColor: '#4C956C',
         }}
       >
-        {/* <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div" sx={{ color: '#fff' }}>
-            Panel de Administrador
-          </Typography>
-        </Toolbar> */}
+
 
       <Box
         sx={{
