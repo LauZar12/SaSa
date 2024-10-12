@@ -6,7 +6,7 @@ import App from './App.jsx'
 import './index.css'
 
 import FullScreenButton from './components/FullScreenButton.jsx'
-import BottomNavBar from './components/BottomNavBar.jsx'
+
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
