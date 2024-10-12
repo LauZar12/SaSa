@@ -9,3 +9,9 @@ Estos establecimientos podrán ofrecer diferentes tipos de comida con grandes de
 Los usuarios de Sasa podrán ver una lista de los lugares cercanos con descuentos o Cajas Sorpresa disponibles, y también visualizarlos en un mapa interactivo.
 
 Sasa es la mejor opción para combatir el desperdicio de alimentos, permitir que las personas accedan a alimentos a precios más accesibles, y generar ingresos adicionales para los negocios.
+
+
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/cc959d7a-6ab4-4fb9-b34d-67d20c8af48c" alt="sasa's logo"/>
+</p>
