@@ -6,11 +6,12 @@ import {
   Menu as MenuIcon, Business as BusinessIcon, Inventory as InventoryIcon, CardGiftcard as CardGiftcardIcon,
 } from '@mui/icons-material';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom'; 
 import BusinessCardV2 from '../components/BusinessCardV2';
 import Cookies from 'js-cookie'; 
 import Logo2 from '../assets/images/Logo Sasa-2.png';
 import AdminProductCard from '../components/AdminProductCard';
+import EditProduct from '../sections/EditProduct'; 
 import toast from 'react-hot-toast';
 
 const drawerWidth = 240;
@@ -19,7 +20,10 @@ export default function AdminDashboard() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('Negocio');
   const [content, setContent] = useState(null);
+  const [editModalOpen, setEditModalOpen] = useState(false); 
+  const [currentProductId, setCurrentProductId] = useState(null); 
   const navigate = useNavigate(); 
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -27,31 +31,43 @@ export default function AdminDashboard() {
   const userInfo = Cookies.get('user') ? JSON.parse(Cookies.get('user')) : null;
   const businessId = userInfo ? encodeURIComponent(userInfo.GS1_PK) : '';
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let response;
-        if (selectedOption === 'Negocio') {
-          response = await axios.get(`http://localhost:5000/admin/businesses/${businessId}`);
-        } else if (selectedOption === 'Productos') {
-          response = await axios.get(`http://localhost:5000/admin/businesses/${businessId}/products`);
-        }
-        setContent(response.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setContent(null);
+  const fetchData = async () => {
+    try {
+      let response;
+      if (selectedOption === 'Negocio') {
+        response = await axios.get(`http://localhost:5000/admin/businesses/${businessId}`);
+      } else if (selectedOption === 'Productos') {
+        response = await axios.get(`http://localhost:5000/admin/businesses/${businessId}/products`);
       }
-    };
+      setContent(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setContent(null);
+    }
+  };
 
+  useEffect(() => {
     if (businessId) {
       fetchData();
     }
   }, [selectedOption, businessId]);
 
-  //Función para redirigir a la edición de un producto
   const handleEditProduct = (productId) => {
-    const encodedProductId = encodeURIComponent(productId); 
-    window.location.href = `/admin/businesses/${businessId}/products/${encodedProductId}/edit-product`;
+    setCurrentProductId(productId);
+    setEditModalOpen(true); 
+  };
+
+  const handleUpdateProduct = (updatedProduct) => {
+    setContent((prevProducts) =>
+      prevProducts.map((product) =>
+        product.GS3_PK === updatedProduct.GS3_PK ? updatedProduct : product
+      )
+    );
+  };
+
+  const handleModalClose = () => {
+    setEditModalOpen(false); 
+    fetchData();
   };
 
   const handleProductDeleted = async (productId) => {
@@ -108,15 +124,14 @@ export default function AdminDashboard() {
               Maneja tus productos
             </Typography>
             <Box display="grid" gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))" gap={2}>
-            
-            {content && content.map((product) => (
-              <AdminProductCard
-                key={product.GS3_PK}
-                product={product}
-                onEdit={handleEditProduct}
-                onDelete={handleProductDeleted}
-              />
-            ))}
+              {content && content.map((product) => (
+                <AdminProductCard
+                  key={product.GS3_PK}
+                  product={product}
+                  onEdit={handleEditProduct} 
+                  onDelete={handleProductDeleted}
+                />
+              ))}
             </Box>
           </Box>
         );
@@ -147,38 +162,34 @@ export default function AdminDashboard() {
           backgroundColor: '#4C956C',
         }}
       >
-
-
-      <Box
-        sx={{
-          bgcolor: '#4C956C',
-          height: '80px',
-          width: '100%', // Ensure the bar covers the full width of the screen
-          top: 0, // Stick to the top of the screen
-          left: 0, // Stick to the left side
-          p: 0, // Remove padding inside the box
-          overflow: 'hidden',
-          position: 'fixed', // Make it sticky
-          display: 'flex', // Align items horizontally
-          alignItems: 'center', // Vertically center the logo
-          justifyContent: 'center', // Horizontally center the logo (optional)
-          zIndex: 1000 // Ensure it's above other elements
-        }}
-      >
+        <Box
+          sx={{
+            bgcolor: '#4C956C',
+            height: '80px',
+            width: '100%', 
+            top: 0, 
+            left: 0,
+            p: 0, 
+            overflow: 'hidden',
+            position: 'fixed', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            zIndex: 1000 
+          }}
+        >
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
-            display = "left"
+            display="left"
             onClick={handleDrawerToggle}
             sx={{ mr: 2, display: { sm: 'none' } }}
           >
             <MenuIcon />
           </IconButton>
-        
-        <img src={Logo2} alt="Logo" style={{ height: '50px' }} /> 
-      </Box>
-
+          <img src={Logo2} alt="Logo" style={{ height: '50px' }} /> 
+        </Box>
       </AppBar>
 
       <Box
@@ -218,6 +229,15 @@ export default function AdminDashboard() {
       >
         <Toolbar />
         {renderContent()}
+
+        {editModalOpen && (
+          <EditProduct
+          open={editModalOpen}
+          handleClose={handleModalClose}
+          productId={currentProductId}
+          onUpdateProduct={handleUpdateProduct} // Pasa la función aquí
+          />
+        )}
       </Box>
     </Box>
   );

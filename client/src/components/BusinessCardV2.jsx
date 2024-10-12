@@ -13,13 +13,12 @@ const BusinessCardV2 = ({ business }) => {
 
   return (
     <Card className="max-w-md mx-auto shadow-lg">
-      <CardHeader
+      <CardHeader sx={{ bgcolor: '#4C956C'}}
         title={
           <Typography variant="h5" className="font-bold text-center text-white">
             {Business_Name}
           </Typography>
         }
-        className="bg-green-400"
       />
       <CardContent className="space-y-4">
         <div className="flex items-center space-x-2">

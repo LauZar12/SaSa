@@ -101,7 +101,7 @@ export const getAllProductsFromBusinessV2 = async (req, res) => {
       const productId = req.params.productId;    
       console.log(businessId, productId);
   
-      const { GS3_PK, Product_Name, Product_Description, ExpirationDate, Price, Discount } = req.body;
+      const { Product_Name, Product_Description, ExpirationDate, Price, Discount } = req.body;
   
       if (!Product_Name && !Price && !Discount) {
         return res.status(400).json({ message: 'No fields to update' });
@@ -109,7 +109,6 @@ export const getAllProductsFromBusinessV2 = async (req, res) => {
   
 
       const updateData = {};
-      if (GS3_PK) updateData.GS3_PK = GS3_PK;
       if (Product_Name) updateData.Product_Name = Product_Name;
       if (Product_Description) updateData.Product_Description = Product_Description;
       if (ExpirationDate) updateData.ExpirationDate = ExpirationDate;
@@ -132,23 +131,23 @@ export const getAllProductsFromBusinessV2 = async (req, res) => {
 
   export const deleteProduct = async (req, res) => {
     try {
-      const businessId = req.params.businessId; // Clave de partición (PK)
-      const productId = req.params.productId;   // Esto será el valor de GS3_PK (product#...)
+      const businessId = req.params.businessId; 
+      const productId = req.params.productId;   
       
       if (!businessId || !productId) {
         return res.status(400).json({ message: 'Missing required parameters' });
       }
   
-      // El SK es la combinación del businessId y el productId
+      // el SK es la combinación del businessId y el productId
       const SK = `${businessId}${productId}`;
       
-      // Definir las claves para identificar el producto a eliminar
+  
       const key = {
-        PK: businessId, // Clave de partición (PK)
-        SK: SK          // Clave de ordenación (SK)
+        PK: businessId, 
+        SK: SK          
       };
   
-      // Eliminar el producto de la tabla
+
       await SasaModel.delete(key);
   
       res.status(200).json({ message: 'Product deleted successfully' });

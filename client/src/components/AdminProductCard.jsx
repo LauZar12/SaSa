@@ -27,7 +27,6 @@ const AdminProductCard = ({ product, onEdit, onDelete }) => {
       return;
     }
   
-    // Usamos el callback onEdit para editar el producto
     if (onEdit) {
       onEdit(GS3_PK);
     }
