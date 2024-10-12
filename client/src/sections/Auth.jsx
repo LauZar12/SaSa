@@ -218,13 +218,26 @@ export default function Auth() {
       });
 
       try {
-        // Verifying user email and password with your API
+        
         const response = await axios.post('http://localhost:5000/auth/login', { Email: email, Password: password });
 
         if (response.data) {
           console.log("Login Successful");
-          Cookies.set('user', JSON.stringify(response.data), { expires: 1 }); // Cookie expires in 1 day
-          navigate('/businesses');
+
+          const userInfo = {
+            Role: response.data.Role,
+            GS1_PK: response.data.GS1_PK
+          }
+          Cookies.set('user', JSON.stringify(userInfo), { expires: 1 }); // Cookie expires in 1 day
+
+          if (userInfo.Role == "admin"){
+            const encodedGS1_PK = encodeURIComponent(userInfo.GS1_PK);
+            navigate(`/admin/businesses/${encodedGS1_PK}`);
+          } else if (userInfo.Role == "client"){
+            navigate('/businesses');
+          }
+
+          
         } else {
           setError({
             emailError: true,

@@ -7,7 +7,7 @@ export const getAllProductsFromBusinessV2 = async (req, res) => {
         console.log(businessId);
         const result = await SasaModel.query("PK").eq(businessId)
           .filter('GS3_PK').beginsWith('product#')
-          .attributes(['Product_Name', 'Product_Description', 'Price', 'Discount', 'ExpirationDate', 'Product_Quantity', 'Available_Quantity'])
+          .attributes(['GS3_PK', 'Product_Name', 'Product_Description', 'Price', 'Discount', 'ExpirationDate', 'Product_Quantity', 'Available_Quantity'])
           .exec();
     
         console.log(result);
@@ -26,7 +26,7 @@ export const getAllProductsFromBusinessV2 = async (req, res) => {
         console.log(businessId);
         const result = await SasaModel.query("PK").eq(businessId)
           .filter('GS3_PK').beginsWith('product#')
-          .attributes(['Product_Name', 'Product_Description', 'Price', 'Discount', 'ExpirationDate', 'Product_Quantity', 'Available_Quantity'])
+          .attributes(['GS3_PK', 'Product_Name', 'Product_Description', 'Price', 'Discount', 'ExpirationDate', 'Product_Quantity', 'Available_Quantity'])
           .exec();
     
         console.log(result);
@@ -45,7 +45,7 @@ export const getAllProductsFromBusinessV2 = async (req, res) => {
       const businessId = req.params.businessId;  
       const productId = req.params.productId; 
       const result = await SasaModel.query("PK").eq(businessId)
-      .filter('GS3_PK').eq(productId)
+      .where('GS3_PK').eq(productId)
       .attributes(['GS3_PK','Product_Name', 'Product_Description', 'ExpirationDate', 'Price', 'Discount'])
       .exec();
       res.status(200).json(result);
@@ -101,7 +101,7 @@ export const getAllProductsFromBusinessV2 = async (req, res) => {
       const productId = req.params.productId;    
       console.log(businessId, productId);
   
-      const { Product_Name, Product_Description, ExpirationDate, Price, Discount } = req.body;
+      const { GS3_PK, Product_Name, Product_Description, ExpirationDate, Price, Discount } = req.body;
   
       if (!Product_Name && !Price && !Discount) {
         return res.status(400).json({ message: 'No fields to update' });
@@ -109,6 +109,7 @@ export const getAllProductsFromBusinessV2 = async (req, res) => {
   
 
       const updateData = {};
+      if (GS3_PK) updateData.GS3_PK = GS3_PK;
       if (Product_Name) updateData.Product_Name = Product_Name;
       if (Product_Description) updateData.Product_Description = Product_Description;
       if (ExpirationDate) updateData.ExpirationDate = ExpirationDate;
