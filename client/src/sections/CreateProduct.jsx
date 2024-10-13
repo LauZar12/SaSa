@@ -5,7 +5,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-const EditProduct = ({ open = false, handleClose, productId }) => {
+const CreateProduct = ({ open = false, handleClose }) => {
   const { businessId } = useParams();
   const [product, setProduct] = useState({
     Product_Name: '',
@@ -14,25 +14,6 @@ const EditProduct = ({ open = false, handleClose, productId }) => {
     Price: '',
     Discount: '',
   });
-
-  useEffect(() => {
-    if (open && productId) {
-      fetchProductDetails(productId);
-    }
-  }, [productId, open]);
-
-  const fetchProductDetails = async (productId) => {
-    try {
-      const encodedProductId = encodeURIComponent(productId);
-      const encodedBusinessId = encodeURIComponent(businessId);
-      
-      const response = await axios.get(`http://localhost:5000/admin/businesses/${encodedBusinessId}/products/${encodedProductId}`);
-      
-      setProduct(response.data);
-    } catch (error) {
-      console.error('Error fetching product details:', error);
-    }
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,16 +26,17 @@ const EditProduct = ({ open = false, handleClose, productId }) => {
 
   const saveChanges = async () => {
     try {
-      const encodedProductId = encodeURIComponent(productId);
+
       const encodedBusinessId = encodeURIComponent(businessId);
 
-      await axios.put(`http://localhost:5000/admin/businesses/${encodedBusinessId}/products/${encodedProductId}/edit-product`, product);
-      
-      toast.success('El producto ha sido editado con éxito!');
+      const response = await axios.post(`http://localhost:5000/admin/businesses/${encodedBusinessId}/products/create-product`, product);
+      setProduct(response.data);
+      console.log("Producto creado con exito:", response.data)  
+      toast.success('El producto ha sido creado con éxito!');
       handleClose();
     } catch (error) {
       console.error('Error editing product:', error);
-      toast.error('Tuvimos problemas para editar el producto');
+      toast.error('Tuvimos problemas para crear el producto');
     }
   };
 
@@ -73,7 +55,7 @@ const EditProduct = ({ open = false, handleClose, productId }) => {
         }}
       >
         <Typography variant="h6" component="h2">
-          Editar Producto
+          Crear Producto
         </Typography>
 
         {product ? (
@@ -136,11 +118,11 @@ const EditProduct = ({ open = false, handleClose, productId }) => {
             </Button>
           </form>
         ) : (
-          <Typography>Cargando información del producto...</Typography>
+          <Typography>Cargando formulario para crear producto...</Typography>
         )}
       </Box>
     </Modal>
   );
 };
 
-export default EditProduct;
+export default CreateProduct;

@@ -17,8 +17,6 @@ const AdminProductCard = ({ product, onEdit, onDelete }) => {
     Discount = 0
   } = product || {};
 
-  const { businessId } = useParams(); // extrae businessId de la URL
-  const navigate = useNavigate();
 
   const handleProductClicked = () => {
     console.log(product);
