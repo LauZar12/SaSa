@@ -9,10 +9,13 @@ import axios from 'axios';
 import BusinessCardV2 from '../components/BusinessCardV2';
 import Cookies from 'js-cookie'; 
 import SaveIcon from '@mui/icons-material/Save';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
 import Logo2 from '../assets/images/Logo Sasa-2.png';
 import AdminProductCard from '../components/AdminProductCard';
 import EditProduct from './EditProduct'; 
 import CreateProduct from './CreateProduct';
+import EditBusiness from './EditBusiness';
 import toast from 'react-hot-toast';
 
 const drawerWidth = 240;
@@ -23,6 +26,7 @@ export default function AdminDashboard() {
   const [content, setContent] = useState(null);
   const [editModalOpen, setEditModalOpen] = useState(false); 
   const [createModalOpen, setCreateModalOpen] = useState(false);
+  const [editBusinessModalOpen, setEditBusinessModalOpen] = useState(false);
   const [currentProductId, setCurrentProductId] = useState(null); 
 
   const handleDrawerToggle = () => {
@@ -70,6 +74,10 @@ export default function AdminDashboard() {
     );
   };
 
+  const handleEditBusiness = () => {
+    setEditBusinessModalOpen(true);
+  }
+
   const handleEditModalClose = () => {
     setEditModalOpen(false); 
     fetchData();
@@ -93,6 +101,12 @@ export default function AdminDashboard() {
       toast.error("Ups, tuvimos problemas para eliminar el producto.")
     }
   };
+
+  const handleEditBusinessModalClose = () => {
+    setEditBusinessModalOpen(false);
+    fetchData();
+  }
+
 
   const drawer = (
     <div>
@@ -120,11 +134,22 @@ export default function AdminDashboard() {
             <Typography variant="h4" gutterBottom>
               Información del Negocio
             </Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              position="absolute"
+              startIcon={<EditIcon />}
+              onClick={handleEditBusiness}
+              sx={{ mt: 2, mb: 5 }}
+            >
+              Editar Negocio
+            </Button>
             {content && content.length > 0 ? (
               <BusinessCardV2 business={content[0]} />
             ) : (
               'Cargando información del negocio...'
             )}
+
           </Box>
         );
       case 'Productos':
@@ -136,12 +161,13 @@ export default function AdminDashboard() {
             <Button
               variant="contained"
               color="primary"
-              startIcon={<SaveIcon />}
+              startIcon={<AddIcon />}
               onClick={handleCreateProduct}
-              sx={{ mt: 2 }}
+              sx={{ mt: 2, mb: 5 }}
             >
               Crear Producto
             </Button>
+            <br />
             <Box display="grid" gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))" gap={2}>
               {content && content.map((product) => (
                 <AdminProductCard
@@ -262,6 +288,13 @@ export default function AdminDashboard() {
           <CreateProduct
             open={createModalOpen}
             handleClose={handleCreateModalClose} 
+          />
+        )}
+
+        {editBusinessModalOpen && (
+          <EditBusiness
+            open={editBusinessModalOpen}
+            handleClose={handleEditBusinessModalClose} 
           />
         )}
       </Box>

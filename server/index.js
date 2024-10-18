@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 import ddb from './ddbClient.js';
 import dynamoose from 'dynamoose'
@@ -19,8 +20,12 @@ const app = express();
 
 // Use CORS middleware
 app.use(cors({
-  origin: 'http://localhost:5173', // Allow requests from this origin
+  origin: 'http://localhost:5173',
+  credentials: true,
 }));
+
+app.use(cookieParser());
+app.use(express.json());
 
 app.get('/all', getAllStuff);
 app.get('/businesses', businessRoutes);
@@ -30,11 +35,9 @@ app.get('/businesses/ola', businessRoutes);
 app.get('/admin/businesses/:businessId/products', productRoutes); // para ver los productos del negocio
 app.get("/admin/businesses/:businessId", businessRoutes)
 app.get('/users', userRoutes);
-
-app.use(express.json());
-
 app.post('/auth/register', userRoutes);
 app.post('/auth/login', userRoutes);
+app.put('/admin/businesses/:businessId/edit-info', businessRoutes)
 app.post('/admin/businesses/:businessId/products/create-product', productRoutes)
 app.get('/admin/businesses/:businessId/products/:productId', productRoutes);
 app.put('/admin/businesses/:businessId/products/:productId/edit-product', productRoutes);

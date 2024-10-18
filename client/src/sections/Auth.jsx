@@ -226,7 +226,8 @@ export default function Auth() {
 
           const userInfo = {
             Role: response.data.Role,
-            GS1_PK: response.data.GS1_PK
+            GS1_PK: response.data.GS1_PK,
+            PK: response.data.PK
           }
           Cookies.set('user', JSON.stringify(userInfo), { expires: 1 }); // Cookie expires in 1 day
 

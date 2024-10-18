@@ -38,7 +38,7 @@ export const getAllProductsFromBusinessV2 = async (req, res) => {
   
   }
 
-// falta agregar editBusinessInfo de admin
+
 
   export const getProductInfo = async (req, res) => {
     try{
@@ -104,7 +104,7 @@ export const getAllProductsFromBusinessV2 = async (req, res) => {
       const { Product_Name, Product_Description, ExpirationDate, Price, Discount } = req.body;
   
       if (!Product_Name && !Price && !Discount) {
-        return res.status(400).json({ message: 'No fields to update' });
+        return res.status(400).json({ message: 'No hay campos para actualizar' });
       }
   
 
@@ -138,10 +138,8 @@ export const getAllProductsFromBusinessV2 = async (req, res) => {
         return res.status(400).json({ message: 'Missing required parameters' });
       }
   
-      // el SK es la combinación del businessId y el productId
       const SK = `${businessId}${productId}`;
       
-  
       const key = {
         PK: businessId, 
         SK: SK          
