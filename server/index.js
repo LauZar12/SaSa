@@ -48,6 +48,8 @@ app.delete('/admin/businesses/:businessId/products/:productId/delete-product', p
 
 app.post('/admin/businesses/:businessId/surprise-boxes/create-surprise-box', surpriseBoxRoutes);
 app.get('/admin/businesses/:businessId/surprise-boxes', surpriseBoxRoutes);
+app.put('/admin/businesses/:businessId/surprise-boxes/:surpboxId/edit-surprise-box', surpriseBoxRoutes);
+app.delete('/admin/businesses/:businessId/surprise-boxes/:surpboxId/delete-surprise-box', surpriseBoxRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
