@@ -8,18 +8,20 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 import { useNavigate } from "react-router-dom";
 
-export default function BottomNavBar() {
-  const [value, setValue] = React.useState(0);
-
+export default function BottomNavBar({ value, onChange }) {
   const navigate = useNavigate();
+
   const handleNavigation = () => {
     navigate('/businesses');
+    if (onChange) onChange(0);
   };
   const handleNavigationMap = () => {
     navigate('/map');
+    if (onChange) onChange(1);
   };
   const handleNavigationProfile = () => {
     navigate('/profile');
+    if (onChange) onChange(2);
   };
 
   return (
@@ -28,20 +30,20 @@ export default function BottomNavBar() {
         showLabels
         value={value}
         onChange={(event, newValue) => {
-          setValue(newValue);
+          if (onChange) onChange(newValue);
         }}
-        sx={{ bgcolor: '#4C956C'}}
+        sx={{ bgcolor: '#4C956C' }}
       >
         <BottomNavigationAction
           label="Restaurantes"
           icon={<FastfoodIcon />}
           onClick={handleNavigation}
           sx={{
-            color: value === 0 ? 'white' : 'rgba(255, 255, 255, 0.6)', // Selected white, unselected slightly transparent
+            color: value === 0 ? 'white' : 'rgba(255, 255, 255, 0.6)',
             '&.Mui-selected': {
-              color: 'white', // Selected label color
-              backgroundColor: 'rgba(255, 255, 255, 0.2)', // Gray transparent background
-              borderRadius: '0px', // Optional, for a rounded background effect
+              color: 'white',
+              backgroundColor: 'rgba(255, 255, 255, 0.2)',
+              borderRadius: '0px',
             },
           }}
         />
@@ -53,20 +55,21 @@ export default function BottomNavBar() {
             color: value === 1 ? 'white' : 'rgba(255, 255, 255, 0.6)',
             '&.Mui-selected': {
               color: 'white',
-              backgroundColor: 'rgba(255, 255, 255, 0.2)', // Gray transparent background
-              borderRadius: '0px', // Optional, for a rounded background effect
+              backgroundColor: 'rgba(255, 255, 255, 0.2)',
+              borderRadius: '0px',
             },
           }}
         />
         <BottomNavigationAction
           label="Perfil"
           icon={<AccountBoxIcon />}
+          onClick={handleNavigationProfile}
           sx={{
             color: value === 2 ? 'white' : 'rgba(255, 255, 255, 0.6)',
             '&.Mui-selected': {
               color: 'white',
-              backgroundColor: 'rgba(255, 255, 255, 0.2)', // Gray transparent background
-              borderRadius: '0px', // Optional, for a rounded background effect
+              backgroundColor: 'rgba(255, 255, 255, 0.2)',
+              borderRadius: '0px',
             },
           }}
         />

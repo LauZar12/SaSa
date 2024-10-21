@@ -5,6 +5,7 @@ import Home from "./sections/Home";
 import Businesses from "./sections/Businesses";
 import AdminDashboard from "./sections/AdminDashboard";
 import Business from "./sections/Business";
+import Profile from "./sections/Profile";
 import EditProduct from "./sections/EditProduct";
 import MapV2 from "./sections/MapV2";
 import BottomNavBar from "./components/BottomNavBar";
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/businesses" element={<Businesses />} />
+        <Route path="/profile" element={<Profile />} />
         <Route
           path="/businesses/:businessId"
           element={<Business />} 
@@ -39,7 +41,7 @@ export default function App() {
           element={
             <>
               <MapV2 />
-              <BottomNavBar />
+              <BottomNavBar value={1} />
             </>  
           } 
         />
