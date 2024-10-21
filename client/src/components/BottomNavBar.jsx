@@ -15,6 +15,12 @@ export default function BottomNavBar() {
   const handleNavigation = () => {
     navigate('/businesses');
   };
+  const handleNavigationMap = () => {
+    navigate('/map');
+  };
+  const handleNavigationProfile = () => {
+    navigate('/profile');
+  };
 
   return (
     <Box sx={{ bgcolor: '#4C956C', position: 'fixed', bottom: 0, left: 0, right: 0 }}>
@@ -42,6 +48,7 @@ export default function BottomNavBar() {
         <BottomNavigationAction
           label="Mapa"
           icon={<MapOutlinedIcon />}
+          onClick={handleNavigationMap}
           sx={{
             color: value === 1 ? 'white' : 'rgba(255, 255, 255, 0.6)',
             '&.Mui-selected': {

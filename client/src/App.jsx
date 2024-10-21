@@ -1,15 +1,22 @@
 import { Route, Routes } from "react-router-dom";
+
 import Auth from "./sections/Auth";
 import Home from "./sections/Home";
 import Businesses from "./sections/Businesses";
-import AdminDashboard from "./sections/AdminDashboard"; // Importa tu componente del Admin Dashboard
+import AdminDashboard from "./sections/AdminDashboard";
 import Business from "./sections/Business";
 import EditProduct from "./sections/EditProduct";
+import MapV2 from "./sections/MapV2";
+import BottomNavBar from "./components/BottomNavBar";
+
 import toast, { Toaster } from 'react-hot-toast';
 
+
 export default function App() {
+  
   return (
     <>
+
       <Toaster />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -17,7 +24,7 @@ export default function App() {
         <Route path="/businesses" element={<Businesses />} />
         <Route
           path="/businesses/:businessId"
-          element={<Business />} // No pasar el businessId como prop
+          element={<Business />} 
         />
         <Route 
           path="/admin/businesses/:businessId" 
@@ -26,6 +33,15 @@ export default function App() {
         <Route 
           path="/admin/businesses/:businessId/products/:productId/edit-product" 
           element={<EditProduct />} 
+        />
+        <Route 
+          path="/map" 
+          element={
+            <>
+              <MapV2 />
+              <BottomNavBar />
+            </>  
+          } 
         />
       </Routes>
     </>
