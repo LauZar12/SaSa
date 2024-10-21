@@ -7,8 +7,10 @@ import AdminDashboard from "./sections/AdminDashboard";
 import Business from "./sections/Business";
 import EditProduct from "./sections/EditProduct";
 import MapV2 from "./sections/MapV2";
+import BottomNavBar from "./components/BottomNavBar";
+
 import toast, { Toaster } from 'react-hot-toast';
-import {APIProvider, Map} from '@vis.gl/react-google-maps';
+
 
 export default function App() {
   
@@ -36,16 +38,8 @@ export default function App() {
           path="/map" 
           element={
             <>
-              <APIProvider apiKey={'AIzaSyBbOxklM1Vcm_wT6wzSnhKJa4LvR1jvYnk'}>
-                <Map
-                style={{width: '100vw', height: '100vh'}}
-                defaultCenter={{lat: 22.54992, lng: 0}}
-                defaultZoom={3}
-                gestureHandling={'greedy'}
-                disableDefaultUI={true}
-                />
-              </APIProvider>
               <MapV2 />
+              <BottomNavBar />
             </>  
           } 
         />
