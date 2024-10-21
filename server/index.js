@@ -30,6 +30,8 @@ app.use(express.json());
 app.get('/all', getAllStuff);
 app.get('/businesses', businessRoutes);
 
+app.get('/profile/:userId', userRoutes);
+
 app.get('/businesses/:businessId', productRoutes);
 app.get('/businesses/ola', businessRoutes);
 app.get('/admin/businesses/:businessId/products', productRoutes); // para ver los productos del negocio

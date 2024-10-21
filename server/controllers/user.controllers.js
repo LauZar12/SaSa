@@ -1,6 +1,31 @@
 import { v4 as uuidv4 } from 'uuid';
 import SasaModel from "../models/singleTableModel.js";
 
+// Get actual user profile from its userId
+export const getUserProfile = async (req, res) => {
+  const userId = req.params.userId;
+  
+  try {
+    // Query the DynamoDB table using the PK to retrieve the user profile
+    const result = await SasaModel.query("PK")
+      .eq(`${userId}`)
+      .attributes(["User_Name", "Email", "Password", "Role", "Business_Name"])
+      .exec();
+    
+    if (result.length === 0) {
+      // No user found with the given userId
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Return the user's profile data
+    res.status(200).json(result[0]);
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    res.status(500).json({ message: 'Error fetching user profile' });
+  }
+};
+
+
 export const getAllUsers = async (req, res) => {
   try {
     const result = await SasaModel.scan().filter("PK").beginsWith("user#").filter("GS1_PK").beginsWith("business#").attributes(["User_Name", "Email", "Password", "Role", "Business_Name"]).exec();

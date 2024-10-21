@@ -5,6 +5,7 @@ import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import Cookies from 'js-cookie';
 
 import { useNavigate } from "react-router-dom";
 
@@ -20,7 +21,10 @@ export default function BottomNavBar({ value, onChange }) {
     if (onChange) onChange(1);
   };
   const handleNavigationProfile = () => {
-    navigate('/profile');
+    const userInfo = Cookies.get('user') ? JSON.parse(Cookies.get('user')) : null;
+    console.log('userInfo:', userInfo);
+    const encodedGS1_PK = encodeURIComponent(userInfo.PK);
+    navigate(`/profile/${encodedGS1_PK}`);
     if (onChange) onChange(2);
   };
 

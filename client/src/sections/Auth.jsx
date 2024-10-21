@@ -52,8 +52,9 @@ export default function Auth() {
   ];
 
   const handleBusinessTypeChange = (event) => {
-    setBusinessType(event.target.value);
+    setBusinessType(Number(event.target.value)); // Convert to number
   };
+
 
   const [isLogin, setIsLogin] = useState(true); // Estado para alternar entre Login y Registro
 
@@ -146,8 +147,8 @@ export default function Auth() {
   };
 
   const handleRegister = async () => {
-    if (businessType == '') {
-      setBusinessType(0);
+    if (businessType === 0) {
+      setBusinessType(0); // Ensure it stays as 0 if no selection is made
     }
 
     const clientData = {
@@ -169,6 +170,7 @@ export default function Auth() {
       Business_Localization: isBusiness ? 'None' : undefined
     };
 
+    // Ensure businessName exists before setting isBusiness to true
     if (businessName) {
       setIsBusiness(true);
 
@@ -202,7 +204,11 @@ export default function Auth() {
         console.error('Error registering user:', error.response ? error.response.data : error.message);
       }
     }
+
+    console.log('Registering with businessType:', businessType);
+
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -218,7 +224,7 @@ export default function Auth() {
       });
 
       try {
-        
+
         const response = await axios.post('http://localhost:5000/auth/login', { Email: email, Password: password });
 
         if (response.data) {
@@ -231,14 +237,14 @@ export default function Auth() {
           }
           Cookies.set('user', JSON.stringify(userInfo), { expires: 1 }); // Cookie expires in 1 day
 
-          if (userInfo.Role == "admin"){
+          if (userInfo.Role == "admin") {
             const encodedGS1_PK = encodeURIComponent(userInfo.GS1_PK);
             navigate(`/admin/businesses/${encodedGS1_PK}`);
-          } else if (userInfo.Role == "client"){
+          } else if (userInfo.Role == "client") {
             navigate('/businesses');
           }
 
-          
+
         } else {
           setError({
             emailError: true,
@@ -612,6 +618,16 @@ export default function Auth() {
                         )}
                         {activeStep === 2 && (
                           <div>
+                            <Typography
+                              sx={{
+                                color: 'red', // Set the text color to red
+                                textAlign: 'center', // Center the text
+                                textDecoration: 'underline', // Underline the text
+                                mb: 2 // Optional: Add some bottom margin
+                              }}
+                            >
+                              DEJAR VACIO SI NO TE ESTÁS REGISTRANDO COMO UN NEGOCIO
+                            </Typography>
                             <TextFieldIndex
                               id="businessName"
                               label="Nombre del Negocio"
@@ -625,7 +641,7 @@ export default function Auth() {
                               inputProps={{ style: { fontSize: 14 } }} // font size of input text
                               InputLabelProps={{ style: { fontSize: 15 } }} // font size of input label
                               fullWidth
-                              helperText="Dejar vacio si no te estas registrando como un negocio"
+                              //helperText="Dejar vacio si no te estas registrando como un negocio"
                               value={businessName}
                               onChange={(e) => setBusinessName(e.target.value)}
                             />

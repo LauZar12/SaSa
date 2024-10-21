@@ -8,7 +8,7 @@ dotenv.config();
 
 const ddb = new dynamoose.aws.ddb.DynamoDB({
     "credentials": {
-        "accessKeyId": process.env.AWS_ACCESS_KEY_ID,
+        "accessKeyId": process.env.AWS_ACCESS_KEY,
         "secretAccessKey": process.env.AWS_SECRET_ACCESS_KEY
     },
     "region": process.env.AWS_DEFAULT_REGION
