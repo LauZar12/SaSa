@@ -78,3 +78,25 @@ export const editSurpriseBox = async (req, res) => {
         res.status(500).json({ message: 'Failed surprise box update' });
     }
 }
+
+
+export const deleteSurpriseBox = async (req, res) => {
+    try{
+        const businessId = req.params.businessId;
+        const surpboxId = req.params.surpboxId;
+
+        if(!businessId || !surpboxId) {
+            return res.status(400).json({ message: 'Missing required parameters for deletion' })
+        }
+
+        const PK = surpboxId
+        const SK = `${surpboxId}${businessId}`
+        
+        await SasaModel.delete({ PK, SK });
+
+        res.status(200).json({ message: "Surpise Box deleted successfully!!" })
+    } catch (error) {
+        console.error("Error deleting surprise box", error);
+        res.status(500).json({ message: "Failed to delete the surprise box" });
+    }
+}
