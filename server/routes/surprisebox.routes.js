@@ -4,9 +4,9 @@ import { createSurpriseBox, deleteSurpriseBox, editSurpriseBox, getAllSurpriseBo
 
 const router = Router();
 
-router.post('/admin/businesses/:businessId/surprise-boxes/create-surprise-box', createSurpriseBox)
-router.get('/admin/businesses/:businessId/surprise-boxes', getAllSurpriseBoxesFromBusiness)
-router.put('/admin/businesses/:businessId/surprise-boxes/:surpboxId/edit-surprise-box', editSurpriseBox)
-router.delete('/admin/businesses/:businessId/surprise-boxes/:surpboxId/delete-surprise-box', deleteSurpriseBox)
+router.post('/:businessId/surprise-boxes/create-surprise-box', createSurpriseBox)
+router.get('/:businessId/surprise-boxes', getAllSurpriseBoxesFromBusiness)
+router.put('/:businessId/surprise-boxes/:surpboxId/edit-surprise-box', editSurpriseBox)
+router.delete('/:businessId/surprise-boxes/:surpboxId/delete-surprise-box', deleteSurpriseBox)
 
 export default router;

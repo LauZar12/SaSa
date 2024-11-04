@@ -6,12 +6,12 @@ import { getAllProductsFromBusinessV2, getBusinessProducts, createProduct, editP
 const router = Router();
 
 
-router.get('/businesses/:businessId', getAllProductsFromBusinessV2);
-router.get('/admin/businesses/:businessId/products', getBusinessProducts)
-router.post('/admin/businesses/:businessId/products/create-product', createProduct) //create product
-router.put('/admin/businesses/:businessId/products/:productId/edit-product', editProduct); // update product
-router.get('/admin/businesses/:businessId/products/:productId', getProductInfo); // get a single product info
-router.delete('/admin/businesses/:businessId/products/:productId/delete-product', deleteProduct); // delete product from db
+router.get('/:businessId', getAllProductsFromBusinessV2);
+router.get('/:businessId/products', getBusinessProducts)
+router.post('/:businessId/products/create-product', createProduct) //create product
+router.put('/:businessId/products/:productId/edit-product', editProduct); // update product
+router.get('/:businessId/products/:productId', getProductInfo); // get a single product info
+router.delete('/:businessId/products/:productId/delete-product', deleteProduct); // delete product from db
 
 
 export default router;

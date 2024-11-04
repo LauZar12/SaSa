@@ -30,6 +30,7 @@ app.use(express.json());
 
 app.get('/all', getAllStuff);
 
+app.use('/admin/businesses', businessRoutes); 
 app.use('/businesses', businessRoutes);               // rutas de negocios
 app.use('/profile', userRoutes);                      // rutas de perfil de usuario
 app.use('/admin/businesses', productRoutes);          // rutas de productos del negocio bajo /admin/businesses

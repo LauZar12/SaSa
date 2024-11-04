@@ -41,19 +41,43 @@ const Profile = () => {
   return (
     <div style={{ backgroundColor: '#F5F5F5', minHeight: '70vh' }}>
       {/* Sección superior con la información del usuario */}
-      <Box
+      <AppBar
+        position="fixed"
         sx={{
-          bgcolor: '#4C956C',
-          color: 'white',
-          py: 4,
-          textAlign: 'center',
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          ml: { sm: `${drawerWidth}px` },
+          backgroundColor: '#4C956C',
         }}
       >
-        <Typography variant="h5" gutterBottom>
-          PERFIL
-        </Typography>
-        <Typography variant="h6">{user.User_Name}</Typography>
-      </Box>
+        <Box
+          sx={{
+            bgcolor: '#4C956C',
+            height: '80px',
+            width: '100%', 
+            top: 0, 
+            left: 0,
+            p: 0, 
+            overflow: 'hidden',
+            position: 'fixed', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            zIndex: 1000 
+          }}
+        >
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            display="left"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { sm: 'none' } }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <img src={Logo2} alt="Logo" style={{ height: '50px' }} /> 
+        </Box>
+      </AppBar>
 
       {/* Sección de detalles del usuario */}
       <Box sx={{ padding: '20px', textAlign: 'center' }}>
