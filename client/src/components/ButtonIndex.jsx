@@ -20,7 +20,7 @@ export default function ButtonIndex({ children, width, marginTop, type = 'button
                     backgroundColor: '#3E7958', // Slightly darker green on hover (optional)
                 },
                 fontWeight: 'bold',           // Bold font weight
-                fontFamily: fontFamily || 'Roboto',
+                fontFamily: fontFamily || 'Epilogue',
                 textTransform: 'none',        // Prevents text from being transformed to uppercase
                 fontSize: fontSize || "16px",
                 justifyContent: justifyContent || 'center',

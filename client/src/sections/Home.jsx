@@ -316,7 +316,7 @@ export function NotHome() {
                 }}
             >
                 {/* Welcome Message */}
-                <Typography variant="h1" component="div" sx={{ mb: 2, color: '#4AD66D', fontWeight: 'bold', fontSize: { xs: '44px', sm: '62px', md: '80px', lg: '88px', xl: '96px' } }}>
+                <Typography variant="h1" component="div" sx={{ mb: 2, color: '#4AD66D', fontFamily:'Epilogue',fontWeight: 'bold', fontSize: { xs: '44px', sm: '62px', md: '80px', lg: '88px', xl: '96px' } }}>
                     Bienvenido a <span style={{ color: '#418441' }}>SaSa</span>
                 </Typography>
 
@@ -326,6 +326,7 @@ export function NotHome() {
                         mb: 1,
                         color: '#737373',
                         fontWeight: 'bold',
+                        fontFamily:'Epilogue',
                         fontSize: { xs: '14px', sm: '20px', md: '24px', lg: '24px', xl: '30px' },
                         lineHeight: 1.2,
                         display: 'flex',
@@ -343,7 +344,7 @@ export function NotHome() {
                 </Typography>
 
                 {/* Call to Action */}
-                <Typography variant="h6" sx={{ mt: 10, mb: 2, color: '#4C956C', fontWeight: 'bold', fontSize: { xs: '14px', sm: '20px', md: '24px', lg: '24px', xl: '30px' } }}>
+                <Typography variant="h6" sx={{ mt: 10, mb: 2, color: '#4C956C',fontFamily:'Epilogue', fontWeight: 'bold', fontSize: { xs: '14px', sm: '20px', md: '24px', lg: '24px', xl: '30px' } }}>
                     ¡Haz click para cambiar el mundo!
                 </Typography>
                 <ButtonIndex variant="contained" padding="10px 20px" fontSize="40px" borderRadius="15px" width="25%">
