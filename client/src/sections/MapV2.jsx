@@ -64,7 +64,7 @@ const MapV2 = () => {
     const fetchDataAndGeocode = async () => {
       try {
         // Paso 1: Realiza la consulta para obtener todos los negocios
-        const response = await axios.get('http://localhost:5000/businesses/business/get-info');
+        const response = await axios.get('http://localhost:5000/businesses/get-info');
         const businesses = response.data;
         console.log("Businesses: ",businesses);
         
