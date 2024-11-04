@@ -12,6 +12,7 @@ import productRoutes from './routes/product.routes.js';
 import userRoutes from './routes/user.routes.js';
 import surpriseBoxRoutes from './routes/surprisebox.routes.js';
 
+
 dynamoose.aws.ddb.set(ddb);
 
 dotenv.config();

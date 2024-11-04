@@ -12,7 +12,6 @@ import BottomNavBar from "./components/BottomNavBar";
 
 import toast, { Toaster } from 'react-hot-toast';
 
-
 export default function App() {
   
   return (

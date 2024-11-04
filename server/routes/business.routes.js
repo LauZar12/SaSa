@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { getAllBusinesses, ola, getBusinessInfo, editBusinessInfo } from '../controllers/business.controllers.js';
+import { getAllBusinesses, ola, getBusinessInfo, editBusinessInfo, getBusinessMapInfo } from '../controllers/business.controllers.js';
 
 const router = Router();
 

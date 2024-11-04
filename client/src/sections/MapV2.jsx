@@ -1,58 +1,138 @@
-import React from 'react';
-import {APIProvider, Map, Pin, AdvancedMarker} from '@vis.gl/react-google-maps';
+import React, {useState, useCallback, useEffect} from 'react'; 
+import axios from 'axios';
 
-const locations = [
-    {key: 'Frisby Eafit', location: { lat: 6.199387481828809, lng: -75.57807649683409  }},
-    {key: 'McDonalds Laureles', location: { lat: 6.244928475806693, lng: -75.59537447538722 }},
-    {key: 'SportsTown VivaEnvigado', location: { lat: 6.1781810867482605, lng: -75.59119123892503 }},
-
-];
+import {
+  APIProvider, 
+  Map, 
+  Pin, 
+  AdvancedMarker, 
+  useMap,
+  InfoWindow} from '@vis.gl/react-google-maps';
   
 
 const PoiMarkers = (props) => {
+  const map = useMap();
+  const [selectedPoi, setSelectedPoi] = useState(null);
+  // const infoWindow = InfoWindow();
+
+  const handleClick = useCallback((poi) => {
+    if (!map) return;
+    setSelectedPoi(poi);
+    map.panTo(poi.location);
+
+  }, [map]);
+
+  const handleClose = () => {
+    setSelectedPoi(null);
+  };
+
   return (
     <>
       {props.pois.map((poi) => (
         <AdvancedMarker
           key={poi.key}
           position={poi.location}
-          // clickable={true}
-          // onClick={handleClick}
+          clickable={true}
+          onClick={() => handleClick(poi)}
+          title={poi.key}
         >
-          <Pin background={'#FBBC04'} glyphColor={'#000'} borderColor={'#000'} />
+          <Pin background={'#4C956C'} glyphColor={'White'} borderColor={'#283618'}/>
         </AdvancedMarker>
       ))}
+
+      {selectedPoi && (
+        <InfoWindow
+          position={selectedPoi.location}
+          onCloseClick={handleClose}
+        >
+          <div>
+            <h3>{selectedPoi.key}</h3>
+            <p>Horario: {selectedPoi.hours}</p>
+          </div>
+        </InfoWindow>
+      )}
+
     </>
   );
 };
 
+const MapV2 = () => {
+  const [locations, setLocations] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-// const handleClick = useCallback((ev) => {
-//   if (!map) return;
-//   if (!ev.latLng) return;
-//   console.log('marker clicked:', ev.latLng.toString());
-//   map.panTo(ev.latLng);
-// }, [map]);
+  useEffect(() => {
+    const fetchDataAndGeocode = async () => {
+      try {
+        // Paso 1: Realiza la consulta para obtener todos los negocios
+        const response = await axios.get('http://localhost:5000/businesses/business/get-info');
+        const businesses = response.data;
+        console.log("Businesses: ",businesses);
+        
+        // Paso 2: Filtra y geolocaliza cada dirección válida
+        const geocodedLocations = await Promise.all(
+          businesses.map(async (business) => {
+            if (business.Business_Address && business.Business_Address !== "None") {
+              const geocodeResponse = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+                params: {
+                  address: business.Business_Address,
+                  key: 'AIzaSyBbOxklM1Vcm_wT6wzSnhKJa4LvR1jvYnk', // Inserta aquí tu clave segura
+                },
+              });
+              const location = geocodeResponse.data.results[0]?.geometry.location;
+              if (location) {
+                return {
+                  key: business.Business_Name,
+                  location, // { lat, lng }
+                  hours: business.Business_Hours,
+                };
+              }
+            }
+            return null; // Ignora direcciones inválidas o sin datos
+          })
+        );
 
+        // Paso 3: Filtra ubicaciones válidas y actualiza el estado
+        setLocations(geocodedLocations.filter((loc) => loc !== null));
+        setLoading(false);
 
+        console.log("Locations:",locations);
 
-const MapV2 = () => (
- <APIProvider apiKey={'AIzaSyBbOxklM1Vcm_wT6wzSnhKJa4LvR1jvYnk'} onLoad={() => console.log('Maps API has loaded.')}>
-    <Map
-      defaultZoom={13}
-      defaultCenter={ { lat: 6.249316307398763, lng: -75.5606163100253 } }
-      mapId='274f8ffa0113d548'
-      style={{width: '100vw', height: '100vh'}}
-      gestureHandling={'greedy'}
-      disableDefaultUI={true}
-    >
-    <PoiMarkers pois={locations} />
-    </Map>
- </APIProvider>
-);
+      } catch (error) {
+        console.error('Error al obtener o geolocalizar los datos:', error);
+        setLocations([]); // Si hay error, establece un arreglo vacío
+        setLoading(false);
+      }
+    };
+
+    fetchDataAndGeocode();
+  }, []);
+
+  if (loading) return <div>Loading...</div>; // Opcional: mostrar un indicador de carga
+
+  return (
+    <APIProvider apiKey="AIzaSyBbOxklM1Vcm_wT6wzSnhKJa4LvR1jvYnk">
+      <Map
+        defaultZoom={13.5}
+        defaultCenter={{ lat: 6.249316, lng: -75.560616 }}
+        style={{ width: '100vw', height: '100vh' }}
+        gestureHandling="greedy"
+        disableDefaultUI={true}
+        mapId="274f8ffa0113d548"
+      >
+        <PoiMarkers pois={locations} /> {/* Pasa las ubicaciones geocodificadas */}
+      </Map>
+    </APIProvider>
+  );
+};
 
 export default MapV2;
+
+
+
 
 //     { address: "Las vegas con 7 sur, El Poblado, Medellín, Antioquia", lat: 6.199387481828809, lng: -75.57807649683409 },
 //     { address: "Calle 39B, Cq. 73B #N° - 67, Medellín, Antioquia", lat: 6.244928475806693, lng: -75.59537447538722 },
 //     { address: "Zona 1, Envigado, Antioquia", lat: 6.1781810867482605, lng: -75.59119123892503 }
+
+
+// <Pin background={'#FBBC04'} glyphColor={'#000'} borderColor={'#137333'} />
