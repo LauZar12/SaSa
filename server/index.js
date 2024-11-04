@@ -13,6 +13,7 @@ import productRoutes from './routes/product.routes.js';
 import userRoutes from './routes/user.routes.js';
 import surpriseBoxRoutes from './routes/surprisebox.routes.js'
 
+
 dynamoose.aws.ddb.set(ddb);
 
 dotenv.config();
@@ -35,13 +36,14 @@ app.get('/profile/:userId', userRoutes);
 app.get('/businesses/:businessId', productRoutes);
 app.get('/businesses/ola', businessRoutes);
 app.get('/admin/businesses/:businessId/products', productRoutes); // para ver los productos del negocio
-app.get("/admin/businesses/:businessId", businessRoutes)
+app.get("/admin/businesses/:businessId", businessRoutes);
+app.get('/businesses/business/get-info', businessRoutes);
 app.get('/users', userRoutes);
 app.post('/auth/register', userRoutes);
 app.post('/auth/login', userRoutes);
 
-app.put('/admin/businesses/:businessId/edit-info', businessRoutes)
-app.post('/admin/businesses/:businessId/products/create-product', productRoutes)
+app.put('/admin/businesses/:businessId/edit-info', businessRoutes);
+app.post('/admin/businesses/:businessId/products/create-product', productRoutes);
 app.get('/admin/businesses/:businessId/products/:productId', productRoutes);
 app.put('/admin/businesses/:businessId/products/:productId/edit-product', productRoutes);
 app.delete('/admin/businesses/:businessId/products/:productId/delete-product', productRoutes);
