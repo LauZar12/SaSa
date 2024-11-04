@@ -14,6 +14,7 @@ export const getAllBusinesses = async (req, res) =>{
 
 export const ola = async (req, res) => {
   const result = "haroooou";
+  console.log(result);
   res.status(200).json(result);
 }
 
