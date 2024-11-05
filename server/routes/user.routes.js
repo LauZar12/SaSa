@@ -4,9 +4,9 @@ import { getAllUsers, addUser, getUserForLogin, getUserProfile } from '../contro
 
 const router = Router();
 
-router.get("/users", getAllUsers)
-router.post("/auth/register", addUser)
-router.post('/auth/login', getUserForLogin);
-router.get('/profile/:userId', getUserProfile);
+router.get("/", getAllUsers)
+router.post("/register", addUser)
+router.post('/login', getUserForLogin);
+router.get('/:userId', getUserProfile);
 
 export default router;

@@ -4,7 +4,7 @@ import BusinessCard from '../components/BusinessCard';
 import { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid2';
 import { Box } from '@mui/material';
-import { useNavigate, useParams } from 'react-router-dom'; // useParams to get route params
+import { useNavigate, useParams, Link } from 'react-router-dom'; // useParams to get route params
 import axios from 'axios';
 import Logo2 from '../assets/images/Logo Sasa-2.png';
 import ProductCard from '../components/ProductCard';
@@ -62,7 +62,9 @@ export default function Business() {
         }}
       >
         {/* Logo inside the top bar */}
-        <img src={Logo2} alt="Logo" style={{ height: '50px' }} /> {/* Adjust the height as needed */}
+        <Link to = "/">
+          <img src={Logo2} alt="Logo" style={{ height: '50px' }} /> 
+        </Link>
       </Box>
 
       <Grid container spacing={2} justifyContent="center">

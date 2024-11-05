@@ -110,7 +110,6 @@ export const addUser = async (req, res) => {
 
       res.status(201).json({ message: 'User / Business added successfully', user: userResult, business: businessResult });
 
-      return;
     }
 
     // Save the user to DynamoDB using Dynamoose

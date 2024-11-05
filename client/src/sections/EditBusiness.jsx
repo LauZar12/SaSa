@@ -117,14 +117,7 @@ const EditBusiness = ({ open = false, handleClose }) => {
               value={business.Business_Hours}
               onChange={handleChange}
             />
-            <TextField
-              fullWidth
-              margin="normal"
-              label="Localización"
-              name="Business_Localization"
-              value={business.Business_Localization}
-              onChange={handleChange}
-            />
+            
 
             <Button
               variant="contained"

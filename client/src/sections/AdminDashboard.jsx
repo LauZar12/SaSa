@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import {
   AppBar, Box, CssBaseline, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography, Button
 } from '@mui/material';
 import {
   Menu as MenuIcon, Business as BusinessIcon, Inventory as InventoryIcon, CardGiftcard as CardGiftcardIcon,
+  AddBusiness,
 } from '@mui/icons-material';
 import axios from 'axios';
-import BusinessCardV2 from '../components/BusinessCardV2';
+import toast from 'react-hot-toast';
+
 import Cookies from 'js-cookie'; 
+
 import SaveIcon from '@mui/icons-material/Save';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
+
 import Logo2 from '../assets/images/Logo Sasa-2.png';
 import AdminProductCard from '../components/AdminProductCard';
+import BusinessCardV2 from '../components/BusinessCardV2';
 import EditProduct from './EditProduct'; 
 import CreateProduct from './CreateProduct';
 import EditBusiness from './EditBusiness';
-import toast from 'react-hot-toast';
 
 const drawerWidth = 240;
 
@@ -27,7 +32,7 @@ export default function AdminDashboard() {
   const [editModalOpen, setEditModalOpen] = useState(false); 
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [editBusinessModalOpen, setEditBusinessModalOpen] = useState(false);
-  const [currentProductId, setCurrentProductId] = useState(null); 
+  const [currentProductId, setCurrentProductId] = useState(null);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -107,7 +112,6 @@ export default function AdminDashboard() {
     fetchData();
   }
 
-
   const drawer = (
     <div>
       <Toolbar />
@@ -134,6 +138,7 @@ export default function AdminDashboard() {
             <Typography variant="h4" gutterBottom>
               Información del Negocio
             </Typography>
+
             <Button
               variant="contained"
               color="primary"
@@ -144,6 +149,7 @@ export default function AdminDashboard() {
             >
               Editar Negocio
             </Button>
+      
             {content && content.length > 0 ? (
               <BusinessCardV2 business={content[0]} />
             ) : (
@@ -233,7 +239,9 @@ export default function AdminDashboard() {
           >
             <MenuIcon />
           </IconButton>
-          <img src={Logo2} alt="Logo" style={{ height: '50px' }} /> 
+          <Link to = "/">
+            <img src={Logo2} alt="Logo" style={{ height: '50px' }} /> 
+          </Link>
         </Box>
       </AppBar>
 
@@ -297,7 +305,9 @@ export default function AdminDashboard() {
             handleClose={handleEditBusinessModalClose} 
           />
         )}
+
       </Box>
     </Box>
   );
 }
+

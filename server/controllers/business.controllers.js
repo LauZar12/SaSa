@@ -14,6 +14,7 @@ export const getAllBusinesses = async (req, res) =>{
 
 export const ola = async (req, res) => {
   const result = "haroooou";
+  console.log(result);
   res.status(200).json(result);
 }
 
@@ -69,4 +70,17 @@ export const editBusinessInfo = async (req, res) => {
     res.status(500).json({ message: 'No se pudo actualizar la info del negocio' });
   }
 };
+
+export const getBusinessMapInfo = async (req, res) => {
+  try {
+    const businessId = "business%231";
+    const result = await SasaModel.scan().filter("GS2_PK").beginsWith("user#").attributes(["Business_Name", "Business_Address", "Business_Hours", "PK"]).exec();
+    console.log(result);
+    res.status(200).json(result);
+
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: 'No se pudo obtener la información del negocio' });
+  }
+}
 

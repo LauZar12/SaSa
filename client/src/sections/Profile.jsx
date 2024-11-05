@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box,
+  AppBar,
+  IconButton,
   Typography,
   Button,
   Grid,
   Paper,
   Avatar,
 } from '@mui/material';
-import { useParams } from 'react-router-dom'; // Obtener userId desde los parámetros de la ruta
+import { useParams, Link  } from 'react-router-dom'; // Obtener userId desde los parámetros de la ruta
 import axios from 'axios';
+import Logo2 from '../assets/images/Logo Sasa-2.png';
 import BottomNavBar from '../components/BottomNavBar';
+
+const drawerWidth = 240;
 
 const Profile = () => {
   const { userId } = useParams(); // Obtener userId desde la ruta
@@ -41,22 +46,39 @@ const Profile = () => {
   return (
     <div style={{ backgroundColor: '#F5F5F5', minHeight: '70vh' }}>
       {/* Sección superior con la información del usuario */}
-      <Box
+      <AppBar
+        position="fixed"
         sx={{
-          bgcolor: '#4C956C',
-          color: 'white',
-          py: 4,
-          textAlign: 'center',
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          ml: { sm: `${drawerWidth}px` },
+          backgroundColor: '#4C956C',
         }}
       >
-        <Typography variant="h5" gutterBottom>
-          PERFIL
-        </Typography>
-        <Typography variant="h6">{user.User_Name}</Typography>
-      </Box>
+        <Box
+          sx={{
+            bgcolor: '#4C956C',
+            mb: 30,
+            height: '80px',
+            width: '100%', 
+            top: 0, 
+            left: 0,
+            p: 0, 
+            overflow: 'hidden',
+            position: 'fixed', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            zIndex: 1000 
+          }}
+        >
+          <Link to = "/">
+            <img src={Logo2} alt="Logo" style={{ height: '50px' }} /> 
+          </Link>
+        </Box>
+      </AppBar>
 
       {/* Sección de detalles del usuario */}
-      <Box sx={{ padding: '20px', textAlign: 'center' }}>
+      <Box sx={{ padding: '110px', textAlign: 'center' }}>
         <Avatar
           alt={user.User_Name}
           src={user.profileImage || 'https://via.placeholder.com/150'} // Imagen de marcador de posición
