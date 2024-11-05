@@ -11,6 +11,7 @@ import businessRoutes from './routes/business.routes.js';
 import productRoutes from './routes/product.routes.js';
 import userRoutes from './routes/user.routes.js';
 import surpriseBoxRoutes from './routes/surprisebox.routes.js';
+import uploadRoutes from './routes/upload.routes.js';
 
 
 dynamoose.aws.ddb.set(ddb);
@@ -24,12 +25,13 @@ app.use(cors({
   credentials: true,
 }));
 
+
 app.use(cookieParser());
 app.use(express.json());
 
 
 app.get('/all', getAllStuff);
-
+app.use('/upload', uploadRoutes);
 app.use('/admin/businesses', businessRoutes); 
 app.use('/businesses', businessRoutes);               // rutas de negocios
 app.use('/profile', userRoutes);                      // rutas de perfil de usuario
