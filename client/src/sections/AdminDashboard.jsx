@@ -67,7 +67,6 @@ export default function AdminDashboard() {
     } catch (error) {
       console.error('Error fetching data:', error);
 
-      // Limpia el estado de la selección
       if (selectedOption === 'Negocio') {
         setBusinessContent(null);
       } else if (selectedOption === 'Productos') {
@@ -161,6 +160,21 @@ export default function AdminDashboard() {
   const handleEditBusinessModalClose = () => {
     setEditBusinessModalOpen(false);
     fetchData();
+  }
+
+  const handleSurpriseBoxDeleted = async (surpriseBoxId) => {
+    try {
+      const encodedSurpBoxId = encodeURIComponent(surpriseBoxId); 
+      await axios.delete(`http://localhost:5000/admin/businesses/${businessId}/surprise-boxes/${encodedSurpBoxId}/delete-surprise-box`);
+      
+      setProductContent((prevSurpriseBoxes) => prevSurpriseBoxes.filter((surpriseBox) => surpriseBox.PK !== surpriseBoxId));
+      console.log(`Caja sorpresa ${surpriseBoxId} eliminada con éxito.`);
+      toast.success('Caja sorpresa eliminada correctamente!')
+      fetchData();
+    } catch (error) {
+      console.error('Error eliminando la caja sorpresa:', error);
+      toast.error("Ups, tuvimos problemas para eliminar la caja sorpresa.")
+    }
   }
 
   const drawer = (
@@ -260,7 +274,7 @@ export default function AdminDashboard() {
                   key={surpriseBox.PK}
                   surpriseBox={surpriseBox}
                   onEdit={handleEditSurpriseBox} 
-                  onDelete={handleProductDeleted}
+                  onDelete={handleSurpriseBoxDeleted}
                 />
               ))}
             </Box>
