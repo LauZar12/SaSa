@@ -7,14 +7,16 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Logo2 from '../assets/images/Logo Sasa-2.png';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import FilterDialog from '../components/Dialog'; 
+import FilterDialog from '../components/Dialog';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Cookies from 'js-cookie';
 
 export default function Businesses() {
   const navigate = useNavigate();
   const [businesses, setBusinesses] = useState([]);
-  const [openDialog, setOpenDialog] = useState(false);  
+  const [recBusinesses, setRecBusinesses] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({});
   const scrollRef = useRef(null);
   const cardWidth = 420; // Adjusted width for responsiveness
@@ -28,14 +30,39 @@ export default function Businesses() {
     }
   };
 
+  
+
   useEffect(() => {
+    fetchRecommendedBusinesses();
     fetchBusinesses();
   }, []);
 
+  useEffect(() => {
+    console.log('Recommended businesses updated:', recBusinesses);
+  }, [recBusinesses]);
+
   const handleBusinessClicked = (event) => {
     const encodedBusinessId = encodeURIComponent(event.PK);
+
+    let recommendations = Cookies.get('recommendations');
+    recommendations = recommendations ? JSON.parse(recommendations) : [];
+    if (!recommendations.includes(event.PK)) {
+      recommendations.push(event.PK);
+
+      if (recommendations.length > 8) {
+        recommendations.shift();
+      }
+
+      Cookies.set('recommendations', JSON.stringify(recommendations), { expires: 7 });
+    }
+
+    // Print all the current cookies
+    console.log('All current recommendations:', Cookies.get('recommendations'));
+
+    // Navigate to the business details page
     navigate('/businesses/' + encodedBusinessId);
   };
+
 
   const handleClickOpen = () => {
     setOpenDialog(true);
@@ -56,6 +83,25 @@ export default function Businesses() {
   const scrollRight = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollBy({ left: cardWidth, behavior: 'smooth' });
+    }
+  };
+
+  const fetchRecommendedBusinesses = async () => {
+    const recommendations = Cookies.get('recommendations');
+    if (recommendations) {
+      const businessIds = JSON.parse(recommendations);
+      const businessPromises = businessIds.map((id) => {
+        const encodedBusinessId = encodeURIComponent(id);
+        return axios.get(`http://localhost:5000/admin/businesses/${encodedBusinessId}`);
+      });
+
+      try {
+        const results = await Promise.all(businessPromises);
+        const fetchedBusinesses = results.map((res) => res.data);
+        setRecBusinesses(fetchedBusinesses);
+      } catch (error) {
+        console.error('Error fetching business info:', error);
+      }
     }
   };
 
@@ -102,21 +148,21 @@ export default function Businesses() {
                 },
               }}
             >
-              {Array.isArray(businesses) && businesses.length > 0 ? (
-                businesses.map((business, index) => (
-                  <Box key={index} sx={{ width: `${cardWidth}px`, mx: 1 }}> {/* Adjusted width for responsiveness */}
+              {Array.isArray(recBusinesses) && recBusinesses.length > 0 ? (
+                recBusinesses.map((business, index) => (
+                  <Box key={index} sx={{ width: `${cardWidth}px`, mx: 1 }}>
                     <BusinessCard
-                      image={business.Business_Logo_Url}
+                      image={business.Business_Logo_Url || 'default_logo.png'} // Use a default image if undefined
                       onClick={() => handleBusinessClicked(business)}
-                      title={business.Business_Name}
-                      location={`${business.Business_City}, ${business.Business_Address}`}
-                      rating={business.Business_Type}
-                      schedule={`Horarios: ${business.Business_Hours}`}
+                      title={business.Business_Name || 'No Name Available'} // Provide a fallback
+                      location={`${business.Business_City || 'Unknown City'}, ${business.Business_Address || 'Unknown Address'}`}
+                      rating={business.Business_Type || 'No Rating'} // Provide a fallback
+                      schedule={`Horarios: ${business.Business_Hours || 'No Hours Available'}`} // Provide a fallback
                     />
                   </Box>
                 ))
               ) : (
-                <p>No businesses available</p>
+                <p>No recommended businesses available</p>
               )}
             </Box>
             <IconButton onClick={scrollRight}>
@@ -124,6 +170,7 @@ export default function Businesses() {
             </IconButton>
           </Box>
         </Box>
+
 
         {/* "Todos los restaurantes" Section */}
         <Box sx={{ mt: 5 }}>
