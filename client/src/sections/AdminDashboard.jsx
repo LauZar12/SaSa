@@ -1,4 +1,5 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import {
   AppBar, Box, CssBaseline, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography, Button
 } from '@mui/material';
@@ -7,7 +8,8 @@ import {
   AddBusiness,
 } from '@mui/icons-material';
 import axios from 'axios';
-import BusinessCardV2 from '../components/BusinessCardV2';
+import toast from 'react-hot-toast';
+
 import Cookies from 'js-cookie'; 
 
 import SaveIcon from '@mui/icons-material/Save';
@@ -16,11 +18,10 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import Logo2 from '../assets/images/Logo Sasa-2.png';
 import AdminProductCard from '../components/AdminProductCard';
+import BusinessCardV2 from '../components/BusinessCardV2';
 import EditProduct from './EditProduct'; 
 import CreateProduct from './CreateProduct';
 import EditBusiness from './EditBusiness';
-
-import toast from 'react-hot-toast';
 
 const drawerWidth = 240;
 
@@ -238,7 +239,9 @@ export default function AdminDashboard() {
           >
             <MenuIcon />
           </IconButton>
-          <img src={Logo2} alt="Logo" style={{ height: '50px' }} /> 
+          <Link to = "/">
+            <img src={Logo2} alt="Logo" style={{ height: '50px' }} /> 
+          </Link>
         </Box>
       </AppBar>
 

@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box,
+  AppBar,
+  IconButton,
   Typography,
   Button,
   Grid,
   Paper,
   Avatar,
 } from '@mui/material';
-import { useParams } from 'react-router-dom'; // Obtener userId desde los parámetros de la ruta
+import { useParams, Link  } from 'react-router-dom'; // Obtener userId desde los parámetros de la ruta
 import axios from 'axios';
+import Logo2 from '../assets/images/Logo Sasa-2.png';
 import BottomNavBar from '../components/BottomNavBar';
+
+const drawerWidth = 240;
 
 const Profile = () => {
   const { userId } = useParams(); // Obtener userId desde la ruta
@@ -52,6 +57,7 @@ const Profile = () => {
         <Box
           sx={{
             bgcolor: '#4C956C',
+            mb: 30,
             height: '80px',
             width: '100%', 
             top: 0, 
@@ -65,22 +71,14 @@ const Profile = () => {
             zIndex: 1000 
           }}
         >
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            display="left"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <img src={Logo2} alt="Logo" style={{ height: '50px' }} /> 
+          <Link to = "/">
+            <img src={Logo2} alt="Logo" style={{ height: '50px' }} /> 
+          </Link>
         </Box>
       </AppBar>
 
       {/* Sección de detalles del usuario */}
-      <Box sx={{ padding: '20px', textAlign: 'center' }}>
+      <Box sx={{ padding: '110px', textAlign: 'center' }}>
         <Avatar
           alt={user.User_Name}
           src={user.profileImage || 'https://via.placeholder.com/150'} // Imagen de marcador de posición

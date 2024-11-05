@@ -6,7 +6,6 @@ const BusinessCardV2 = ({ business }) => {
   const {
     Business_Address = 'Dirección no disponible',
     Business_Name = 'Nombre no disponible',
-    Business_Localization = 'Localización no disponible',
     Business_City = 'Ciudad no especificada',
     Business_Hours = 'Horario no especificado'
   } = business || {};
@@ -24,12 +23,12 @@ const BusinessCardV2 = ({ business }) => {
         <div className="flex items-center space-x-2">
           <LocationOn className="text-gray-500" />
           <Typography variant="body1">
-            {Business_Address}, {Business_City}
+            {Business_Address}
           </Typography>
         </div>
         <div className="flex items-center space-x-2">
           <MyLocation className="text-gray-500" />
-          <Typography variant="body1">{Business_Localization}</Typography>
+          <Typography variant="body1">{Business_City}</Typography>
         </div>
         <div className="flex items-center space-x-2">
           <AccessTime className="text-gray-500" />

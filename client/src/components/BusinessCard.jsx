@@ -8,12 +8,13 @@ import Box from '@mui/material/Box';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import StarIcon from '@mui/icons-material/Star';
 import ScheduleIcon from '@mui/icons-material/Schedule';
+import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import '../index.css';
 
-export default function BusinessCard({ image, title, location, rating, schedule, onClick, width = '400px' }) {
+export default function BusinessCard({ image, title, location, rating, schedule, city, onClick, width = '400px' }) {
     return (
         <ButtonBase sx={{ display: 'block', textAlign: 'inherit', width, borderRadius: '20px' }} onClick={onClick}>
-            <Card sx={{ width: '100%', backgroundColor: '#4C956C', boxShadow: 8 }}>
+            <Card sx={{ maxWidth: 600, maxHeight:400, backgroundColor: '#4C956C', boxShadow: 8 }}>
                 <CardMedia
                     sx={{ height: 140, objectFit: 'cover' }}
                     image={image}
@@ -32,6 +33,10 @@ export default function BusinessCard({ image, title, location, rating, schedule,
                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
                             <StarIcon sx={{ mr: 1 }} />
                             <Typography variant="body2" color='#FFFFFF'>{rating}</Typography>
+                        </Box>
+                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            <TravelExploreIcon sx={{ mr: 1 }} />
+                            <Typography variant="body2" color='#FFFFFF'>{city}</Typography>
                         </Box>
                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
                             <ScheduleIcon sx={{ mr: 1 }} />
