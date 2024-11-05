@@ -48,11 +48,11 @@ const EditSurpriseBox = ({ open = false, handleClose, surpriseBoxId }) => {
 
       await axios.put(`http://localhost:5000/admin/businesses/${encodedBusinessId}/surprise-boxes/${encodedSurpriseBoxId}/edit-surprise-box`, surpriseBox);
       
-      toast.success('La Surprise Box ha sido editada con éxito!');
+      toast.success('La caja sorpresa ha sido editada con éxito!');
       handleClose();
     } catch (error) {
       console.error('Error editing surprise box:', error);
-      toast.error('Tuvimos problemas para editar la Surprise Box');
+      toast.error('Tuvimos problemas para editar la caja sorpresa');
     }
   };
 
