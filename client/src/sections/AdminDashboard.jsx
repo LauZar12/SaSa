@@ -15,6 +15,7 @@ import Cookies from 'js-cookie';
 import SaveIcon from '@mui/icons-material/Save';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
+import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 
 import Logo2 from '../assets/images/Logo Sasa-2.png';
 import AdminProductCard from '../components/AdminProductCard';
@@ -26,9 +27,17 @@ import CreateSurpriseBox from './CreateSurpriseBox';
 import EditSurpriseBox from './EditSurpriseBox';
 import EditBusiness from './EditBusiness';
 
+import { useNavigate } from 'react-router-dom';
+
 const drawerWidth = 240;
 
 export default function AdminDashboard() {
+  const navigate = useNavigate();
+
+  const handleDonationNavigate = () => {
+    navigate('/donations');
+  };
+  
   const [mobileOpen, setMobileOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('Negocio');
   const [businessContent, setBusinessContent] = useState(null);
@@ -213,6 +222,17 @@ export default function AdminDashboard() {
               sx={{ mt: 2, mb: 5 }}
             >
               Editar Negocio
+            </Button>
+
+            <Button
+              variant="contained"
+              color="secondary"
+              position="absolute"
+              startIcon={<VolunteerActivismIcon />}
+              onClick={handleDonationNavigate}
+              sx={{ mt: 2, mb: 5, ml: 3 }}
+            >
+              ¿Donde puedo donar?
             </Button>
       
             {businessContent && businessContent.length > 0 ? (
