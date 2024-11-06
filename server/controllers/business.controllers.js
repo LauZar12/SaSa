@@ -18,6 +18,34 @@ export const ola = async (req, res) => {
   res.status(200).json(result);
 }
 
+export const getDonationBusinessesInfo = async (req, res) => {
+  try {
+    const result = await SasaModel.scan().filter("GS2_PK").beginsWith("user#").attributes(["Business_Name", "Business_City","Business_Address", "Business_Hours", "Business_Type", "Business_Localization", "Business_Logo_Url", "PK"]).exec();
+    console.log(result);
+    res.status(200).json(result);
+  } catch (error) {
+    console.error('Error fetching businesses:', error);
+    res.status(500).json({ message: 'Error fetching businesses' });
+  }
+}
+
+export const getDonationBusinessByType = async (req, res) => {
+  try {
+    const businessType = req.params.businessType;
+
+    const result = await SasaModel
+      .scan()
+      .filter("GS2_PK").beginsWith("user#")
+      .filter("Business_Type").eq(businessType)
+      .attributes(["Business_Name", "Business_City", "Business_Address", "Business_Hours", "Business_Type", "Business_Localization", "Business_Logo_Url", "PK"])
+      .exec();
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.error('Error fetching business info:', error);
+    res.status(500).json({ message: 'Error fetching business info' });
+  }
+};
 
 export const getBusinessInfo = async (req, res) => {
     try{

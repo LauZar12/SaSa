@@ -5,6 +5,7 @@ import Home from "./sections/Home";
 import Businesses from "./sections/Businesses";
 import AdminDashboard from "./sections/AdminDashboard";
 import Business from "./sections/Business";
+import Donations from "./sections/Donations";
 import Profile from "./sections/Profile";
 import EditProduct from "./sections/EditProduct";
 import MapV2 from "./sections/MapV2";
@@ -27,6 +28,7 @@ export default function App() {
           path="/businesses/:businessId"
           element={<Business />} 
         />
+        <Route path="/donations" element={<Donations />} />
         <Route 
           path="/admin/businesses/:businessId" 
           element={<AdminDashboard />} 

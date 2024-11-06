@@ -7,15 +7,17 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import Logo2 from '../assets/images/Logo Sasa-2.png';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import FilterDialog from '../components/Dialog'; 
+import FilterDialog from '../components/Dialog';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Cookies from 'js-cookie';
 import SearchIcon from '@mui/icons-material/Search';
 
 export default function Businesses() {
   const navigate = useNavigate();
   const [businesses, setBusinesses] = useState([]);
-  const [openDialog, setOpenDialog] = useState(false);  
+  const [recBusinesses, setRecBusinesses] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredBusinesses, setFilteredBusinesses] = useState([]);
@@ -31,14 +33,39 @@ export default function Businesses() {
     }
   };
 
+  
+
   useEffect(() => {
+    fetchRecommendedBusinesses();
     fetchBusinesses();
   }, []);
 
+  useEffect(() => {
+    console.log('Recommended businesses updated:', recBusinesses);
+  }, [recBusinesses]);
+
   const handleBusinessClicked = (event) => {
     const encodedBusinessId = encodeURIComponent(event.PK);
+
+    let recommendations = Cookies.get('recommendations');
+    recommendations = recommendations ? JSON.parse(recommendations) : [];
+    if (!recommendations.includes(event.PK)) {
+      recommendations.push(event.PK);
+
+      if (recommendations.length > 8) {
+        recommendations.shift();
+      }
+
+      Cookies.set('recommendations', JSON.stringify(recommendations), { expires: 7 });
+    }
+
+    // Print all the current cookies
+    console.log('All current recommendations:', Cookies.get('recommendations'));
+
+    // Navigate to the business details page
     navigate('/businesses/' + encodedBusinessId);
   };
+
 
   const handleClickOpen = () => {
     setOpenDialog(true);
@@ -59,6 +86,25 @@ export default function Businesses() {
   const scrollRight = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollBy({ left: cardWidth, behavior: 'smooth' });
+    }
+  };
+
+  const fetchRecommendedBusinesses = async () => {
+    const recommendations = Cookies.get('recommendations');
+    if (recommendations) {
+      const businessIds = JSON.parse(recommendations);
+      const businessPromises = businessIds.map((id) => {
+        const encodedBusinessId = encodeURIComponent(id);
+        return axios.get(`http://localhost:5000/admin/businesses/${encodedBusinessId}`);
+      });
+
+      try {
+        const results = await Promise.all(businessPromises);
+        const fetchedBusinesses = results.map((res) => res.data);
+        setRecBusinesses(fetchedBusinesses);
+      } catch (error) {
+        console.error('Error fetching business info:', error);
+      }
     }
   };
 
