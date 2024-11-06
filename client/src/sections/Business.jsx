@@ -22,7 +22,7 @@ export default function Business() {
 
     try {
       // Update URL to include businessId
-      const response = await axios.get(`http://localhost:5000/businesses/${encodedBusinessId}`);
+      const response = await axios.get(`http://localhost:5000/businesses/${encodedBusinessId}/products`);
       setProducts(response.data);  // Assuming response.data contains the list of products
       console.log(response.data);
     } catch (error) {

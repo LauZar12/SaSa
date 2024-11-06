@@ -94,7 +94,7 @@ export default function Businesses() {
             zIndex: 1000 
           }}
         >
-          <Link to="/home"> 
+          <Link to="/"> 
             <img src={Logo2} alt="Logo" style={{ height: '50px', cursor: 'pointer' }} />
           </Link>
         </Box>

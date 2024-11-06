@@ -39,7 +39,7 @@ app.use('/admin/businesses', productRoutes);          // rutas de productos del 
 app.use('/users', userRoutes);                        // rutas de usuarios
 app.use('/auth', userRoutes);                         // rutas de autenticación
 app.use('/admin/businesses', surpriseBoxRoutes);      // rutas de cajas sorpresa bajo /admin/businesses
-
+app.use('/businesses', productRoutes)
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
