@@ -50,6 +50,27 @@ export const getAllSurpriseBoxesFromBusiness = async (req, res) => {
     }
 }
 
+export const getSurpriseBoxInfo = async (req, res) => {
+    try {
+        const businessId = req.params.businessId;  
+        const surpBoxId = req.params.surpBoxId; 
+        const result = await SasaModel.scan()
+        .filter("GS1_PK").eq(businessId)
+        .filter("PK").eq(surpBoxId)
+        .attributes(['PK','Available_Quantity', 'Price', 'Product_Name'])
+        .exec();
+
+        if (result.length === 0) {
+            return res.status(404).json({ message: 'Surprise Box not found' });
+        }
+
+        res.status(200).json(result);
+    } catch (error) {
+        console.error('Error fetching surprise box info:', error);
+        res.status(500).json({ message: 'Error fetching surprise box info' });
+    }
+};
+
 
 export const editSurpriseBox = async (req, res) => {
     try{
@@ -100,3 +121,5 @@ export const deleteSurpriseBox = async (req, res) => {
         res.status(500).json({ message: "Failed to delete the surprise box" });
     }
 }
+
+

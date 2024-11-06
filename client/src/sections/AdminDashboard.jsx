@@ -18,9 +18,12 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import Logo2 from '../assets/images/Logo Sasa-2.png';
 import AdminProductCard from '../components/AdminProductCard';
+import AdminSurpriseBoxCard from '../components/AdminSurpriseBox';
 import BusinessCardV2 from '../components/BusinessCardV2';
 import EditProduct from './EditProduct'; 
 import CreateProduct from './CreateProduct';
+import CreateSurpriseBox from './CreateSurpriseBox';
+import EditSurpriseBox from './EditSurpriseBox';
 import EditBusiness from './EditBusiness';
 
 const drawerWidth = 240;
@@ -28,11 +31,18 @@ const drawerWidth = 240;
 export default function AdminDashboard() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('Negocio');
-  const [content, setContent] = useState(null);
+  const [businessContent, setBusinessContent] = useState(null);
+  const [productContent, setProductContent] = useState([]);
+  const [surpriseBoxContent, setSurpriseBoxContent] = useState([]);
+
+
   const [editModalOpen, setEditModalOpen] = useState(false); 
+  const [editSurpriseBoxOpen, setEditSurpriseBoxOpen] = useState(false); 
   const [createModalOpen, setCreateModalOpen] = useState(false);
+  const [createSurpriseBoxOpen, setCreateSurpriseBoxOpen] = useState(false);
   const [editBusinessModalOpen, setEditBusinessModalOpen] = useState(false);
   const [currentProductId, setCurrentProductId] = useState(null);
+  const [currentSurpriseBoxId, setCurrentSurpriseBoxId] = useState(null);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -46,13 +56,24 @@ export default function AdminDashboard() {
       let response;
       if (selectedOption === 'Negocio') {
         response = await axios.get(`http://localhost:5000/admin/businesses/${businessId}`);
+        setBusinessContent(response.data);
       } else if (selectedOption === 'Productos') {
         response = await axios.get(`http://localhost:5000/admin/businesses/${businessId}/products`);
+        setProductContent(response.data);
+      } else if (selectedOption === 'Cajas Sorpresa') {
+        response = await axios.get(`http://localhost:5000/admin/businesses/${businessId}/surprise-boxes`);
+        setSurpriseBoxContent(response.data.result || []);
       }
-      setContent(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
-      setContent(null);
+
+      if (selectedOption === 'Negocio') {
+        setBusinessContent(null);
+      } else if (selectedOption === 'Productos') {
+        setProductContent([]);
+      } else if (selectedOption === 'Cajas Sorpresa') {
+        setSurpriseBoxContent([]);
+      }
     }
   };
 
@@ -66,18 +87,37 @@ export default function AdminDashboard() {
     setCreateModalOpen(true);
   }
 
+  const handleCreateSurpriseBox = () => {
+    setCreateSurpriseBoxOpen(true);
+  }
+
   const handleEditProduct = (productId) => {
     setCurrentProductId(productId);
     setEditModalOpen(true); 
   };
 
+  const handleEditSurpriseBox = (surpriseBoxId) => {
+    setCurrentSurpriseBoxId(surpriseBoxId);
+    setEditSurpriseBoxOpen(true); 
+  };
+
+
   const handleUpdateProduct = (updatedProduct) => {
-    setContent((prevProducts) =>
+    setProductContent((prevProducts) =>
       prevProducts.map((product) =>
         product.GS3_PK === updatedProduct.GS3_PK ? updatedProduct : product
       )
     );
   };
+
+  const handleUpdateSurpriseBox = (updatedSurpriseBox) => {
+    setSurpriseBoxContent((prevSurpriseBoxes) =>
+      prevSurpriseBoxes.map((surpriseBox) =>
+        surpriseBox.PK === updatedSurpriseBox.PK ? updatedSurpriseBox : surpriseBox
+      )
+    );
+  };
+  
 
   const handleEditBusiness = () => {
     setEditBusinessModalOpen(true);
@@ -88,8 +128,18 @@ export default function AdminDashboard() {
     fetchData();
   };
 
+  const handleEditSurpriseBoxClose = () => {
+    setEditSurpriseBoxOpen(false); 
+    fetchData();
+  };
+
   const handleCreateModalClose = () => {
     setCreateModalOpen(false);
+    fetchData();
+  }
+
+  const handleCreateSurpriseBoxClose = () => {
+    setCreateSurpriseBoxOpen(false);
     fetchData();
   }
 
@@ -98,7 +148,7 @@ export default function AdminDashboard() {
       const encodedProductId = encodeURIComponent(productId); 
       await axios.delete(`http://localhost:5000/admin/businesses/${businessId}/products/${encodedProductId}/delete-product`);
       
-      setContent((prevProducts) => prevProducts.filter((product) => product.GS3_PK !== productId));
+      setProductContent((prevProducts) => prevProducts.filter((product) => product.GS3_PK !== productId));
       console.log(`Producto ${productId} eliminado con éxito.`);
       toast.success('Producto eliminado correctamente!')
     } catch (error) {
@@ -110,6 +160,21 @@ export default function AdminDashboard() {
   const handleEditBusinessModalClose = () => {
     setEditBusinessModalOpen(false);
     fetchData();
+  }
+
+  const handleSurpriseBoxDeleted = async (surpriseBoxId) => {
+    try {
+      const encodedSurpBoxId = encodeURIComponent(surpriseBoxId); 
+      await axios.delete(`http://localhost:5000/admin/businesses/${businessId}/surprise-boxes/${encodedSurpBoxId}/delete-surprise-box`);
+      
+      setProductContent((prevSurpriseBoxes) => prevSurpriseBoxes.filter((surpriseBox) => surpriseBox.PK !== surpriseBoxId));
+      console.log(`Caja sorpresa ${surpriseBoxId} eliminada con éxito.`);
+      toast.success('Caja sorpresa eliminada correctamente!')
+      fetchData();
+    } catch (error) {
+      console.error('Error eliminando la caja sorpresa:', error);
+      toast.error("Ups, tuvimos problemas para eliminar la caja sorpresa.")
+    }
   }
 
   const drawer = (
@@ -150,8 +215,8 @@ export default function AdminDashboard() {
               Editar Negocio
             </Button>
       
-            {content && content.length > 0 ? (
-              <BusinessCardV2 business={content[0]} />
+            {businessContent && businessContent.length > 0 ? (
+              <BusinessCardV2 business={businessContent[0]} />
             ) : (
               'Cargando información del negocio...'
             )}
@@ -175,7 +240,7 @@ export default function AdminDashboard() {
             </Button>
             <br />
             <Box display="grid" gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))" gap={2}>
-              {content && content.map((product) => (
+              {productContent && productContent.map((product) => (
                 <AdminProductCard
                   key={product.GS3_PK}
                   product={product}
@@ -192,9 +257,27 @@ export default function AdminDashboard() {
             <Typography variant="h4" gutterBottom>
               Cajas Sorpresa
             </Typography>
-            <Typography paragraph>
-              Crea y administra ofertas de cajas sorpresa, establece los contenidos y determina los precios de estos paquetes especiales!
-            </Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<AddIcon />}
+              onClick={handleCreateSurpriseBox}
+              sx={{ mt: 2, mb: 5 }}
+            >
+              Crear cajas sorpresas
+            </Button>
+
+            <br />
+            <Box display="grid" gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))" gap={2}>
+              {surpriseBoxContent && surpriseBoxContent.map((surpriseBox) => (
+                <AdminSurpriseBoxCard
+                  key={surpriseBox.PK}
+                  surpriseBox={surpriseBox}
+                  onEdit={handleEditSurpriseBox} 
+                  onDelete={handleSurpriseBoxDeleted}
+                />
+              ))}
+            </Box>
           </Box>
         );
       default:
@@ -296,6 +379,22 @@ export default function AdminDashboard() {
           <CreateProduct
             open={createModalOpen}
             handleClose={handleCreateModalClose} 
+          />
+        )}
+
+        {createSurpriseBoxOpen && (
+          <CreateSurpriseBox
+            open={createSurpriseBoxOpen}
+            handleClose={handleCreateSurpriseBoxClose} 
+          />
+        )}
+
+        {editSurpriseBoxOpen && (
+          <EditSurpriseBox
+            open={editSurpriseBoxOpen}
+            handleClose={handleEditSurpriseBoxClose}
+            surpriseBoxId={currentSurpriseBoxId}
+            onUpdateSurpriseBox={handleUpdateSurpriseBox} 
           />
         )}
 
