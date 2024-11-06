@@ -41,6 +41,7 @@ app.use('/admin/businesses', productRoutes);          // rutas de productos del 
 app.use('/users', userRoutes);                        // rutas de usuarios
 app.use('/auth', userRoutes);                         // rutas de autenticación
 app.use('/admin/businesses', surpriseBoxRoutes);      // rutas de cajas sorpresa bajo /admin/businesses
+app.use('/businesses', productRoutes)
 app.use('/donations', businessRoutes);                // rutas de negocios donadores
 
 // Define the endpoint to generate a response based on a prompt
