@@ -17,6 +17,7 @@
     "@aws-sdk/lib-dynamodb": "^3.645.0",
     "@aws-sdk/s3-request-presigner": "^3.685.0",
     "aws-sdk": "^2.1691.0",
+    "axios": "^1.7.7",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
@@ -26,6 +27,7 @@
     "express": "^4.19.2",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.1.4",
+    "openai": "^4.71.1",
     "uuid4": "^2.0.3"
   }
 }

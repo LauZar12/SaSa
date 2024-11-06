@@ -33,7 +33,7 @@ export default function Businesses() {
     }
   };
 
-  
+
 
   useEffect(() => {
     fetchRecommendedBusinesses();
@@ -128,16 +128,16 @@ export default function Businesses() {
             bgcolor: '#4C956C',
             mb: 30,
             height: '80px',
-            width: '100%', 
-            top: 0, 
+            width: '100%',
+            top: 0,
             left: 0,
-            p: 0, 
+            p: 0,
             overflow: 'hidden',
-            position: 'fixed', 
-            display: 'flex', 
-            alignItems: 'center', 
-            justifyContent: 'center', 
-            zIndex: 1000 
+            position: 'fixed',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000
           }}
         >
           <Link to="/businesses">
@@ -155,9 +155,9 @@ export default function Businesses() {
         > */}
         <Box sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'center', p: 2 }}>
           <SearchIcon sx={{ color: 'action.active', mr: 1, my: 1.9 }} />
-          <TextField id="input-with-sx" sx={{ width: '30%'}} label="Busca tu restaurante favorito!" variant="outlined" onChange={(e) => handleSearch(e.target.value)} />
+          <TextField id="input-with-sx" sx={{ width: '30%' }} label="Busca tu restaurante favorito!" variant="outlined" onChange={(e) => handleSearch(e.target.value)} />
         </Box>
-          {/* <TextField
+        {/* <TextField
             variant="outlined"
             placeholder="Buscar negocio..."
             onChange={(e) => handleSearch(e.target.value)}  // Maneja la búsqueda
@@ -283,7 +283,7 @@ export default function Businesses() {
           selectedFilters={selectedFilters}
           setSelectedFilters={setSelectedFilters}
         />
-        
+
         <BottomNavBar value={0} />
       </div>
     </>
