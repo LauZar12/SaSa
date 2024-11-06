@@ -96,7 +96,7 @@ const Profile = () => {
         <>
           {beforeLink}
           <Link href={link} target="_blank" sx={{ color: '#4C956C', textDecoration: 'underline' }}>
-            {link}
+            Recomendación
           </Link>
           {afterLink}
         </>

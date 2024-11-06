@@ -219,7 +219,7 @@ export default function Businesses() {
                     },
                   }}
                 >
-                  {businesses.slice(0, 5).map((business, index) => (
+                  {businesses.slice(5, 9).map((business, index) => (
                     <Box key={index} sx={{ width: `${cardWidth}px`, mx: 1 }}>
                       <BusinessCard
                         image={business.Business_Logo_Url}
