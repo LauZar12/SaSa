@@ -74,6 +74,7 @@ export default function Businesses() {
   const handleApplyFilters = (filters) => {
     console.log('Selected Filters:', filters);
     setSelectedFilters(filters);
+    console.log('Filters:', selectedFilters);
   };
 
   // Scroll functions
@@ -140,7 +141,7 @@ export default function Businesses() {
             zIndex: 1000
           }}
         >
-          <Link to="/"> 
+          <Link to="/">
             <img src={Logo2} alt="Logo" style={{ height: '50px', cursor: 'pointer' }} />
           </Link>
         </Box>
@@ -251,26 +252,33 @@ export default function Businesses() {
               </Box>
 
               <Grid container spacing={2} justifyContent="center">
-                {businesses.map((business, index) => (
-                  <Grid
-                    key={index}
-                    item
-                    xs={12}
-                    sm={6}
-                    md={3}
-                    sx={{ display: 'flex', justifyContent: 'center' }}
-                  >
-                    <BusinessCard
-                      image={business.Business_Logo_Url}
-                      onClick={() => handleBusinessClicked(business)}
-                      title={business.Business_Name}
-                      location={business.Business_Address}
-                      city={business.Business_City}
-                      rating={business.Business_Type}
-                      schedule={`Horarios: ${business.Business_Hours}`}
-                    />
-                  </Grid>
-                ))}
+                {businesses
+                  .filter((business) => {
+                    if (selectedFilters.distance) {
+                      return business.Business_City === "Medellín";
+                    }
+                    return true; // Si no hay filtro, mostrar todos los restaurantes
+                  })
+                  .map((business, index) => (
+                    <Grid
+                      key={index}
+                      item
+                      xs={12}
+                      sm={6}
+                      md={3}
+                      sx={{ display: 'flex', justifyContent: 'center' }}
+                    >
+                      <BusinessCard
+                        image={business.Business_Logo_Url}
+                        onClick={() => handleBusinessClicked(business)}
+                        title={business.Business_Name}
+                        location={business.Business_Address}
+                        city={business.Business_City}
+                        rating={business.Business_Type}
+                        schedule={`Horarios: ${business.Business_Hours}`}
+                      />
+                    </Grid>
+                  ))}
               </Grid>
             </Box>
           </>
