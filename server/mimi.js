@@ -30,6 +30,9 @@ app.use(express.json());
 app.get('/all', getAllStuff);
 app.get('/businesses', businessRoutes);
 
+app.get('/donations', businessRoutes);
+app.get('/donations/:businessType', businessRoutes);
+
 app.get('/profile/:userId', userRoutes);
 
 app.get('/businesses/:businessId', productRoutes);
