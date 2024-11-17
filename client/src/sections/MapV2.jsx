@@ -36,7 +36,7 @@ const PoiMarkers = (props) => {
           onClick={() => handleClick(poi)}
           title={poi.key}
         >
-          <Pin background={'#4C956C'} glyphColor={'White'} borderColor={'#283618'}/>
+          <Pin />
         </AdvancedMarker>
       ))}
 
@@ -107,7 +107,7 @@ const MapV2 = () => {
     fetchDataAndGeocode();
   }, []);
 
-  if (loading) return <div>Loading...</div>; // Opcional: mostrar un indicador de carga
+  if (loading) return <div>Loading...</div>; 
 
   return (
     <APIProvider apiKey="AIzaSyBbOxklM1Vcm_wT6wzSnhKJa4LvR1jvYnk">
@@ -117,7 +117,20 @@ const MapV2 = () => {
         style={{ width: '100vw', height: '100vh' }}
         gestureHandling="greedy"
         disableDefaultUI={true}
-        mapId="274f8ffa0113d548"
+        mapId="f84cb2d1ea92e997"
+        options={{
+          minZoom: 13, // Zoom mínimo
+          maxZoom: 16, // Zoom máximo
+          restriction: {
+            latLngBounds: {
+              north: 6.455, // Límite norte
+              south: 5.947, // Límite sur
+              west: -75.829, // Límite oeste
+              east: -75.338, // Límite este
+            },
+            strictBounds: true, // Restringir estrictamente al área
+          },
+        }}
       >
         <PoiMarkers pois={locations} /> {/* Pasa las ubicaciones geocodificadas */}
       </Map>

@@ -319,7 +319,7 @@ export default function Auth() {
                       component="div"
                       sx={{
                         mb: 2,
-                        fontFamily: "Roboto",
+                        fontFamily: "Epilogue",
                         fontWeight: "bold",
                         fontSize: { xs: "1.5rem", sm: "2rem" }, // Responsive font size
                       }}
@@ -331,7 +331,7 @@ export default function Auth() {
                       component="div"
                       sx={{
                         fontSize: { xs: "0.875rem", sm: "1rem" }, // Responsive font size
-                        fontFamily: "Roboto",
+                        fontFamily: "Epilogue",
                         textAlign: "center",
                         lineHeight: 1.5,
                       }}
@@ -491,7 +491,7 @@ export default function Auth() {
                           mr: 5,
                           ml: 5,
                           fontSize: { xs: "0.875rem", sm: "1rem" }, // Responsive font size
-                          fontFamily: "Roboto",
+                          fontFamily: "Epilogue",
                           fontWeight: "bold",
                           textAlign: "center",
                           color: "#212121",

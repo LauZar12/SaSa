@@ -71,6 +71,38 @@ export const editBusinessInfo = async (req, res) => {
   }
 };
 
+export const editBusinessAddress = async (req, res) => {
+  try {
+    const businessId = req.params.businessId;
+
+    if (!req.cookies.user) {
+      return res.status(400).json({ message: 'Usuario no autenticado' });
+    }
+    
+    const user = JSON.parse(req.cookies.user);
+    const userId = user.PK;
+
+    const { Business_Address } = req.body;
+
+    if (!Business_Address) {
+      return res.status(400).json({ message: 'No hay campos para actualizar' });
+    }
+
+    const updateData = {};
+    if (Business_Address) updateData.Business_Address = Business_Address;
+
+    const PK = `${businessId}`;
+    const SK = `${businessId}${userId}`;
+
+    const updatedBusiness = await SasaModel.update({ PK, SK }, updateData);
+
+    res.status(200).json({ message: 'Negocio editado correctamente', business: updatedBusiness });
+  } catch (error) {
+    console.error('Error actualizando el negocio:', error);
+    res.status(500).json({ message: 'No se pudo actualizar la info del negocio' });
+  }
+};
+
 export const getBusinessMapInfo = async (req, res) => {
   try {
     const businessId = "business%231";

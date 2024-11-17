@@ -9,6 +9,7 @@ router.get("/ola", ola)
 router.get("/get-info", getBusinessMapInfo)
 router.get("/:businessId", getBusinessInfo)
 router.put("/:businessId/edit-info", editBusinessInfo)
+router.put("/:businessId/edit-address", editBusinessInfo)
 
 
 export default router;

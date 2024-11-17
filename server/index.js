@@ -34,6 +34,7 @@ app.use('/admin/businesses', businessRoutes);
 app.use('/businesses', businessRoutes);               // rutas de negocios
 app.use('/profile', userRoutes);                      // rutas de perfil de usuario
 app.use('/admin/businesses', productRoutes);          // rutas de productos del negocio bajo /admin/businesses
+app.use('/businesses', productRoutes);   
 app.use('/users', userRoutes);                        // rutas de usuarios
 app.use('/auth', userRoutes);                         // rutas de autenticación
 app.use('/admin/businesses', surpriseBoxRoutes);      // rutas de cajas sorpresa bajo /admin/businesses

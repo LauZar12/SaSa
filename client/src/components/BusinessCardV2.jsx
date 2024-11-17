@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, Typography } from '@mui/material';
-import { LocationOn, AccessTime, MyLocation } from '@mui/icons-material';
+import { LocationOn, AccessTime } from '@mui/icons-material';
+import MapIcon from '@mui/icons-material/Map';
 
 const BusinessCardV2 = ({ business }) => {
   const {
@@ -27,7 +28,7 @@ const BusinessCardV2 = ({ business }) => {
           </Typography>
         </div>
         <div className="flex items-center space-x-2">
-          <MyLocation className="text-gray-500" />
+          <MapIcon className="text-gray-500" />
           <Typography variant="body1">{Business_City}</Typography>
         </div>
         <div className="flex items-center space-x-2">
@@ -38,5 +39,6 @@ const BusinessCardV2 = ({ business }) => {
     </Card>
   );
 };
+
 
 export default BusinessCardV2;

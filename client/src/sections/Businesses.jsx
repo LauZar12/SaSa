@@ -94,7 +94,7 @@ export default function Businesses() {
             zIndex: 1000 
           }}
         >
-          <Link to="/home"> 
+          <Link to="/"> 
             <img src={Logo2} alt="Logo" style={{ height: '50px', cursor: 'pointer' }} />
           </Link>
         </Box>
@@ -107,7 +107,7 @@ export default function Businesses() {
             p: 2,
           }}
         > */}
-        <Box sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'center', p: 2 }}>
+        <Box sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'center', p: 2}}>
           <SearchIcon sx={{ color: 'action.active', mr: 1, my: 1.9 }} />
           <TextField id="input-with-sx" sx={{ width: '30%'}} label="Busca tu restaurante favorito!" variant="outlined" onChange={(e) => handleSearch(e.target.value)} />
         </Box>
@@ -120,7 +120,7 @@ export default function Businesses() {
 
         {searchQuery ? (
           <Box sx={{ mt: 5 }}>
-            <Typography variant="h5" align="center" gutterBottom>
+            <Typography variant="h5" align="center" gutterBottom sx={{ fontFamily: "'Epilogue', sans-serif" }}>
               Resultados de búsqueda
             </Typography>
             <Grid container spacing={2} justifyContent="center">
@@ -146,7 +146,7 @@ export default function Businesses() {
                   </Grid>
                 ))
               ) : (
-                <Typography>No se encontraron resultados</Typography>
+                <Typography sx={{ fontFamily: "'Epilogue', sans-serif" }}>No se encontraron resultados</Typography>
               )}
             </Grid>
           </Box>
@@ -154,7 +154,7 @@ export default function Businesses() {
           <>
             {/* "Restaurantes Recomendados" Section */}
             <Box sx={{ mt: 1 }}>
-              <Typography variant="h5" align="center" gutterBottom>
+              <Typography variant="h5" align="center" gutterBottom sx={{ fontFamily: "'Epilogue', sans-serif", fontWeight: 500 }}>
                 Restaurantes Recomendados
               </Typography>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -195,8 +195,8 @@ export default function Businesses() {
 
             {/* "Todos los restaurantes" Section */}
             <Box sx={{ mt: 5 }}>
-              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 2 }}>
-                <Typography variant="h5" align="center" gutterBottom>
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 2,  }}>
+                <Typography variant="h5" align="center" gutterBottom sx={{ fontFamily: "'Epilogue', sans-serif", fontWeight: 500 }}>
                   Todos los restaurantes
                 </Typography>
                 <IconButton onClick={handleClickOpen}>
