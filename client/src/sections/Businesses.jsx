@@ -7,15 +7,17 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import Logo2 from '../assets/images/Logo Sasa-2.png';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import FilterDialog from '../components/Dialog'; 
+import FilterDialog from '../components/Dialog';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Cookies from 'js-cookie';
 import SearchIcon from '@mui/icons-material/Search';
 
 export default function Businesses() {
   const navigate = useNavigate();
   const [businesses, setBusinesses] = useState([]);
-  const [openDialog, setOpenDialog] = useState(false);  
+  const [recBusinesses, setRecBusinesses] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredBusinesses, setFilteredBusinesses] = useState([]);
@@ -31,14 +33,39 @@ export default function Businesses() {
     }
   };
 
+
+
   useEffect(() => {
+    fetchRecommendedBusinesses();
     fetchBusinesses();
   }, []);
 
+  useEffect(() => {
+    console.log('Recommended businesses updated:', recBusinesses);
+  }, [recBusinesses]);
+
   const handleBusinessClicked = (event) => {
     const encodedBusinessId = encodeURIComponent(event.PK);
+
+    let recommendations = Cookies.get('recommendations');
+    recommendations = recommendations ? JSON.parse(recommendations) : [];
+    if (!recommendations.includes(event.PK)) {
+      recommendations.push(event.PK);
+
+      if (recommendations.length > 8) {
+        recommendations.shift();
+      }
+
+      Cookies.set('recommendations', JSON.stringify(recommendations), { expires: 7 });
+    }
+
+    // Print all the current cookies
+    console.log('All current recommendations:', Cookies.get('recommendations'));
+
+    // Navigate to the business details page
     navigate('/businesses/' + encodedBusinessId);
   };
+
 
   const handleClickOpen = () => {
     setOpenDialog(true);
@@ -47,6 +74,7 @@ export default function Businesses() {
   const handleApplyFilters = (filters) => {
     console.log('Selected Filters:', filters);
     setSelectedFilters(filters);
+    console.log('Filters:', selectedFilters);
   };
 
   // Scroll functions
@@ -59,6 +87,25 @@ export default function Businesses() {
   const scrollRight = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollBy({ left: cardWidth, behavior: 'smooth' });
+    }
+  };
+
+  const fetchRecommendedBusinesses = async () => {
+    const recommendations = Cookies.get('recommendations');
+    if (recommendations) {
+      const businessIds = JSON.parse(recommendations);
+      const businessPromises = businessIds.map((id) => {
+        const encodedBusinessId = encodeURIComponent(id);
+        return axios.get(`http://localhost:5000/admin/businesses/${encodedBusinessId}`);
+      });
+
+      try {
+        const results = await Promise.all(businessPromises);
+        const fetchedBusinesses = results.map((res) => res.data);
+        setRecBusinesses(fetchedBusinesses);
+      } catch (error) {
+        console.error('Error fetching business info:', error);
+      }
     }
   };
 
@@ -82,19 +129,19 @@ export default function Businesses() {
             bgcolor: '#4C956C',
             mb: 30,
             height: '80px',
-            width: '100%', 
-            top: 0, 
+            width: '100%',
+            top: 0,
             left: 0,
-            p: 0, 
+            p: 0,
             overflow: 'hidden',
-            position: 'fixed', 
-            display: 'flex', 
-            alignItems: 'center', 
-            justifyContent: 'center', 
-            zIndex: 1000 
+            position: 'fixed',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000
           }}
         >
-          <Link to="/"> 
+          <Link to="/">
             <img src={Logo2} alt="Logo" style={{ height: '50px', cursor: 'pointer' }} />
           </Link>
         </Box>
@@ -109,9 +156,9 @@ export default function Businesses() {
         > */}
         <Box sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'center', p: 2}}>
           <SearchIcon sx={{ color: 'action.active', mr: 1, my: 1.9 }} />
-          <TextField id="input-with-sx" sx={{ width: '30%'}} label="Busca tu restaurante favorito!" variant="outlined" onChange={(e) => handleSearch(e.target.value)} />
+          <TextField id="input-with-sx" sx={{ width: '30%' }} label="Busca tu restaurante favorito!" variant="outlined" onChange={(e) => handleSearch(e.target.value)} />
         </Box>
-          {/* <TextField
+        {/* <TextField
             variant="outlined"
             placeholder="Buscar negocio..."
             onChange={(e) => handleSearch(e.target.value)}  // Maneja la búsqueda
@@ -173,7 +220,7 @@ export default function Businesses() {
                     },
                   }}
                 >
-                  {businesses.slice(0, 5).map((business, index) => (
+                  {businesses.slice(5, 9).map((business, index) => (
                     <Box key={index} sx={{ width: `${cardWidth}px`, mx: 1 }}>
                       <BusinessCard
                         image={business.Business_Logo_Url}
@@ -205,26 +252,33 @@ export default function Businesses() {
               </Box>
 
               <Grid container spacing={2} justifyContent="center">
-                {businesses.map((business, index) => (
-                  <Grid
-                    key={index}
-                    item
-                    xs={12}
-                    sm={6}
-                    md={3}
-                    sx={{ display: 'flex', justifyContent: 'center' }}
-                  >
-                    <BusinessCard
-                      image={business.Business_Logo_Url}
-                      onClick={() => handleBusinessClicked(business)}
-                      title={business.Business_Name}
-                      location={business.Business_Address}
-                      city={business.Business_City}
-                      rating={business.Business_Type}
-                      schedule={`Horarios: ${business.Business_Hours}`}
-                    />
-                  </Grid>
-                ))}
+                {businesses
+                  .filter((business) => {
+                    if (selectedFilters.distance) {
+                      return business.Business_City === "Medellín";
+                    }
+                    return true; // Si no hay filtro, mostrar todos los restaurantes
+                  })
+                  .map((business, index) => (
+                    <Grid
+                      key={index}
+                      item
+                      xs={12}
+                      sm={6}
+                      md={3}
+                      sx={{ display: 'flex', justifyContent: 'center' }}
+                    >
+                      <BusinessCard
+                        image={business.Business_Logo_Url}
+                        onClick={() => handleBusinessClicked(business)}
+                        title={business.Business_Name}
+                        location={business.Business_Address}
+                        city={business.Business_City}
+                        rating={business.Business_Type}
+                        schedule={`Horarios: ${business.Business_Hours}`}
+                      />
+                    </Grid>
+                  ))}
               </Grid>
             </Box>
           </>
@@ -237,7 +291,7 @@ export default function Businesses() {
           selectedFilters={selectedFilters}
           setSelectedFilters={setSelectedFilters}
         />
-        
+
         <BottomNavBar value={0} />
       </div>
     </>

@@ -15,7 +15,7 @@ import Cookies from 'js-cookie';
 import SaveIcon from '@mui/icons-material/Save';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
-import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
+import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 
 import Logo2 from '../assets/images/Logo Sasa-2.png';
 import AdminProductCard from '../components/AdminProductCard';
@@ -26,11 +26,19 @@ import CreateProduct from './CreateProduct';
 import CreateSurpriseBox from './CreateSurpriseBox';
 import EditSurpriseBox from './EditSurpriseBox';
 import EditBusiness from './EditBusiness';
+
+import { useNavigate } from 'react-router-dom';
 import EditLocation from './EditLocation';
 
 const drawerWidth = 240;
 
 export default function AdminDashboard() {
+  const navigate = useNavigate();
+
+  const handleDonationNavigate = () => {
+    navigate('/donations');
+  };
+  
   const [mobileOpen, setMobileOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('Negocio');
   const [businessContent, setBusinessContent] = useState(null);
@@ -69,7 +77,6 @@ export default function AdminDashboard() {
     } catch (error) {
       console.error('Error fetching data:', error);
 
-      // Limpia el estado de la selección
       if (selectedOption === 'Negocio') {
         setBusinessContent(null);
       } else if (selectedOption === 'Productos') {
@@ -165,6 +172,20 @@ export default function AdminDashboard() {
     fetchData();
   }
 
+  const handleSurpriseBoxDeleted = async (surpriseBoxId) => {
+    try {
+      const encodedSurpBoxId = encodeURIComponent(surpriseBoxId); 
+      await axios.delete(`http://localhost:5000/admin/businesses/${businessId}/surprise-boxes/${encodedSurpBoxId}/delete-surprise-box`);
+      
+      setProductContent((prevSurpriseBoxes) => prevSurpriseBoxes.filter((surpriseBox) => surpriseBox.PK !== surpriseBoxId));
+      console.log(`Caja sorpresa ${surpriseBoxId} eliminada con éxito.`);
+      toast.success('Caja sorpresa eliminada correctamente!')
+      fetchData();
+    } catch (error) {
+      console.error('Error eliminando la caja sorpresa:', error);
+      toast.error("Ups, tuvimos problemas para eliminar la caja sorpresa.")
+    }
+  }
 
   const drawer = (
     <div>
@@ -277,7 +298,7 @@ export default function AdminDashboard() {
                   key={surpriseBox.PK}
                   surpriseBox={surpriseBox}
                   onEdit={handleEditSurpriseBox} 
-                  onDelete={handleProductDeleted}
+                  onDelete={handleSurpriseBoxDeleted}
                 />
               ))}
             </Box>
