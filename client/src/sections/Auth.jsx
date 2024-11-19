@@ -20,11 +20,12 @@ import { useState } from "react";
 import TextFieldIndex from "../components/TextFieldIndex";
 import ButtonIndex from "../components/ButtonIndex";
 import SelectFieldIndex from "../components/SelectFieldIndex";
+import Logo1 from '../assets/images/Logo Sasa-1.png';
 import '../index.css';
 
 import Cookies from 'js-cookie';
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Auth() {
   const navigate = useNavigate();
@@ -285,6 +286,27 @@ export default function Auth() {
 
   return (
     <div className="authgradient" style={{ height: '100vh', width: '100vw' }}>
+      <Box
+        sx={{
+          mb: 30,
+          height: '80px',
+          width: '100%',
+          top: 0,
+          left: 0,
+          p: 0,
+          overflow: 'hidden',
+          position: 'fixed',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000
+        }}
+      >
+        <Link to="/">
+          <img src={Logo1} alt="Logo" style={{ height: '50px', cursor: 'pointer' }} />
+        </Link>
+      </Box>
+
       <Container maxWidth={false}>
         <Grid item xs={1} sm={1} md={1}>
           {isLogin ? (
@@ -299,7 +321,7 @@ export default function Auth() {
                   py: { xs: 1, sm: 2 }, // Responsive vertical padding
                 }}
               >
-                <Card variant="outlined" sx={{ p: 3, maxWidth: 600, mx: "auto" }}>
+                <Card variant="outlined" sx={{ p: 3, maxWidth: 600, mx: "auto", }}>
                   <Box
                     sx={{
                       display: "flex",
@@ -392,17 +414,17 @@ export default function Auth() {
                   <Button
                     onClick={toggleForm}
                     variant="text"
-                    color="black" // Note: 'black' should be lowercase
+                    color="black" 
                     sx={{
                       mt: 2,
-                      fontWeight: "bold", // Apply bold font weight
+                      fontWeight: "bold", 
                       fontFamily: 'Epilogue',
-                      textDecoration: "underline", // Apply underline to the text
-                      textTransform: "none", // Prevent text from being uppercase (default behavior in Material-UI buttons)
-                      color: "#000000", // Ensure the text color is black
+                      textDecoration: "underline", 
+                      textTransform: "none", 
+                      color: "#000000", 
                     }}
                   >
-                    ¿No tienes una cuenta? Únete a nosotros
+                    ¿No tienes una cuenta? Registrate aquí!
                   </Button>
                 </Card>
               </Box>

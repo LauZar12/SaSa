@@ -58,11 +58,7 @@ export default function ProductCard({
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Discount sx={{ mr: 1 }} />
-<<<<<<< HEAD
-              <Typography variant="body2" color='#FFFFFF'>{`$${formatPrice(afterDiscountPrice.toFixed(2))}`}</Typography>
-=======
               <Typography variant="body2" fontWeight='bold' color='#FFFFFF'>{`$${formatPrice(afterDiscountPrice)}`}</Typography>
->>>>>>> 58317a8e63979286627d7a47b76f86b311ccdf33
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Description sx={{ mr: 1 }} />

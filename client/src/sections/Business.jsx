@@ -22,10 +22,7 @@ export default function Business() {
     const encodedBusinessId = encodeURIComponent(businessId);
 
     try {
-<<<<<<< HEAD
       // Update URL to include businessId
-=======
->>>>>>> 58317a8e63979286627d7a47b76f86b311ccdf33
       const response = await axios.get(`http://localhost:5000/businesses/${encodedBusinessId}/products`);
       setProducts(response.data);  // Assuming response.data contains the list of products
       console.log(response.data);

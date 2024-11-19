@@ -21,6 +21,7 @@ export default function Businesses() {
   const [selectedFilters, setSelectedFilters] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredBusinesses, setFilteredBusinesses] = useState([]);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
   const scrollRef = useRef(null);
   const cardWidth = 420; // Adjusted width for responsiveness
 
@@ -43,6 +44,31 @@ export default function Businesses() {
   useEffect(() => {
     console.log('Recommended businesses updated:', recBusinesses);
   }, [recBusinesses]);
+
+  useEffect(() => {
+    const scrollContainer = scrollRef.current;
+    scrollContainer.addEventListener('scroll', handleScroll);
+    return () => {
+      scrollContainer.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const handleScroll = () => {
+    if (scrollRef.current.scrollLeft > 0) {
+      setShowLeftArrow(true);
+    } else {
+      setShowLeftArrow(false);
+    }
+  };
+
+  const scrollLeft = () => {
+    scrollRef.current.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+  };
+
+  // Función para hacer scroll hacia la derecha
+  const scrollRight = () => {
+    scrollRef.current.scrollBy({ left: cardWidth, behavior: 'smooth' });
+  };
 
   const handleBusinessClicked = (event) => {
     const encodedBusinessId = encodeURIComponent(event.PK);
@@ -75,19 +101,6 @@ export default function Businesses() {
     console.log('Selected Filters:', filters);
     setSelectedFilters(filters);
     console.log('Filters:', selectedFilters);
-  };
-
-  // Scroll functions
-  const scrollLeft = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: -cardWidth, behavior: 'smooth' });
-    }
-  };
-
-  const scrollRight = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: cardWidth, behavior: 'smooth' });
-    }
   };
 
   const fetchRecommendedBusinesses = async () => {
@@ -146,24 +159,10 @@ export default function Businesses() {
           </Link>
         </Box>
 
-        {/* Barra de búsqueda */}
-        {/* <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            p: 2,
-          }}
-        > */}
         <Box sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'center', p: 2}}>
           <SearchIcon sx={{ color: 'action.active', mr: 1, my: 1.9 }} />
           <TextField id="input-with-sx" sx={{ width: '30%' }} label="Busca tu restaurante favorito!" variant="outlined" onChange={(e) => handleSearch(e.target.value)} />
         </Box>
-        {/* <TextField
-            variant="outlined"
-            placeholder="Buscar negocio..."
-            onChange={(e) => handleSearch(e.target.value)}  // Maneja la búsqueda
-            sx={{ width: '50%'}}
-          /> */}
 
         {searchQuery ? (
           <Box sx={{ mt: 5 }}>
@@ -201,13 +200,17 @@ export default function Businesses() {
           <>
             {/* "Restaurantes Recomendados" Section */}
             <Box sx={{ mt: 1 }}>
-              <Typography variant="h5" align="center" gutterBottom sx={{ fontFamily: "'Epilogue', sans-serif", fontWeight: 500 }}>
-                Restaurantes Recomendados
+              <Typography variant="h5" align="center" gutterBottom sx={{ fontFamily: "'Epilogue', sans-serif", fontWeight: 500, paddingRight: 120}}>
+                Restaurantes Recomendados para ti!!
               </Typography>
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <IconButton onClick={scrollLeft}>
-                  <ArrowBackIcon />
-                </IconButton>
+
+              <Box sx={{ display: 'flex', alignItems: 'center', mt: 2}}>
+                {showLeftArrow && (
+                  <IconButton onClick={scrollLeft}>
+                    <ArrowBackIcon />
+                  </IconButton>
+                )}
+
                 <Box
                   ref={scrollRef}
                   sx={{
@@ -227,7 +230,6 @@ export default function Businesses() {
                         onClick={() => handleBusinessClicked(business)}
                         title={business.Business_Name}
                         location={business.Business_Address}
-                        city={business.Business_City}
                         rating={business.Business_Type}
                         schedule={`Horarios: ${business.Business_Hours}`}
                       />
@@ -273,7 +275,6 @@ export default function Businesses() {
                         onClick={() => handleBusinessClicked(business)}
                         title={business.Business_Name}
                         location={business.Business_Address}
-                        city={business.Business_City}
                         rating={business.Business_Type}
                         schedule={`Horarios: ${business.Business_Hours}`}
                       />
