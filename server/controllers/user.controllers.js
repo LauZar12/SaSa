@@ -108,16 +108,15 @@ export const addUser = async (req, res) => {
       const userModel = new SasaModel(newUser);
       const userResult = await userModel.save();
 
-      res.status(201).json({ message: 'User / Business added successfully', user: userResult, business: businessResult });
-
+      return res.status(201).json({ message: 'User / Business added successfully', user: userResult, business: businessResult });
     }
 
     // Save the user to DynamoDB using Dynamoose
     const userModel = new SasaModel(newUser);
     const userResult = await userModel.save();
-    res.status(201).json({ message: 'User added successfully', user: userResult });
+    return res.status(201).json({ message: 'User added successfully', user: userResult });
   } catch (error) {
     console.error('Error adding user:', error);
-    res.status(500).json({ message: 'Error adding user' });
+    return res.status(500).json({ message: 'Error adding user' });
   }
 };

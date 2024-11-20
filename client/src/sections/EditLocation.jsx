@@ -15,7 +15,7 @@ const EditLocation = () => {
   useEffect(() => {
     const loadGoogleMaps = () => {
       const script = document.createElement("script");
-      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBbOxklM1Vcm_wT6wzSnhKJa4LvR1jvYnk&libraries=places&callback=initMap`;
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}&libraries=places&callback=initMap`;
       script.async = true;
       script.defer = true;
       script.onload = () => {
@@ -78,7 +78,7 @@ const EditLocation = () => {
   return (
     <Box
       sx={{
-        maxWidth: 400,
+        maxWidth: 600,
         bgcolor: 'background.paper',
         boxShadow: 24,
         p: 4,
@@ -107,23 +107,7 @@ const EditLocation = () => {
           sx={{ mt: 2 }}
         />
       </Box>
-
-      {selectedPlace && selectedPlace.location ? (
-        <Box sx={{ mt: 3 }}>
-          <Typography variant="subtitle1">Lugar Seleccionado:</Typography>
-          <pre>
-            {JSON.stringify(
-              {
-                address: formattedAddress || 'Dirección no disponible',
-                location: selectedPlace.location,
-              },
-              null,
-              2
-            )}
-          </pre>
-        </Box>
-      ) : null}
-
+      
       <Button
         variant="contained"
         color="primary"

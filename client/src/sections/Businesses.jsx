@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import BottomNavBar from '../components/BottomNavBar';
 import BusinessCard from '../components/BusinessCard';
 import Grid from '@mui/material/Grid2';
-import { Box, Typography, IconButton, TextField } from '@mui/material';
+import { Box, Typography, IconButton, TextField, Button } from '@mui/material';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import Logo2 from '../assets/images/Logo Sasa-2.png';
@@ -12,6 +12,11 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Cookies from 'js-cookie';
 import SearchIcon from '@mui/icons-material/Search';
+import BurgerIcon from '../assets/icons/cheese-burger.png'
+import CoffeeIcon from '../assets/icons/coffee-cup.png'
+import CroissantIcon from '../assets/icons/croissant.png'
+import ChickenIcon from '../assets/icons/fried-chicken.png'
+import PizzaIcon from '../assets/icons/pizza.png'
 
 export default function Businesses() {
   const navigate = useNavigate();
@@ -20,10 +25,20 @@ export default function Businesses() {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [viewMode, setViewMode] = useState('all');
   const [filteredBusinesses, setFilteredBusinesses] = useState([]);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const scrollRef = useRef(null);
   const cardWidth = 420; // Adjusted width for responsiveness
+
+  const categories = [
+    { label: 'hamburguesa', icon: BurgerIcon },
+    { label: 'pizza', icon: PizzaIcon },
+    { label: 'café', icon: CoffeeIcon },
+    { label: 'pollo', icon: ChickenIcon },
+    { label: 'panadería', icon: CroissantIcon },
+  ];
 
   const fetchBusinesses = async () => {
     try {
@@ -33,8 +48,6 @@ export default function Businesses() {
       console.error('Error fetching businesses:', error);
     }
   };
-
-
 
   useEffect(() => {
     fetchRecommendedBusinesses();
@@ -52,6 +65,10 @@ export default function Businesses() {
       scrollContainer.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    console.log('View mode updated:', viewMode);
+  }, [viewMode]);
 
   const handleScroll = () => {
     if (scrollRef.current.scrollLeft > 0) {
@@ -122,8 +139,21 @@ export default function Businesses() {
     }
   };
 
+  const fetchBusinessesByCategory = async (category) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/businesses/category/${category}`);
+      setBusinesses(response.data);  // Actualizar los restaurantes filtrados
+      setSelectedCategory(category);
+      setViewMode('category');
+      console.log(viewMode);
+    } catch (error) {
+      console.error('Error fetching businesses by category:', error);
+    }
+  };
+
   const handleSearch = (query) => {
     setSearchQuery(query);
+    setViewMode(query === '' ? 'all' : 'search');
     if (query === "") {
       setFilteredBusinesses([]);
     } else {
@@ -159,12 +189,92 @@ export default function Businesses() {
           </Link>
         </Box>
 
-        <Box sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'center', p: 2}}>
-          <SearchIcon sx={{ color: 'action.active', mr: 1, my: 1.9 }} />
-          <TextField id="input-with-sx" sx={{ width: '30%' }} label="Busca tu restaurante favorito!" variant="outlined" onChange={(e) => handleSearch(e.target.value)} />
-        </Box>
+        {viewMode !== 'category' && (
+          <Box sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'center', p: 2}}>
+            <SearchIcon sx={{ color: 'action.active', mr: 1, my: 1.9 }} />
+            <TextField id="input-with-sx" sx={{ width: '30%' }} label="Busca tu restaurante favorito!" variant="outlined" onChange={(e) => handleSearch(e.target.value)} />
+          </Box>
+        )}
 
-        {searchQuery ? (
+        {viewMode === 'category' ? (
+          <Box sx={{ mt: 5 }}>
+            {/* Botón para regresar */}
+            <Box sx={{ display: 'flex', justifyContent: 'flex-start', mb: 2 }}>
+              <Button 
+                variant="contained" 
+                onClick={() => setViewMode('all')} 
+                startIcon={<ArrowBackIcon />} // Icono de flecha hacia atrás
+                sx={{
+                  textTransform: 'none', // Texto en formato natural
+                  fontFamily: "'Epilogue', sans-serif",
+                  fontSize: '1rem',
+                  backgroundColor: "#4C956C",
+                }}
+              >
+                Volver a Restaurantes
+              </Button>
+            </Box>
+          
+            {/* Título de la categoría */}
+            <Typography 
+              variant="h5" 
+              align="center" 
+              gutterBottom 
+              sx={{ fontFamily: "'Epilogue', sans-serif", mb: 2 }}
+            >
+              Restaurantes de {selectedCategory}
+            </Typography>
+          
+            {/* Ícono de la categoría */}
+            <Box 
+              sx={{ 
+                display: 'flex', 
+                justifyContent: 'center', 
+                mb: 4 // Espaciado adicional debajo del ícono
+              }}
+            >
+              <Box
+                sx={{
+                  width: 100,
+                  height: 100,
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <img 
+                  src={categories.find(cat => cat.label === selectedCategory)?.icon} 
+                  alt={selectedCategory} 
+                  style={{ width: '70%', height: '70%', objectFit: 'contain' }} 
+                />
+              </Box>
+            </Box>
+          
+            {/* Grid de restaurantes */}
+            <Grid container spacing={2} justifyContent="center">
+              {businesses.map((business, index) => (
+                <Grid 
+                  key={index} 
+                  item 
+                  xs={12} 
+                  sm={6} 
+                  md={3} 
+                  sx={{ display: 'flex', justifyContent: 'center' }}
+                >
+                  <BusinessCard
+                    image={business.Business_Logo_Url}
+                    onClick={() => handleBusinessClicked(business)}
+                    title={business.Business_Name}
+                    location={business.Business_Address}
+                    city={business.Business_City}
+                    schedule={`Horarios: ${business.Business_Hours}`}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        ) : viewMode === 'search' ? (
           <Box sx={{ mt: 5 }}>
             <Typography variant="h5" align="center" gutterBottom sx={{ fontFamily: "'Epilogue', sans-serif" }}>
               Resultados de búsqueda
@@ -172,20 +282,12 @@ export default function Businesses() {
             <Grid container spacing={2} justifyContent="center">
               {filteredBusinesses.length > 0 ? (
                 filteredBusinesses.map((business, index) => (
-                  <Grid
-                    key={index}
-                    item
-                    xs={12}
-                    sm={6}
-                    md={3}
-                    sx={{ display: 'flex', justifyContent: 'center' }}
-                  >
+                  <Grid key={index} item xs={12} sm={6} md={3} sx={{ display: 'flex', justifyContent: 'center' }}>
                     <BusinessCard
                       image={business.Business_Logo_Url}
                       onClick={() => handleBusinessClicked(business)}
                       title={business.Business_Name}
                       location={business.Business_Address}
-                      city={business.Business_City}
                       rating={business.Business_Type}
                       schedule={`Horarios: ${business.Business_Hours}`}
                     />
@@ -199,12 +301,12 @@ export default function Businesses() {
         ) : (
           <>
             {/* "Restaurantes Recomendados" Section */}
-            <Box sx={{ mt: 1 }}>
-              <Typography variant="h5" align="center" gutterBottom sx={{ fontFamily: "'Epilogue', sans-serif", fontWeight: 500, paddingRight: 120}}>
+            <Box sx={{ mt: 4 }}>
+              <Typography variant="h5" align="center" gutterBottom sx={{ fontFamily: "'Epilogue', sans-serif", fontWeight: 500}}>
                 Restaurantes Recomendados para ti!!
               </Typography>
 
-              <Box sx={{ display: 'flex', alignItems: 'center', mt: 2}}>
+              <Box sx={{ display: 'flex', alignItems: 'center', mt: 3}}>
                 {showLeftArrow && (
                   <IconButton onClick={scrollLeft}>
                     <ArrowBackIcon />
@@ -242,13 +344,48 @@ export default function Businesses() {
               </Box>
             </Box>
 
+            {/* Categories Section */}
+
+            <Typography variant="h5" align="center" gutterBottom sx={{ fontFamily: "'Epilogue', sans-serif", fontWeight: 500, mb: 5, mt: 10}}>
+                Qué tipo de comida quieres salvar hoy??
+            </Typography>
+
+            <Box sx={{ display: 'flex', justifyContent: 'center', gap: 12, mt: 5 }}>
+              {categories.map((category) => (
+                <IconButton
+                  key={category.label}
+                  sx={{
+                    backgroundColor: '#f1f1f1',
+                    borderRadius: '50%',
+                    width: 110, // Aumentar el tamaño al doble
+                    height: 110,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', // Agregar sombra para un diseño más atractivo
+                    transition: 'transform 0.3s ease',
+                    '&:hover': {
+                      transform: 'scale(1.1)', // Efecto de agrandar al pasar el mouse
+                    },
+                  }}
+                  onClick={() => fetchBusinessesByCategory(category.label)}
+                >
+                  <img 
+                    src={category.icon} 
+                    alt={category.label} 
+                    style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
+                  />
+                </IconButton>
+              ))}
+            </Box>
+
             {/* "Todos los restaurantes" Section */}
-            <Box sx={{ mt: 5 }}>
-              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 2,  }}>
-                <Typography variant="h5" align="center" gutterBottom sx={{ fontFamily: "'Epilogue', sans-serif", fontWeight: 500 }}>
+            <Box sx={{ mt: 10 }}>
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 2, mt: 6 }}>
+                <Typography variant="h5" align="center" gutterBottom sx={{ fontFamily: "'Epilogue', sans-serif", fontWeight: 500}}>
                   Todos los restaurantes
                 </Typography>
-                <IconButton onClick={handleClickOpen}>
+                <IconButton onClick={handleClickOpen} >
                   <FilterListIcon />
                 </IconButton>
               </Box>

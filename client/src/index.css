@@ -5,6 +5,7 @@
 body {
     margin: 0;
     padding: 0;
+    background: linear-gradient(to bottom,#f8f9fa, #b3d4c2);
 }
 
 .epilogue-font {

@@ -102,7 +102,7 @@ const MapV2 = () => {
               const geocodeResponse = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
                 params: {
                   address: business.Business_Address,
-                  key: 'AIzaSyBbOxklM1Vcm_wT6wzSnhKJa4LvR1jvYnk', // Inserta aquí tu clave segura
+                  key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY, // Inserta aquí tu clave segura
                 },
               });
               const location = geocodeResponse.data.results[0]?.geometry.location;
@@ -146,7 +146,7 @@ const MapV2 = () => {
 
 
   return (
-    <APIProvider apiKey="AIzaSyBbOxklM1Vcm_wT6wzSnhKJa4LvR1jvYnk">
+    <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
       <Map
         defaultZoom={13.5}
         defaultCenter={{ lat: 6.249316, lng: -75.560616 }}

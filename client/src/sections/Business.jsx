@@ -3,26 +3,26 @@ import BottomNavBar from '../components/BottomNavBar';
 import ProductCard from '../components/ProductCard';
 import { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid2';
-import { Box, Typography, Divider } from '@mui/material';
-import { useNavigate, useParams, Link } from 'react-router-dom'; // useParams to get route params
+import { Box, Typography, Divider, Button } from '@mui/material';
+import { useNavigate, useParams, Link } from 'react-router-dom'; 
 import axios from 'axios';
 import Logo2 from '../assets/images/Logo Sasa-2.png';
-import SurpriseBoxCard from '../components/SurpriseBoxCard'; // The new component for displaying surprise boxes
+import SurpriseBoxCard from '../components/SurpriseBoxCard'; 
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export default function Business() {
-  const { businessId } = useParams(); // Get businessId from route parameters
+  const { businessId } = useParams(); 
+  const navigate = useNavigate();
 
   const [products, setProducts] = useState([]);
   const [surpriseBoxContent, setSurpriseBoxContent] = useState([]);
 
-  // Function to fetch products for the specific businessId
   const fetchProducts = async () => {
     console.log("Fetching products");
 
     const encodedBusinessId = encodeURIComponent(businessId);
 
     try {
-      // Update URL to include businessId
       const response = await axios.get(`http://localhost:5000/businesses/${encodedBusinessId}/products`);
       setProducts(response.data);  // Assuming response.data contains the list of products
       console.log(response.data);
@@ -58,8 +58,28 @@ export default function Business() {
     console.log("Surprise Box clicked:", surpriseBox);
   };
 
+  const handleGoBack = () => {
+    navigate('/businesses'); // Redirige a la ruta de /businesses
+  };
+
   return (
     <div style={{ paddingLeft: '30px', paddingRight: '30px', paddingTop: '100px', paddingBottom: '100px' }}>
+
+      <Box sx={{ display: 'flex', justifyContent: 'flex-start', mb: 2 }}>
+        <Button 
+          variant="contained" 
+          onClick={handleGoBack} 
+          startIcon={<ArrowBackIcon />} // Icono de flecha hacia atrás
+          sx={{
+            textTransform: 'none', // Texto en formato natural
+            fontFamily: "'Epilogue', sans-serif",
+            fontSize: '1rem',
+            backgroundColor: "#4C956C",
+          }}
+        >
+          Volver a Restaurantes
+        </Button>
+      </Box>
 
       {/* Top bar */}
       <Box

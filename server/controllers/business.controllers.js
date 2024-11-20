@@ -144,3 +144,19 @@ export const getBusinessMapInfo = async (req, res) => {
   }
 }
 
+export const getBusinessesByCategory = async (req, res) => {
+  try{
+    const category = req.params.category;
+    const result = await SasaModel.scan().filter("GS2_PK").beginsWith("user#").filter("Business_Localization").eq(category)
+    .filter('GS2_PK').beginsWith('user#')
+    .attributes(['Business_Name', 'Business_Address', 'Business_City', 'Business_Country', 'Business_Hours', "Business_Logo_Url"])
+    .exec();
+    res.status(200).json(result);
+  } catch(error){
+    console.error('Error fetching business info', error);
+    res.status(500).json({ message: 'Error fetching biz info' });
+  }
+
+}
+
+//.beginsWith("user#")

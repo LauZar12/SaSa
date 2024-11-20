@@ -148,68 +148,77 @@ export default function Auth() {
   };
 
   const handleRegister = async () => {
-    if (businessType === 0) {
-      setBusinessType(0); // Ensure it stays as 0 if no selection is made
-    }
-
+    // Verifica si el businessName está definido
+    const isBusinessValid = businessName && businessName.trim() !== ""; 
+  
     const clientData = {
       User_Name: username,
       Email: email,
       Password: password,
       Role: 'client',
     };
-    const adminData = {
+  
+    let adminData = {
       User_Name: username,
       Email: email,
       Password: password,
       Role: 'admin',
-      Business_Name: isBusiness ? businessName : undefined,
-      Business_Type: isBusiness ? businessType : undefined,
-      Business_City: isBusiness ? 'None' : undefined,
-      Business_Address: isBusiness ? 'None' : undefined,
-      Business_Hours: isBusiness ? 'None' : undefined,
-      Business_Localization: isBusiness ? 'None' : undefined
+      Business_Name: isBusinessValid ? businessName : undefined,
+      Business_Type: isBusinessValid ? businessType : undefined,
+      Business_City: isBusinessValid ? 'None' : undefined,
+      Business_Address: isBusinessValid ? 'None' : undefined,
+      Business_Hours: isBusinessValid ? 'None' : undefined,
     };
-
-    // Ensure businessName exists before setting isBusiness to true
-    if (businessName) {
-      setIsBusiness(true);
-
-      try {
-        const response = await axios.post('http://localhost:5000/auth/register', adminData, {
-          headers: {
-            'Content-Type': 'application/json',
+  
+    try {
+      if (isBusinessValid) {
+        // Si es negocio, realiza la clasificación usando OpenAI
+        const openAIPrompt = `
+          Dado el nombre del negocio: "${businessName}", 
+          clasifícalo en una de las siguientes categorías: hamburguesa, pizza, pollo, café, alitas, postre, panadería. 
+          Responde solo con una palabra de las opciones mencionadas.
+          Y en caso de que consideres que no aplica para ninguna responde solo con la palabra 'None'.
+        `;
+  
+        const openAIResponse = await axios.post(
+          "https://api.openai.com/v1/chat/completions",
+          {
+            model: "gpt-3.5-turbo",
+            messages: [{ role: "user", content: openAIPrompt }],
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`, // Reemplaza por tu clave
+              "Content-Type": "application/json",
+            },
           }
-        });
-
-        console.log('User registered successfully:', response.data);
-        toggleForm();
-
-      } catch (error) {
-        console.error('Error registering user:', error.response ? error.response.data : error.message);
+        );
+  
+        const category = openAIResponse.data.choices[0].message.content.trim().toLowerCase();
+        adminData.Business_Localization = category;
+  
+        console.log("Categoría asignada por OpenAI:", category);
       }
-    } else {
-      setIsBusiness(false);
-
-      try {
-        const response = await axios.post('http://localhost:5000/auth/register', clientData, {
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        });
-
-        console.log('User registered successfully:', response.data);
-        toggleForm();
-
-      } catch (error) {
-        console.error('Error registering user:', error.response ? error.response.data : error.message);
-      }
+  
+      // Decide qué datos enviar (cliente o admin)
+      const dataToSend = isBusinessValid ? adminData : clientData;
+  
+      // Realiza la solicitud de registro
+      const response = await axios.post('http://localhost:5000/auth/register', dataToSend, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      console.log('User registered successfully:', response.data);
+      alert("Registro exitoso");
+      toggleForm();
+    } catch (error) {
+      console.error('Error registering user:', error.response ? error.response.data : error.message);
+      alert("Hubo un problema registrando el negocio. Por favor, intenta de nuevo.");
     }
-
-    console.log('Registering with businessType:', businessType);
-
   };
-
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -408,7 +417,7 @@ export default function Auth() {
                       marginTop={4}
                       fontFamily='Epilogue'
                     >
-                      INICIAR SESIÓN
+                      Iniciar Sesión
                     </ButtonIndex>
                   </Box>
                   <Button
@@ -713,7 +722,7 @@ export default function Auth() {
                             },
                           }}
                         >
-                          ATRÁS
+                          Atrás
                         </Button>
                         <Box sx={{ flex: "1 1 auto" }} />
                         {isStepOptional(activeStep) && (
