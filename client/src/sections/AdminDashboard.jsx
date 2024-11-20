@@ -18,7 +18,7 @@ import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 
-import Logo2 from '../assets/images/Logo-Sasa-2.png';
+import Logo2 from '../assets/images/Logo-SaSa-2.png';
 import AdminProductCard from '../components/AdminProductCard';
 import AdminSurpriseBoxCard from '../components/AdminSurpriseBox';
 import BusinessCardV2 from '../components/BusinessCardV2';

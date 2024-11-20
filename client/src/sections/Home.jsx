@@ -5,7 +5,7 @@ import '../index.css';
 import { useNavigate } from 'react-router-dom';
 
 // Import your logo image
-import Logo from '../assets/images/Logo-Sasa-1.png';
+import Logo from '../assets/images/Logo-SaSa-1.png';
 import Help from '../assets/images/HELP.png';
 import Porvenir from '../assets/images/ContactImages/Donations/El Porvenir.webp';
 
