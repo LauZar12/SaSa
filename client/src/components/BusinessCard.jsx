@@ -8,39 +8,79 @@ import Box from '@mui/material/Box';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import StarIcon from '@mui/icons-material/Star';
 import ScheduleIcon from '@mui/icons-material/Schedule';
-import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import '../index.css';
 
 export default function BusinessCard({ image, title, location, rating, schedule, onClick, width = '400px' }) {
     return (
-        <ButtonBase sx={{ display: 'block', textAlign: 'inherit', width, borderRadius: '20px' }} onClick={onClick}>
-            <Card sx={{ width: 400, height: 315, backgroundColor: '#4C956C', boxShadow: 0.5, flexDirection: 'column', marginBottom: 2 }}>
+        <ButtonBase
+            sx={{
+                display: 'block',
+                textAlign: 'inherit',
+                width,
+                borderRadius: '20px',
+                transition: 'transform 0.3s ease',
+                '&:hover': { transform: 'scale(1.02)' }
+            }}
+            onClick={onClick}
+        >
+            <Card
+                sx={{
+                    width: 400,
+                    height: 320,
+                    backgroundColor: '#ffffff',
+                    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
+                    borderRadius: '20px',
+                    overflow: 'hidden',
+                    marginBottom: 2,
+                }}
+            >
                 <CardMedia
-                    sx={{ height: 140, objectFit: 'cover' }}
+                    sx={{
+                        height: 140,
+                        objectFit: 'cover',
+                        transition: 'transform 0.5s ease',
+                        '&:hover': { transform: 'scale(1.1)' },
+                    }}
                     image={image}
                     title={title}
                     component="img"
                 />
-                <CardContent sx={{ 
-                    flex: 1, // Permite que el contenido se ajuste al espacio restante
-                    overflow: 'hidden', // Oculta contenido desbordante
-                    textOverflow: 'ellipsis' // Añade puntos suspensivos si el texto es muy largo
-                    }}>
-                    <Typography gutterBottom variant="h5" component="div" fontFamily='Epilogue' fontWeight='bold' color='#FFFFFF'>
+                <CardContent
+                    sx={{
+                        flex: 1,
+                        overflow: 'hidden',
+                        padding: '16px',
+                        textOverflow: 'ellipsis',
+                    }}
+                >
+                    <Typography
+                        gutterBottom
+                        variant="h6"
+                        component="div"
+                        fontFamily="'Lato', sans-serif"
+                        fontWeight="bold"
+                        color="#333333"
+                    >
                         {title}
                     </Typography>
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', color: '#4C956C' }}>
                             <LocationOnIcon sx={{ mr: 1 }} />
-                            <Typography variant="body2" color='#FFFFFF' noWrap>{location}</Typography>
+                            <Typography variant="body2" noWrap>
+                                {location}
+                            </Typography>
                         </Box>
-                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', color: '#FFC107' }}>
                             <StarIcon sx={{ mr: 1 }} />
-                            <Typography variant="body2" color='#FFFFFF' noWrap>{rating}</Typography>
+                            <Typography variant="body2" noWrap>
+                                {rating}
+                            </Typography>
                         </Box>
-                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', color: '#6C757D' }}>
                             <ScheduleIcon sx={{ mr: 1 }} />
-                            <Typography variant="body2" color='#FFFFFF' noWrap>{schedule}</Typography>
+                            <Typography variant="body2" noWrap>
+                                {schedule}
+                            </Typography>
                         </Box>
                     </Box>
                 </CardContent>
