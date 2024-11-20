@@ -20,11 +20,12 @@ import { useState } from "react";
 import TextFieldIndex from "../components/TextFieldIndex";
 import ButtonIndex from "../components/ButtonIndex";
 import SelectFieldIndex from "../components/SelectFieldIndex";
+import Logo1 from '../assets/images/Logo Sasa-1.png';
 import '../index.css';
 
 import Cookies from 'js-cookie';
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Auth() {
   const navigate = useNavigate();
@@ -147,68 +148,77 @@ export default function Auth() {
   };
 
   const handleRegister = async () => {
-    if (businessType === 0) {
-      setBusinessType(0); // Ensure it stays as 0 if no selection is made
-    }
-
+    // Verifica si el businessName está definido
+    const isBusinessValid = businessName && businessName.trim() !== ""; 
+  
     const clientData = {
       User_Name: username,
       Email: email,
       Password: password,
       Role: 'client',
     };
-    const adminData = {
+  
+    let adminData = {
       User_Name: username,
       Email: email,
       Password: password,
       Role: 'admin',
-      Business_Name: isBusiness ? businessName : undefined,
-      Business_Type: isBusiness ? businessType : undefined,
-      Business_City: isBusiness ? 'None' : undefined,
-      Business_Address: isBusiness ? 'None' : undefined,
-      Business_Hours: isBusiness ? 'None' : undefined,
-      Business_Localization: isBusiness ? 'None' : undefined
+      Business_Name: isBusinessValid ? businessName : undefined,
+      Business_Type: isBusinessValid ? businessType : undefined,
+      Business_City: isBusinessValid ? 'None' : undefined,
+      Business_Address: isBusinessValid ? 'None' : undefined,
+      Business_Hours: isBusinessValid ? 'None' : undefined,
     };
-
-    // Ensure businessName exists before setting isBusiness to true
-    if (businessName) {
-      setIsBusiness(true);
-
-      try {
-        const response = await axios.post('http://localhost:5000/auth/register', adminData, {
-          headers: {
-            'Content-Type': 'application/json',
+  
+    try {
+      if (isBusinessValid) {
+        // Si es negocio, realiza la clasificación usando OpenAI
+        const openAIPrompt = `
+          Dado el nombre del negocio: "${businessName}", 
+          clasifícalo en una de las siguientes categorías: hamburguesa, pizza, pollo, café, alitas, postre, panadería. 
+          Responde solo con una palabra de las opciones mencionadas.
+          Y en caso de que consideres que no aplica para ninguna responde solo con la palabra 'None'.
+        `;
+  
+        const openAIResponse = await axios.post(
+          "https://api.openai.com/v1/chat/completions",
+          {
+            model: "gpt-3.5-turbo",
+            messages: [{ role: "user", content: openAIPrompt }],
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`, // Reemplaza por tu clave
+              "Content-Type": "application/json",
+            },
           }
-        });
-
-        console.log('User registered successfully:', response.data);
-        toggleForm();
-
-      } catch (error) {
-        console.error('Error registering user:', error.response ? error.response.data : error.message);
+        );
+  
+        const category = openAIResponse.data.choices[0].message.content.trim().toLowerCase();
+        adminData.Business_Localization = category;
+  
+        console.log("Categoría asignada por OpenAI:", category);
       }
-    } else {
-      setIsBusiness(false);
-
-      try {
-        const response = await axios.post('http://localhost:5000/auth/register', clientData, {
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        });
-
-        console.log('User registered successfully:', response.data);
-        toggleForm();
-
-      } catch (error) {
-        console.error('Error registering user:', error.response ? error.response.data : error.message);
-      }
+  
+      // Decide qué datos enviar (cliente o admin)
+      const dataToSend = isBusinessValid ? adminData : clientData;
+  
+      // Realiza la solicitud de registro
+      const response = await axios.post('http://localhost:5000/auth/register', dataToSend, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      console.log('User registered successfully:', response.data);
+      alert("Registro exitoso");
+      toggleForm();
+    } catch (error) {
+      console.error('Error registering user:', error.response ? error.response.data : error.message);
+      alert("Hubo un problema registrando el negocio. Por favor, intenta de nuevo.");
     }
-
-    console.log('Registering with businessType:', businessType);
-
   };
-
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -285,6 +295,27 @@ export default function Auth() {
 
   return (
     <div className="authgradient" style={{ height: '100vh', width: '100vw' }}>
+      <Box
+        sx={{
+          mb: 30,
+          height: '80px',
+          width: '100%',
+          top: 0,
+          left: 0,
+          p: 0,
+          overflow: 'hidden',
+          position: 'fixed',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000
+        }}
+      >
+        <Link to="/">
+          <img src={Logo1} alt="Logo" style={{ height: '50px', cursor: 'pointer' }} />
+        </Link>
+      </Box>
+
       <Container maxWidth={false}>
         <Grid item xs={1} sm={1} md={1}>
           {isLogin ? (
@@ -299,7 +330,7 @@ export default function Auth() {
                   py: { xs: 1, sm: 2 }, // Responsive vertical padding
                 }}
               >
-                <Card variant="outlined" sx={{ p: 3, maxWidth: 600, mx: "auto" }}>
+                <Card variant="outlined" sx={{ p: 3, maxWidth: 600, mx: "auto", }}>
                   <Box
                     sx={{
                       display: "flex",
@@ -319,7 +350,7 @@ export default function Auth() {
                       component="div"
                       sx={{
                         mb: 2,
-                        fontFamily: "Roboto",
+                        fontFamily: "Epilogue",
                         fontWeight: "bold",
                         fontSize: { xs: "1.5rem", sm: "2rem" }, // Responsive font size
                       }}
@@ -331,7 +362,7 @@ export default function Auth() {
                       component="div"
                       sx={{
                         fontSize: { xs: "0.875rem", sm: "1rem" }, // Responsive font size
-                        fontFamily: "Roboto",
+                        fontFamily: "Epilogue",
                         textAlign: "center",
                         lineHeight: 1.5,
                       }}
@@ -386,23 +417,23 @@ export default function Auth() {
                       marginTop={4}
                       fontFamily='Epilogue'
                     >
-                      INICIAR SESIÓN
+                      Iniciar Sesión
                     </ButtonIndex>
                   </Box>
                   <Button
                     onClick={toggleForm}
                     variant="text"
-                    color="black" // Note: 'black' should be lowercase
+                    color="black" 
                     sx={{
                       mt: 2,
-                      fontWeight: "bold", // Apply bold font weight
+                      fontWeight: "bold", 
                       fontFamily: 'Epilogue',
-                      textDecoration: "underline", // Apply underline to the text
-                      textTransform: "none", // Prevent text from being uppercase (default behavior in Material-UI buttons)
-                      color: "#000000", // Ensure the text color is black
+                      textDecoration: "underline", 
+                      textTransform: "none", 
+                      color: "#000000", 
                     }}
                   >
-                    ¿No tienes una cuenta? Únete a nosotros
+                    ¿No tienes una cuenta? Registrate aquí!
                   </Button>
                 </Card>
               </Box>
@@ -491,7 +522,7 @@ export default function Auth() {
                           mr: 5,
                           ml: 5,
                           fontSize: { xs: "0.875rem", sm: "1rem" }, // Responsive font size
-                          fontFamily: "Roboto",
+                          fontFamily: "Epilogue",
                           fontWeight: "bold",
                           textAlign: "center",
                           color: "#212121",
@@ -691,7 +722,7 @@ export default function Auth() {
                             },
                           }}
                         >
-                          ATRÁS
+                          Atrás
                         </Button>
                         <Box sx={{ flex: "1 1 auto" }} />
                         {isStepOptional(activeStep) && (

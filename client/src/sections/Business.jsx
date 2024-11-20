@@ -1,27 +1,28 @@
 import React from 'react';
 import BottomNavBar from '../components/BottomNavBar';
-import BusinessCard from '../components/BusinessCard';
+import ProductCard from '../components/ProductCard';
 import { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid2';
-import { Box } from '@mui/material';
-import { useNavigate, useParams, Link } from 'react-router-dom'; // useParams to get route params
+import { Box, Typography, Divider, Button } from '@mui/material';
+import { useNavigate, useParams, Link } from 'react-router-dom'; 
 import axios from 'axios';
 import Logo2 from '../assets/images/Logo Sasa-2.png';
-import ProductCard from '../components/ProductCard';
+import SurpriseBoxCard from '../components/SurpriseBoxCard'; 
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export default function Business() {
-  const { businessId } = useParams(); // Get businessId from route parameters
+  const { businessId } = useParams(); 
+  const navigate = useNavigate();
 
   const [products, setProducts] = useState([]);
+  const [surpriseBoxContent, setSurpriseBoxContent] = useState([]);
 
-  // Function to fetch products for the specific businessId
   const fetchProducts = async () => {
     console.log("Fetching products");
 
     const encodedBusinessId = encodeURIComponent(businessId);
 
     try {
-      // Update URL to include businessId
       const response = await axios.get(`http://localhost:5000/businesses/${encodedBusinessId}/products`);
       setProducts(response.data);  // Assuming response.data contains the list of products
       console.log(response.data);
@@ -30,9 +31,20 @@ export default function Business() {
     }
   };
 
+  const fetchSurpriseBox = async () => {
+    console.log("Fetching surprise box");
+
+    const encodedBusinessId = encodeURIComponent(businessId);
+
+    const response = await axios.get(`http://localhost:5000/admin/businesses/${encodedBusinessId}/surprise-boxes`);
+    setSurpriseBoxContent(response.data.result || []);
+    console.log("Surprise boxes:", response.data.result);
+  };
+
   useEffect(() => {
     if (businessId) {
       fetchProducts(); // Fetch products when the component mounts
+      fetchSurpriseBox();
     }
   }, [businessId]);
 
@@ -41,50 +53,86 @@ export default function Business() {
     console.log("Product clicked:", product);
   };
 
+  const handleSurpriseBoxClicked = (surpriseBox) => {
+    // Implement the logic for handling the surprise box click event
+    console.log("Surprise Box clicked:", surpriseBox);
+  };
+
+  const handleGoBack = () => {
+    navigate('/businesses'); // Redirige a la ruta de /businesses
+  };
+
   return (
-    <div style={{ paddingLeft: '30px', paddingRight: '30px', paddingTop: '100px', paddingBottom: '100px' }}>
+    <div style={{ paddingLeft: '30px', paddingRight: '30px', paddingTop: '100px', paddingBottom: '100px', minHeight: '100vh' }}>
+
+      <Box sx={{ display: 'flex', justifyContent: 'flex-start', mb: 2 }}>
+        <Button 
+          variant="contained" 
+          onClick={handleGoBack} 
+          startIcon={<ArrowBackIcon />} // Icono de flecha hacia atrás
+          sx={{
+            textTransform: 'none', // Texto en formato natural
+            fontFamily: "'Epilogue', sans-serif",
+            fontSize: '1rem',
+            backgroundColor: "#4C956C",
+          }}
+        >
+          Volver a Restaurantes
+        </Button>
+      </Box>
 
       {/* Top bar */}
       <Box
         sx={{
           bgcolor: '#4C956C',
           height: '80px',
-          width: '100%', // Ensure the bar covers the full width of the screen
-          top: 0, // Stick to the top of the screen
-          left: 0, // Stick to the left side
-          p: 0, // Remove padding inside the box
+          width: '100%',
+          top: 0,
+          left: 0,
+          p: 0,
           overflow: 'hidden',
-          position: 'fixed', // Make it sticky
-          display: 'flex', // Align items horizontally
-          alignItems: 'center', // Vertically center the logo
-          justifyContent: 'center', // Horizontally center the logo (optional)
-          zIndex: 1000 // Ensure it's above other elements
+          position: 'fixed',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000
         }}
       >
-        {/* Logo inside the top bar */}
-        <Link to = "/">
-          <img src={Logo2} alt="Logo" style={{ height: '50px' }} /> 
+        <Link to="/">
+          <img src={Logo2} alt="Logo" style={{ height: '50px' }} />
         </Link>
       </Box>
 
+      {/* h2 title for the products */}
+      <Typography variant="h4" sx={{
+        marginTop: '10px',
+        marginBottom: '30px',
+        color: '#666666',
+        fontWeight: 'bold',
+        textAlign: 'center'
+      }}>
+        Todos los productos
+      </Typography>
+
+      {/* Products Grid */}
       <Grid container spacing={2} justifyContent="center">
         {Array.isArray(products) && products.length > 0 ? (
           products.map((product, index) => (
             <Grid
               key={index}
               item
-              xs={12} // 1 column on small devices
-              sm={12}  // 1 column on medium devices
-              md={2}  // 4 columns on larger devices
-              sx={{ display: 'flex', justifyContent: 'center' }} // Center each card
+              xs={12}
+              sm={12}
+              md={2}
+              sx={{ display: 'flex', justifyContent: 'center' }}
             >
               <ProductCard
-                image={'https://www.distrecol.com/wp-content/themes/456repair/assets//img/no-product-image.png'} // Ensure this field exists in your product data
+                image={'https://www.distrecol.com/wp-content/themes/456repair/assets//img/no-product-image.png'}
                 onClick={() => handleProductClicked(product)}
                 title={product.Product_Name}
-                discount={product.Discount} // Assuming discount is available in your product data
-                price={product.Price} // Assuming price is available in your product data
-                description={product.Product_Description} // Assuming description is available in your product data
+                discount={product.Discount}
+                price={product.Price}
+                description={product.Product_Description}
                 width={{
                   xs: '300px',
                   sm: '350px',
@@ -94,9 +142,58 @@ export default function Business() {
             </Grid>
           ))
         ) : (
-          <p>No products available</p>
+          <Typography variant="h6" sx={{ textAlign: 'center', width: '100%' }}>
+            No hay productos disponibles
+          </Typography>
         )}
       </Grid>
+
+      {/* Divider line */}
+      <Divider sx={{ marginTop: '40px', marginBottom: '40px' }} />
+
+      {/* h2 title for the surprise boxes */}
+      <Typography variant="h4" sx={{
+        marginTop: '10px',
+        marginBottom: '30px',
+        color: '#666666',
+        fontWeight: 'bold',
+        textAlign: 'center'
+      }}>
+        Cajas sorpresas
+      </Typography>
+
+      {/* Surprise Boxes Grid */}
+      <Grid container spacing={2} justifyContent="center" sx={{ marginTop: '30px' }}>
+        {Array.isArray(surpriseBoxContent) && surpriseBoxContent.length > 0 ? (
+          surpriseBoxContent.map((surpriseBox, index) => (
+            <Grid
+              key={index}
+              item
+              xs={12}
+              sm={12}
+              md={2}
+              sx={{ display: 'flex', justifyContent: 'center' }}
+            >
+              <SurpriseBoxCard
+                title={surpriseBox.Product_Name}
+                price={surpriseBox.Price}
+                count={surpriseBox.Available_Quantity}
+                onClick={() => handleSurpriseBoxClicked(surpriseBox)}
+                width={{
+                  xs: '225px',
+                  sm: '275px',
+                  md: '325px',
+                }}
+              />
+            </Grid>
+          ))
+        ) : (
+          <Typography variant="h6" sx={{ textAlign: 'center', width: '100%' }}>
+            No hay cajas sorpresas disponibles
+          </Typography>
+        )}
+      </Grid>
+
       <BottomNavBar />
     </div>
   );

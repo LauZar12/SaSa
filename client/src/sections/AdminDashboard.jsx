@@ -15,6 +15,7 @@ import Cookies from 'js-cookie';
 import SaveIcon from '@mui/icons-material/Save';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
+import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 
 import Logo2 from '../assets/images/Logo Sasa-2.png';
 import AdminProductCard from '../components/AdminProductCard';
@@ -26,9 +27,18 @@ import CreateSurpriseBox from './CreateSurpriseBox';
 import EditSurpriseBox from './EditSurpriseBox';
 import EditBusiness from './EditBusiness';
 
+import { useNavigate } from 'react-router-dom';
+import EditLocation from './EditLocation';
+
 const drawerWidth = 240;
 
 export default function AdminDashboard() {
+  const navigate = useNavigate();
+
+  const handleDonationNavigate = () => {
+    navigate('/donations');
+  };
+  
   const [mobileOpen, setMobileOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('Negocio');
   const [businessContent, setBusinessContent] = useState(null);
@@ -199,28 +209,42 @@ export default function AdminDashboard() {
     switch (selectedOption) {
       case 'Negocio':
         return (
-          <Box p={3}>
-            <Typography variant="h4" gutterBottom>
-              Información del Negocio
-            </Typography>
-
-            <Button
-              variant="contained"
-              color="primary"
-              position="absolute"
-              startIcon={<EditIcon />}
-              onClick={handleEditBusiness}
-              sx={{ mt: 2, mb: 5 }}
+          <Box
+            sx={{
+              height: '80vh', 
+              display: 'flex', 
+              alignItems: 'center', 
+            }}
+          >
+            <Box 
+              p={4} 
+              sx={{ 
+                display: 'flex', 
+                gap: 4, 
+                alignItems: 'center', 
+              }}
             >
-              Editar Negocio
-            </Button>
-      
-            {businessContent && businessContent.length > 0 ? (
-              <BusinessCardV2 business={businessContent[0]} />
-            ) : (
-              'Cargando información del negocio...'
-            )}
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  startIcon={<EditIcon />}
+                  onClick={handleEditBusiness}
+                >
+                  Editar Negocio
+                </Button>
 
+                <EditLocation />
+              </Box>
+              
+              <Box sx={{ flexGrow: 1, justifyContent: 'center', }}>
+                {businessContent && businessContent.length > 0 ? (
+                  <BusinessCardV2 business={businessContent[0]} />
+                ) : (
+                  <Typography variant="body1">Cargando información del negocio...</Typography>
+                )}
+              </Box>
+            </Box>
           </Box>
         );
       case 'Productos':

@@ -14,9 +14,6 @@ const ddb = new dynamoose.aws.ddb.DynamoDB({
     "region": process.env.AWS_DEFAULT_REGION
   });
 
-
-
-
 export default ddb;
 
 // funcion para testear la conexion con DynamoDB en la nube

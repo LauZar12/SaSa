@@ -5,6 +5,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import Cookies from 'js-cookie'; 
+import { CenterFocusStrong } from '@mui/icons-material';
 
 const EditBusiness = ({ open = false, handleClose }) => {
   const { businessId } = useParams();
@@ -99,14 +100,6 @@ const EditBusiness = ({ open = false, handleClose }) => {
               label="Ciudad"
               name="Business_City"
               value={business.Business_City}
-              onChange={handleChange}
-            />
-            <TextField
-              fullWidth
-              margin="normal"
-              label="Dirección"
-              name="Business_Address"
-              value={business.Business_Address}
               onChange={handleChange}
             />
             <TextField

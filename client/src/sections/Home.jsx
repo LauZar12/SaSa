@@ -214,37 +214,6 @@ export default function Home() {
                         fontSize={{
                             xs: '15px', sm: '15px', md: '19px', lg: '19px', xl: '25px'
                         }}
-                        onClick={() => navigate('/auth')}
-                        sx={{
-                            justifyContent: {
-                                xs: 'center',
-                                sm: 'center',
-                                md: 'left',
-                                lg: 'left',
-                                xl: 'left',
-                            },
-                            textAlign: {
-                                xs: 'center',
-                                sm: 'center',
-                                md: 'left',
-                                lg: 'left',
-                                xl: 'left',
-                            },
-                        }}>
-                        INICIAR SESIÓN
-                    </ButtonIndex>
-                    <br />
-                    <ButtonIndex variant="contained" padding="12px 20px" borderRadius="50px" backgroundColor="#737373" fontFamily='Epilogue'
-                        width={{
-                            xs: '100%',
-                            sm: '100%',
-                            md: '60%',
-                            lg: '50%',
-                            xl: '40%',
-                        }}
-                        fontSize={{
-                            xs: '15px', sm: '15px', md: '19px', lg: '19px', xl: '25px'
-                        }}
                         onClick={() => navigate('/businesses')}
                         sx={{
                             justifyContent: {
@@ -262,7 +231,38 @@ export default function Home() {
                                 xl: 'left',
                             },
                         }}>
-                        VER RESTAURANTES
+                        Ver Restaurantes
+                    </ButtonIndex>
+                    <br />
+                    <ButtonIndex variant="contained" padding="12px 20px" borderRadius="50px" backgroundColor="#737373" fontFamily='Epilogue'
+                        width={{
+                            xs: '100%',
+                            sm: '100%',
+                            md: '60%',
+                            lg: '50%',
+                            xl: '40%',
+                        }}
+                        fontSize={{
+                            xs: '15px', sm: '15px', md: '19px', lg: '19px', xl: '25px'
+                        }}
+                        onClick={() => navigate('/auth')}
+                        sx={{
+                            justifyContent: {
+                                xs: 'center',
+                                sm: 'center',
+                                md: 'left',
+                                lg: 'left',
+                                xl: 'left',
+                            },
+                            textAlign: {
+                                xs: 'center',
+                                sm: 'center',
+                                md: 'left',
+                                lg: 'left',
+                                xl: 'left',
+                            },
+                        }}>
+                        Iniciar Sesión
                     </ButtonIndex>
 
                 </Box>

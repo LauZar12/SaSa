@@ -159,19 +159,23 @@ export default function Businesses() {
                                 },
                             }}
                         >
-                            {businesses.slice(0, 5).map((business, index) => (
-                                <Box key={index} sx={{ width: `${cardWidth}px`, mx: 1 }}>
-                                    <BusinessCard
-                                        image={business.Business_Logo_Url}
-                                        onClick={() => handleBusinessClicked(business)}
-                                        title={business.Business_Name}
-                                        location={business.Business_Address}
-                                        city={business.Business_City}
-                                        rating={business.Business_Type}
-                                        schedule={`Horarios: ${business.Business_Hours}`}
-                                    />
-                                </Box>
-                            ))}
+                            {/* Filtra los negocios por Business_Type igual a Entidad sin animo de lucro */}
+                            {businesses
+                                .filter(business => business.Business_Type === 3) // Filtrado por Business_Type
+                                .map((business, index) => (
+                                    <Box key={index} sx={{ width: `${cardWidth}px`, mx: 1 }}>
+                                        <BusinessCard
+                                            image={business.Business_Logo_Url}
+                                            onClick={() => handleBusinessClicked(business)}
+                                            title={business.Business_Name}
+                                            location={business.Business_Address}
+                                            city={business.Business_City}
+                                            rating={business.Business_Type}
+                                            schedule={`Horarios: ${business.Business_Hours}`}
+                                        />
+                                    </Box>
+                                ))
+                            }
                         </Box>
                         <IconButton onClick={() => scrollRight(donationScrollRef)}>
                             <ArrowForwardIcon />
@@ -185,7 +189,7 @@ export default function Businesses() {
                         Fincas
                     </Typography>
                     <Typography variant='h6' align='center' gutterBottom color='#888888'>
-                        Aprovecha estos alimentos ofreciendolos para la alimentacion de animales
+                        Aprovecha estos alimentos ofreciendolos para la alimentacion de animales o para la ayuda en el campo
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <IconButton onClick={() => scrollLeft(farmsScrollRef)}>
@@ -203,19 +207,23 @@ export default function Businesses() {
                                 },
                             }}
                         >
-                            {businesses.slice(0, 5).map((business, index) => (
-                                <Box key={index} sx={{ width: `${cardWidth}px`, mx: 1 }}>
-                                    <BusinessCard
-                                        image={business.Business_Logo_Url}
-                                        onClick={() => handleBusinessClicked(business)}
-                                        title={business.Business_Name}
-                                        location={business.Business_Address}
-                                        city={business.Business_City}
-                                        rating={business.Business_Type}
-                                        schedule={`Horarios: ${business.Business_Hours}`}
-                                    />
-                                </Box>
-                            ))}
+                            {/* Filtra los negocios por Business_Type igual a Granja o Sector Agro */}
+                            {businesses
+                                .filter(business => business.Business_Type === 2) // Filtrado por Business_Type
+                                .map((business, index) => (
+                                    <Box key={index} sx={{ width: `${cardWidth}px`, mx: 1 }}>
+                                        <BusinessCard
+                                            image={business.Business_Logo_Url}
+                                            onClick={() => handleBusinessClicked(business)}
+                                            title={business.Business_Name}
+                                            location={business.Business_Address}
+                                            city={business.Business_City}
+                                            rating={business.Business_Type}
+                                            schedule={`Horarios: ${business.Business_Hours}`}
+                                        />
+                                    </Box>
+                                ))
+                            }
                         </Box>
                         <IconButton onClick={() => scrollRight(farmsScrollRef)}>
                             <ArrowForwardIcon />
@@ -229,7 +237,7 @@ export default function Businesses() {
                         Compostaje
                     </Typography>
                     <Typography variant='h6' align='center' gutterBottom color='#888888'>
-                        ¡Haz buen uso de ese desperdicio que no te genera valor y ayuda al desarrollo del campo!
+                        ¡Haz buen uso de ese desperdicio que no te genera valor y ayuda a Empresas a darle un mejor uso a los restos!
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <IconButton onClick={() => scrollLeft(compostScrollRef)}>
@@ -247,19 +255,23 @@ export default function Businesses() {
                                 },
                             }}
                         >
-                            {businesses.slice(0, 5).map((business, index) => (
-                                <Box key={index} sx={{ width: `${cardWidth}px`, mx: 1 }}>
-                                    <BusinessCard
-                                        image={business.Business_Logo_Url}
-                                        onClick={() => handleBusinessClicked(business)}
-                                        title={business.Business_Name}
-                                        location={business.Business_Address}
-                                        city={business.Business_City}
-                                        rating={business.Business_Type}
-                                        schedule={`Horarios: ${business.Business_Hours}`}
-                                    />
-                                </Box>
-                            ))}
+                            {/* Filtra los negocios por Business_Type igual a Empresa */}
+                            {businesses
+                                .filter(business => business.Business_Type === 1) // Filtrado por Business_Type
+                                .map((business, index) => (
+                                    <Box key={index} sx={{ width: `${cardWidth}px`, mx: 1 }}>
+                                        <BusinessCard
+                                            image={business.Business_Logo_Url}
+                                            onClick={() => handleBusinessClicked(business)}
+                                            title={business.Business_Name}
+                                            location={business.Business_Address}
+                                            city={business.Business_City}
+                                            rating={business.Business_Type}
+                                            schedule={`Horarios: ${business.Business_Hours}`}
+                                        />
+                                    </Box>
+                                ))
+                            }
                         </Box>
                         <IconButton onClick={() => scrollRight(compostScrollRef)}>
                             <ArrowForwardIcon />

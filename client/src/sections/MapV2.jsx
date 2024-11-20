@@ -7,8 +7,35 @@ import {
   Pin, 
   AdvancedMarker, 
   useMap,
-  InfoWindow} from '@vis.gl/react-google-maps';
+  InfoWindow 
+} from '@vis.gl/react-google-maps';
   
+const styles = {
+  overlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100vw',
+    height: '100vh',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fondo semitransparente
+    zIndex: 9999, // Asegura que esté por encima de todo
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modal: {
+    backgroundColor: 'white',
+    padding: '20px 40px',
+    borderRadius: '8px',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    textAlign: 'center',
+  },
+  text: {
+    margin: 0,
+    fontFamily: "'Epilogue', sans-serif",
+    color: '#333',
+  },
+};
 
 const PoiMarkers = (props) => {
   const map = useMap();
@@ -36,7 +63,7 @@ const PoiMarkers = (props) => {
           onClick={() => handleClick(poi)}
           title={poi.key}
         >
-          <Pin background={'#4C956C'} glyphColor={'White'} borderColor={'#283618'}/>
+          <Pin />
         </AdvancedMarker>
       ))}
 
@@ -75,7 +102,7 @@ const MapV2 = () => {
               const geocodeResponse = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
                 params: {
                   address: business.Business_Address,
-                  key: 'AIzaSyBbOxklM1Vcm_wT6wzSnhKJa4LvR1jvYnk', // Inserta aquí tu clave segura
+                  key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY, // Inserta aquí tu clave segura
                 },
               });
               const location = geocodeResponse.data.results[0]?.geometry.location;
@@ -107,32 +134,46 @@ const MapV2 = () => {
     fetchDataAndGeocode();
   }, []);
 
-  if (loading) return <div>Loading...</div>; // Opcional: mostrar un indicador de carga
+  if (loading) {
+    return (
+      <div style={styles.overlay}>
+        <div style={styles.modal}>
+          <h2 style={styles.text}>Cargando Mapa...</h2>
+        </div>
+      </div>
+    );
+  }
+
 
   return (
-    <APIProvider apiKey="AIzaSyBbOxklM1Vcm_wT6wzSnhKJa4LvR1jvYnk">
+    <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
       <Map
         defaultZoom={13.5}
         defaultCenter={{ lat: 6.249316, lng: -75.560616 }}
         style={{ width: '100vw', height: '100vh' }}
         gestureHandling="greedy"
         disableDefaultUI={true}
-        mapId="274f8ffa0113d548"
+        mapId="f84cb2d1ea92e997"
+        options={{
+          minZoom: 13, // Zoom mínimo
+          maxZoom: 16, // Zoom máximo
+          restriction: {
+            latLngBounds: {
+              north: 6.455, // Límite norte
+              south: 5.947, // Límite sur
+              west: -75.829, // Límite oeste
+              east: -75.338, // Límite este
+            },
+            strictBounds: true, // Restringir estrictamente al área
+          },
+        }}
       >
-        <PoiMarkers pois={locations} /> {/* Pasa las ubicaciones geocodificadas */}
+        <PoiMarkers pois={locations} /> 
       </Map>
     </APIProvider>
   );
 };
 
 export default MapV2;
-
-
-
-
-//     { address: "Las vegas con 7 sur, El Poblado, Medellín, Antioquia", lat: 6.199387481828809, lng: -75.57807649683409 },
-//     { address: "Calle 39B, Cq. 73B #N° - 67, Medellín, Antioquia", lat: 6.244928475806693, lng: -75.59537447538722 },
-//     { address: "Zona 1, Envigado, Antioquia", lat: 6.1781810867482605, lng: -75.59119123892503 }
-
 
 // <Pin background={'#FBBC04'} glyphColor={'#000'} borderColor={'#137333'} />
