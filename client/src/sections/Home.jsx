@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Box, Typography, Button, Container, Divider } from '@mui/material';
 import ButtonIndex from '../components/ButtonIndex';
-import Logo2 from '../assets/images/Logo Sasa-2.png';
+import Logo2 from '../assets/images/Logo SaSa-2.png';
 import '../index.css';
 import { useNavigate } from 'react-router-dom';
 
