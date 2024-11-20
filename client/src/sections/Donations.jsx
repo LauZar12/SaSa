@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid2';
 import { Box, Typography, IconButton, TextField } from '@mui/material';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import Logo2 from '../assets/images/Logo Sasa-2.png';
+import Logo2 from '../assets/images/Logo-Sasa-2.png';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import FilterDialog from '../components/Dialog';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';

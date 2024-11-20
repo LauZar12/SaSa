@@ -20,7 +20,7 @@ import { useState } from "react";
 import TextFieldIndex from "../components/TextFieldIndex";
 import ButtonIndex from "../components/ButtonIndex";
 import SelectFieldIndex from "../components/SelectFieldIndex";
-import Logo1 from '../assets/images/Logo Sasa-1.png';
+import Logo1 from '../assets/images/Logo-Sasa-1.png';
 import '../index.css';
 
 import Cookies from 'js-cookie';

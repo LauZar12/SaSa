@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid2';
 import { Box, Typography, Divider, Button } from '@mui/material';
 import { useNavigate, useParams, Link } from 'react-router-dom'; 
 import axios from 'axios';
-import Logo2 from '../assets/images/Logo Sasa-2.png';
+import Logo2 from '../assets/images/Logo-Sasa-2.png';
 import SurpriseBoxCard from '../components/SurpriseBoxCard'; 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
