@@ -33,7 +33,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.get('/all', getAllStuff);
-app.use('/upload', uploadRoutes);
+app.use('/admin/businesses', uploadRoutes);
 app.use('/admin/businesses', businessRoutes); 
 app.use('/businesses', businessRoutes);               // rutas de negocios
 app.use('/profile', userRoutes);                      // rutas de perfil de usuario

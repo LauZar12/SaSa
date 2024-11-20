@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   AppBar, Box, CssBaseline, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography, Button
 } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import {
   Menu as MenuIcon, Business as BusinessIcon, Inventory as InventoryIcon, CardGiftcard as CardGiftcardIcon,
   AddBusiness,
@@ -17,7 +18,7 @@ import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 
-import Logo2 from '../assets/images/Logo Sasa-2.png';
+import Logo2 from '../assets/images/Logo-SaSa-2.png';
 import AdminProductCard from '../components/AdminProductCard';
 import AdminSurpriseBoxCard from '../components/AdminSurpriseBox';
 import BusinessCardV2 from '../components/BusinessCardV2';
@@ -26,6 +27,7 @@ import CreateProduct from './CreateProduct';
 import CreateSurpriseBox from './CreateSurpriseBox';
 import EditSurpriseBox from './EditSurpriseBox';
 import EditBusiness from './EditBusiness';
+import ImageUpload from './ImageUpload';
 
 import { useNavigate } from 'react-router-dom';
 import EditLocation from './EditLocation';
@@ -213,7 +215,7 @@ export default function AdminDashboard() {
             sx={{
               height: '80vh', 
               display: 'flex', 
-              alignItems: 'center', 
+              alignItems: 'center',
             }}
           >
             <Box 
@@ -224,28 +226,38 @@ export default function AdminDashboard() {
                 alignItems: 'center', 
               }}
             >
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, }}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  startIcon={<EditIcon />}
-                  onClick={handleEditBusiness}
-                >
-                  Editar Negocio
-                </Button>
 
-                <EditLocation />
-              </Box>
-              
-              <Box sx={{ flexGrow: 1, justifyContent: 'center', }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, }}>
+                  <EditLocation />
+                </Box>
+
+                <Box sx={{ flexGrow: 1, justifyContent: 'center', bgcolor: 'background.paper', boxShadow: 24, borderRadius: 2,}}>
                 {businessContent && businessContent.length > 0 ? (
                   <BusinessCardV2 business={businessContent[0]} />
                 ) : (
                   <Typography variant="body1">Cargando información del negocio...</Typography>
                 )}
               </Box>
+
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, }}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={<EditIcon />}
+                    onClick={handleEditBusiness}
+                  >
+                    Editar Negocio
+                  </Button>
+                  <ImageUpload />
+                </Box>
+                
+
+
+              
+
             </Box>
           </Box>
+
         );
       case 'Productos':
         return (

@@ -159,4 +159,3 @@ export const getBusinessesByCategory = async (req, res) => {
 
 }
 
-//.beginsWith("user#")

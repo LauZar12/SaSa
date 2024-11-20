@@ -13,7 +13,7 @@ import {
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { RestaurantMenu as RestaurantIcon, EmojiFoodBeverage as CoffeeIcon } from '@mui/icons-material';
-import Logo2 from '../assets/images/Logo Sasa-2.png';
+import Logo2 from '../assets/images/Logo-SaSa-2.png';
 import BottomNavBar from '../components/BottomNavBar';
 import { useNavigate } from 'react-router-dom';
 
