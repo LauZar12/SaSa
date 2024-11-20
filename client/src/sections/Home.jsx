@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Box, Typography, Button, Container, Divider } from '@mui/material';
 import ButtonIndex from '../components/ButtonIndex';
+import Logo2 from '../assets/images/Logo Sasa-2.png';
 import '../index.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,7 +17,6 @@ export default function Home() {
         <Container
             maxWidth="100%"
             sx={{
-                backgroundColor: '#FFFFFF',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
@@ -29,14 +29,22 @@ export default function Home() {
             <Box
                 sx={{
                     bgcolor: '#4C956C',
-                    height: '50px',
-                    width: '120%',
-                    ml: '-10%',
-                    p: 0, // Remove box padding
+                    mb: 30,
+                    height: '80px',
+                    width: '100%',
+                    top: 0,
+                    left: 0,
+                    p: 0,
                     overflow: 'hidden',
-                    position: 'fixed'
+                    position: 'fixed',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    zIndex: 1000
                 }}
-            />
+            >
+                <img src={Logo2} alt="Logo" style={{ height: '50px', cursor: 'pointer' }} />
+            </Box>
 
             {/* Main Content */}
             <Box
@@ -316,7 +324,7 @@ export function NotHome() {
                 }}
             >
                 {/* Welcome Message */}
-                <Typography variant="h1" component="div" sx={{ mb: 2, color: '#4AD66D', fontFamily:'Epilogue',fontWeight: 'bold', fontSize: { xs: '44px', sm: '62px', md: '80px', lg: '88px', xl: '96px' } }}>
+                <Typography variant="h1" component="div" sx={{ mb: 2, color: '#4AD66D', fontFamily: 'Epilogue', fontWeight: 'bold', fontSize: { xs: '44px', sm: '62px', md: '80px', lg: '88px', xl: '96px' } }}>
                     Bienvenido a <span style={{ color: '#418441' }}>SaSa</span>
                 </Typography>
 
@@ -326,7 +334,7 @@ export function NotHome() {
                         mb: 1,
                         color: '#737373',
                         fontWeight: 'bold',
-                        fontFamily:'Epilogue',
+                        fontFamily: 'Epilogue',
                         fontSize: { xs: '14px', sm: '20px', md: '24px', lg: '24px', xl: '30px' },
                         lineHeight: 1.2,
                         display: 'flex',
@@ -344,7 +352,7 @@ export function NotHome() {
                 </Typography>
 
                 {/* Call to Action */}
-                <Typography variant="h6" sx={{ mt: 10, mb: 2, color: '#4C956C',fontFamily:'Epilogue', fontWeight: 'bold', fontSize: { xs: '14px', sm: '20px', md: '24px', lg: '24px', xl: '30px' } }}>
+                <Typography variant="h6" sx={{ mt: 10, mb: 2, color: '#4C956C', fontFamily: 'Epilogue', fontWeight: 'bold', fontSize: { xs: '14px', sm: '20px', md: '24px', lg: '24px', xl: '30px' } }}>
                     ¡Haz click para cambiar el mundo!
                 </Typography>
                 <ButtonIndex variant="contained" padding="10px 20px" fontSize="40px" borderRadius="15px" width="25%">
@@ -367,3 +375,192 @@ export function NotHome() {
         </Container>
     );
 }
+
+//import React from 'react';
+//import { Box, Typography, Container } from '@mui/material';
+//import ButtonIndex from '../components/ButtonIndex';
+//import Logo2 from '../assets/images/Logo Sasa-2.png';
+//import Logo from '../assets/images/Logo Sasa-1.png';
+//import '../index.css';
+//import { useNavigate } from 'react-router-dom';
+//
+//export default function Home() {
+//  const navigate = useNavigate();
+//
+//  return (
+//    <Container
+//      maxWidth="xl"
+//      sx={{
+//        display: 'flex',
+//        flexDirection: 'column',
+//        justifyContent: 'space-between',
+//        minHeight: '100vh',
+//        padding: 0,
+//      }}
+//    >
+//      {/* Barra superior */}
+//      <Box
+//        sx={{
+//          bgcolor: '#4C956C',
+//          height: '80px',
+//          position: 'fixed',
+//          top: 0,
+//          left: 0,
+//          width: '100%',
+//          display: 'flex',
+//          alignItems: 'center',
+//          justifyContent: 'center',
+//          zIndex: 10,
+//        }}
+//      >
+//        <img
+//          src={Logo2}
+//          alt="Logo SaSa"
+//          style={{ height: '50px', cursor: 'pointer' }}
+//          onClick={() => navigate('/')}
+//        />
+//      </Box>
+//
+//      {/* Contenido principal */}
+//      <Box
+//        sx={{
+//          flexGrow: 1,
+//          display: 'flex',
+//          flexDirection: { xs: 'column', md: 'row' },
+//          alignItems: 'center',
+//          justifyContent: 'space-between',
+//          mt: '80px', // Compensa la barra superior
+//          padding: { xs: '20px', md: '40px' },
+//          gap: { xs: 4, md: 0 },
+//        }}
+//      >
+//        {/* Columna izquierda */}
+//        <Box
+//          sx={{
+//            display: { xs: 'none', md: 'flex' },
+//            justifyContent: 'center',
+//            alignItems: 'center',
+//            width: '40%',
+//          }}
+//        >
+//          <img src={Logo} alt="Logo principal SaSa" style={{ width: '80%', maxHeight: '100%' }} />
+//        </Box>
+//
+//        {/* Columna derecha */}
+//        <Box
+//          sx={{
+//            width: { xs: '100%', md: '60%' },
+//            display: 'flex',
+//            flexDirection: 'column',
+//            alignItems: { xs: 'center', md: 'flex-start' },
+//            textAlign: { xs: 'center', md: 'left' },
+//            gap: 2,
+//          }}
+//        >
+//          <Typography
+//            variant="h1"
+//            sx={{
+//              color: '#4AD66D',
+//              fontWeight: 'bold',
+//              fontFamily: 'Epilogue',
+//              fontSize: { xs: '44px', sm: '62px', md: '76px', xl: '86px' },
+//              lineHeight: 1.2,
+//            }}
+//          >
+//            Bienvenido a <span style={{ color: '#418441' }}>SaSa</span>
+//          </Typography>
+//
+//          <Typography
+//            sx={{
+//              color: '#737373',
+//              fontWeight: 'bold',
+//              fontStyle: 'italic',
+//              fontFamily: 'Epilogue',
+//              fontSize: { xs: '14px', sm: '20px', md: '24px', xl: '30px' },
+//              lineHeight: 1.5,
+//            }}
+//          >
+//            Salvar con sabor
+//          </Typography>
+//
+//          <Box
+//            sx={{
+//              width: '100%',
+//              maxWidth: '90%',
+//              height: '10px',
+//              backgroundColor: '#4C956C',
+//              borderRadius: '5px',
+//              my: 2,
+//            }}
+//          />
+//
+//          <Typography
+//            sx={{
+//              color: '#737373',
+//              fontFamily: 'Epilogue',
+//              fontSize: { xs: '15px', md: '19px', xl: '25px' },
+//              lineHeight: 1.8,
+//              maxWidth: '90%',
+//            }}
+//          >
+//            ¡Haz parte de este movimiento para luchar contra el desperdicio de comida de la forma
+//            más deliciosa posible!
+//          </Typography>
+//
+//          {/* Botones */}
+//          <Box
+//            sx={{
+//              display: 'flex',
+//              flexDirection: 'column',
+//              gap: 2,
+//              width: '100%',
+//              maxWidth: { xs: '100%', md: '60%' },
+//            }}
+//          >
+//            <ButtonIndex
+//              variant="contained"
+//              sx={{
+//                padding: '12px 20px',
+//                borderRadius: '50px',
+//                backgroundColor: '#4C956C',
+//                fontFamily: 'Epilogue',
+//                fontSize: { xs: '15px', xl: '20px' },
+//                width: '100%',
+//              }}
+//              onClick={() => navigate('/businesses')}
+//            >
+//              Ver Restaurantes
+//            </ButtonIndex>
+//
+//            <ButtonIndex
+//              variant="contained"
+//              sx={{
+//                padding: '12px 20px',
+//                borderRadius: '50px',
+//                backgroundColor: '#737373',
+//                fontFamily: 'Epilogue',
+//                fontSize: { xs: '15px', xl: '20px' },
+//                width: '100%',
+//              }}
+//              onClick={() => navigate('/auth')}
+//            >
+//              Iniciar Sesión
+//            </ButtonIndex>
+//          </Box>
+//        </Box>
+//      </Box>
+//
+//      {/* Barra inferior */}
+//      <Box
+//        sx={{
+//          bgcolor: '#4C956C',
+//          height: '50px',
+//          width: '100%',
+//          position: 'fixed',
+//          bottom: 0,
+//          left: 0,
+//        }}
+//      />
+//    </Container>
+//  );
+//}
