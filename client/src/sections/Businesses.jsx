@@ -70,6 +70,12 @@ export default function Businesses() {
     console.log('View mode updated:', viewMode);
   }, [viewMode]);
 
+  useEffect(() => {
+    if (viewMode === 'all') {
+      fetchBusinesses();  // Recargar todos los restaurantes
+    }
+  }, [viewMode]);
+
   const handleScroll = () => {
     if (scrollRef.current.scrollLeft > 0) {
       setShowLeftArrow(true);
@@ -298,7 +304,7 @@ export default function Businesses() {
               )}
             </Grid>
           </Box>
-        ) : (
+        ) : viewMode === 'all' ? (
           <>
             {/* "Restaurantes Recomendados" Section */}
             <Box sx={{ mt: 4 }}>
@@ -420,7 +426,7 @@ export default function Businesses() {
               </Grid>
             </Box>
           </>
-        )}
+        ): null }
 
         <FilterDialog
           open={openDialog}
