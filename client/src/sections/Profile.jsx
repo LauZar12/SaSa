@@ -119,8 +119,7 @@ const Profile = () => {
       style={{
         display: 'flex',
         flexDirection: 'column',
-        minHeight: '100vh', // Asegura que el contenedor cubra toda la altura del viewport
-        backgroundColor: '#F5F5F5',
+        minHeight: '100vh',
       }}
     >
       {/* Sección superior con la información del usuario */}
