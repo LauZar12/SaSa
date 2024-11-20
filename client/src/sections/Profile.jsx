@@ -7,12 +7,14 @@ import {
   Paper,
   Avatar,
   Link,
+  CircularProgress,
+  Stack,
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { RestaurantMenu as RestaurantIcon, EmojiFoodBeverage as CoffeeIcon } from '@mui/icons-material';
 import Logo2 from '../assets/images/Logo Sasa-2.png';
 import BottomNavBar from '../components/BottomNavBar';
-
 import { useNavigate } from 'react-router-dom';
 
 const drawerWidth = 240;
@@ -29,6 +31,7 @@ const Profile = () => {
   const [user, setUser] = useState({});
   const [businesses, setBusinesses] = useState([]);
   const [recommendation, setRecommendation] = useState('');
+  const [loadingRecommendation, setLoadingRecommendation] = useState(false);
 
   const fetchBusinesses = async () => {
     try {
@@ -67,12 +70,16 @@ const Profile = () => {
     console.log('restaurantList:', restaurantList);
     const prompt = `Recomienda un restaurante entre la siguiente lista de restaurantes en forma de un antojo, y proporciona un link al restaurante recomendado (El link tiene el siguiente formato: "http://localhost:5173/businesses/{business.PK}", es importante que la PK elegida siempre tiene un caracter '#', cambia este caracter para su codificacion en URL la cual es '%23'). Lista de restaurantes: ${restaurantList}`;
 
+    setLoadingRecommendation(true);
+
     try {
       const response = await axios.post('http://localhost:5000/generate-response', { prompt });
       setRecommendation(response.data.response);
     } catch (error) {
       console.error('Error fetching recommendation:', error);
       setRecommendation('No se pudo obtener una recomendación en este momento.');
+    } finally {
+      setLoadingRecommendation(false);
     }
   };
 
@@ -108,7 +115,14 @@ const Profile = () => {
 
 
   return (
-    <div style={{ backgroundColor: '#F5F5F5', minHeight: '70vh' }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh', // Asegura que el contenedor cubra toda la altura del viewport
+        backgroundColor: '#F5F5F5',
+      }}
+    >
       {/* Sección superior con la información del usuario */}
       <AppBar
         position="fixed"
@@ -148,13 +162,13 @@ const Profile = () => {
       <Box sx={{ padding: '110px', textAlign: 'center' }}>
         <Avatar
           alt={user.User_Name}
-          src={user.profileImage || 'https://via.placeholder.com/150'}
-          sx={{ width: 100, height: 100, margin: '0 auto' }}
+          src={user.profileImage || 'https://via.placeholder.com/250'}
+          sx={{ width: 150, height: 150, margin: '0 auto' }}
         />
         <Typography variant="h5" sx={{ marginTop: 2 }}>
           {user.User_Name}
         </Typography>
-        <Typography variant="subtitle1" sx={{ color: '#4C956C' }}>
+        <Typography variant="h5" sx={{ color: '#4C956C' }}>
           {user.Email}
         </Typography>
         <Typography variant="body1" sx={{ marginTop: 2, color: '#666' }}>
@@ -170,14 +184,32 @@ const Profile = () => {
       </Box>
 
       {/* Sección de recomendación de restaurante */}
-      <Box sx={{ padding: '20px' }}>
-        <Paper elevation={2} sx={{ padding: 3 }}>
-          <Typography variant="h5" sx={{ color: '#4C956C', marginBottom: 2 }}>
-            ¿Te antojas de algo delicioso?
-          </Typography>
-          <Typography variant="h6">
-            {renderRecommendationWithLink(recommendation || 'Cargando recomendación...')}
-          </Typography>
+      <Box
+        sx={{
+          padding: '20px',
+          marginTop: 'auto', // Empuja esta sección hacia la parte inferior
+          marginBottom: '80px', // Espacio de separación al final
+        }}
+      >
+        <Paper elevation={3} sx={{ padding: 4, backgroundColor: '#ffffff', borderRadius: 3 }}>
+          <Stack direction="row" alignItems="center" spacing={2} sx={{ marginBottom: 2 }}>
+            <RestaurantIcon sx={{ fontSize: 40, color: '#4C956C' }} />
+            <Typography variant="h5" sx={{ color: '#4C956C' }}>
+              ¿Te antojas de algo delicioso?
+            </Typography>
+          </Stack>
+          {loadingRecommendation ? (
+            <Box display="flex" justifyContent="center" alignItems="center" sx={{ height: '50px' }}>
+              <CircularProgress sx={{ color: '#4C956C' }} />
+              <Typography variant="h6" sx={{ marginLeft: 2 }}>
+                Generando recomendación...
+              </Typography>
+            </Box>
+          ) : (
+            <Typography variant="h6" sx={{ textAlign: 'center', color: '#555' }}>
+              {renderRecommendationWithLink(recommendation || 'No se encontró ninguna recomendación.')}
+            </Typography>
+          )}
         </Paper>
       </Box>
 

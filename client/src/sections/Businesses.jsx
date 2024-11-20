@@ -309,7 +309,7 @@ export default function Businesses() {
             {/* "Restaurantes Recomendados" Section */}
             <Box sx={{ mt: 4 }}>
               <Typography variant="h5" align="center" gutterBottom sx={{ fontFamily: "'Epilogue', sans-serif", fontWeight: 500}}>
-                Restaurantes Recomendados para ti!!
+                Restaurantes Recomendados para ti
               </Typography>
 
               <Box sx={{ display: 'flex', alignItems: 'center', mt: 3}}>
@@ -353,7 +353,7 @@ export default function Businesses() {
             {/* Categories Section */}
 
             <Typography variant="h5" align="center" gutterBottom sx={{ fontFamily: "'Epilogue', sans-serif", fontWeight: 500, mb: 5, mt: 10}}>
-                Qué tipo de comida quieres salvar hoy??
+                ¿Qué tipo de comida quieres salvar hoy?
             </Typography>
 
             <Box sx={{ display: 'flex', justifyContent: 'center', gap: 12, mt: 5 }}>
