@@ -26,7 +26,7 @@ export default function BusinessCard({ image, title, location, rating, schedule,
             <Card
                 sx={{
                     width: 400,
-                    height: 280,
+                    height: 330,
                     backgroundColor: '#ffffff',
                     boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.2)',
                     borderRadius: '15px',
@@ -36,7 +36,7 @@ export default function BusinessCard({ image, title, location, rating, schedule,
             >
                 <CardMedia
                     sx={{
-                        height: 140,
+                        height: 180,
                         objectFit: 'cover',
                         transition: 'transform 0.5s ease',
                         '&:hover': { transform: 'scale(1.1)' },
