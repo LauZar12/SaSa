@@ -26,10 +26,10 @@ export default function BusinessCard({ image, title, location, rating, schedule,
             <Card
                 sx={{
                     width: 400,
-                    height: 320,
+                    height: 280,
                     backgroundColor: '#ffffff',
-                    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
-                    borderRadius: '20px',
+                    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.2)',
+                    borderRadius: '15px',
                     overflow: 'hidden',
                     marginBottom: 2,
                 }}
@@ -68,12 +68,6 @@ export default function BusinessCard({ image, title, location, rating, schedule,
                             <LocationOnIcon sx={{ mr: 1 }} />
                             <Typography variant="body2" noWrap>
                                 {location}
-                            </Typography>
-                        </Box>
-                        <Box sx={{ display: 'flex', alignItems: 'center', color: '#FFC107' }}>
-                            <StarIcon sx={{ mr: 1 }} />
-                            <Typography variant="body2" noWrap>
-                                {rating}
                             </Typography>
                         </Box>
                         <Box sx={{ display: 'flex', alignItems: 'center', color: '#6C757D' }}>
