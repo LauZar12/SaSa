@@ -31,9 +31,7 @@ export default function ImageUploadModal() {
   }
 
   const handleUpload = () => {
-    // Aquí iría la lógica para subir la imagen al servidor
     console.log('Subiendo imagen:', selectedImage)
-    // Después de subir, cerramos el modal
     handleClose()
   }
 
