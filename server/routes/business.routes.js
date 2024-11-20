@@ -14,6 +14,5 @@ router.put("/:businessId/edit-info", editBusinessInfo)
 router.put("/:businessId/edit-address", editBusinessInfo)
 router.get("/category/:category", getBusinessesByCategory)
 
-
 export default router;
 

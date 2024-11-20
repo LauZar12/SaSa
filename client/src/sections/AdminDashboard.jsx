@@ -26,6 +26,7 @@ import CreateProduct from './CreateProduct';
 import CreateSurpriseBox from './CreateSurpriseBox';
 import EditSurpriseBox from './EditSurpriseBox';
 import EditBusiness from './EditBusiness';
+import ImageUpload from './ImageUpload';
 
 import { useNavigate } from 'react-router-dom';
 import EditLocation from './EditLocation';
@@ -236,6 +237,11 @@ export default function AdminDashboard() {
 
                 <EditLocation />
               </Box>
+              
+              <Box  sx={{ flexGrow: 1, justifyContent: 'center', }}>
+                <ImageUpload />
+              </Box>
+
               
               <Box sx={{ flexGrow: 1, justifyContent: 'center', }}>
                 {businessContent && businessContent.length > 0 ? (

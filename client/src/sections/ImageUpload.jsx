@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState} from 'react'
+import { useParams } from 'react-router-dom';
 import {
   Button,
   Dialog,
@@ -9,11 +10,13 @@ import {
   IconButton,
 } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
+import axios from 'axios';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 
-export default function ImageUploadModal() {
+export default function ImageUpload() {
   const [open, setOpen] = useState(false)
   const [selectedImage, setSelectedImage] = useState(null)
+  const { businessId } = useParams();
 
   const handleOpen = () => setOpen(true)
   const handleClose = () => {
@@ -22,19 +25,42 @@ export default function ImageUploadModal() {
   }
 
   const handleImageChange = (event) => {
-    const file = event.target.files[0]
+    const file = event.target.files[0];
     if (file) {
-      const reader = new FileReader()
-      reader.onload = (e) => setSelectedImage(e.target.result)
-      reader.readAsDataURL(file)
+      setSelectedImage(file); 
     }
   }
 
-  const handleUpload = () => {
-    // Aquí iría la lógica para subir la imagen al servidor
+  const handleUpload = async () => {
     console.log('Subiendo imagen:', selectedImage)
-    // Después de subir, cerramos el modal
-    handleClose()
+
+    const formData = new FormData();
+    formData.append('image', selectedImage);
+    console.log('FormData:', formData);
+
+    const encodedBusinessId = encodeURIComponent(businessId);
+    console.log(encodedBusinessId);
+
+    try{
+      const response = await axios.put(`http://localhost:5000/admin/businesses/${encodedBusinessId}/upload`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data', // Esto es importante para enviar archivos
+          },
+          withCredentials: true,
+        }
+      );
+      
+      // Aquí manejas la respuesta, si es exitosa
+      console.log('Imagen subida correctamente:', response.data);
+      handleClose(); // Cerrar el modal si la subida fue exitosa
+  
+    } catch (error) {
+      console.error('Error subiendo la imagen:', error);
+    }
+    
+    handleClose();
   }
 
   return (
@@ -75,7 +101,7 @@ export default function ImageUploadModal() {
             </Button>
           </label>
           {selectedImage && (
-            <img src={selectedImage} alt="Vista previa" style={{ width: '100%', marginTop: 16 }} />
+            <img src={URL.createObjectURL(selectedImage)} alt="Vista previa" style={{ width: '100%', marginTop: 16 }} />
           )}
         </DialogContent>
         <DialogActions>
