@@ -63,7 +63,7 @@ export default function Business() {
   };
 
   return (
-    <div style={{ paddingLeft: '30px', paddingRight: '30px', paddingTop: '100px', paddingBottom: '100px' }}>
+    <div style={{ paddingLeft: '30px', paddingRight: '30px', paddingTop: '100px', paddingBottom: '100px', minHeight: '100vh' }}>
 
       <Box sx={{ display: 'flex', justifyContent: 'flex-start', mb: 2 }}>
         <Button 

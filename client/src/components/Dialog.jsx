@@ -11,8 +11,7 @@ import {
     FormLabel,
     Radio,
     RadioGroup,
-    Checkbox,
-    Typography
+    Typography,
 } from '@mui/material';
 
 // The filter dialog with multiple options
@@ -34,14 +33,23 @@ function FilterDialog(props) {
         }));
     };
 
+    // Handle clearing all filters
+    const handleClearFilters = () => {
+        setSelectedFilters({});
+    };
+
     return (
         <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
-            <DialogTitle>Filtros de Búsqueda</DialogTitle>
+            <Typography variant="h4" font-weight='bold' sx={{ color: '#444444', mb: 0, mt: 2, ml: 3, mr: 1 }}>
+                Filtros de Búsqueda
+            </Typography>
             <DialogContent>
 
                 {/* Distancia Form */}
                 <FormControl component="fieldset" sx={{ mt: 1, ml: 2 }}>
-                    <FormLabel component="legend">Distancia</FormLabel>
+                    <Typography variant="h5" font-weight='bold' sx={{ color: '#4C956C', mb: 1 }}>
+                        Distancia
+                    </Typography>
                     <RadioGroup
                         name="distance"
                         value={selectedFilters.distance || ''}
@@ -54,8 +62,10 @@ function FilterDialog(props) {
                 </FormControl>
 
                 {/* Rango de Precio Form */}
-                <FormControl component="fieldset" sx={{ mt: 1, ml: 2 }}>
-                    <FormLabel component="legend">Rango de Precio</FormLabel>
+                <FormControl component="fieldset" sx={{ mt: 1, ml: 1 }}>
+                    <Typography variant="h5" font-weight='bold' sx={{ color: '#4C956C', mb: 1 }}>
+                        Rango de Precio
+                    </Typography>
                     <RadioGroup
                         name="price"
                         value={selectedFilters.price || ''}
@@ -67,49 +77,42 @@ function FilterDialog(props) {
                     </RadioGroup>
                 </FormControl>
 
-                {/* Tipos de Comidas Form */}
-                <FormControl component="fieldset" sx={{ mt: 1, ml: 2 }}>
-                    <FormLabel component="legend">Tipos de Comidas</FormLabel>
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                name="italian"
-                                checked={selectedFilters.italian || false}
-                                onChange={handleFilterChange}
-                            />
-                        }
-                        label="Italiana"
-                    />
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                name="mexican"
-                                checked={selectedFilters.mexican || false}
-                                onChange={handleFilterChange}
-                            />
-                        }
-                        label="Mexicana"
-                    />
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                name="chinese"
-                                checked={selectedFilters.chinese || false}
-                                onChange={handleFilterChange}
-                            />
-                        }
-                        label="China"
-                    />
-                </FormControl>
+                {/* Limpiar Filtros 
+                <Button
+                    onClick={handleClearFilters}
+                    color="secondary"
+                    variant="outlined"
+                    sx={{
+                        mt: 2,
+                        ml: 2,
+                        borderColor: '#FF6F61',
+                        color: '#FF6F61',
+                        '&:hover': {
+                            backgroundColor: '#FFEBE9',
+                        },
+                    }}
+                >
+                    Limpiar Filtros
+                </Button>
+                */}
 
             </DialogContent>
             <DialogActions>
                 <Button
-                    onClick={onClose}
-                    color="primary"
-                    sx={{ color: 'black' }}
+                    onClick={handleClearFilters}
+                    color="secondary"
+                    variant="outlined"
+                    sx={{
+                        mt: 0,
+                        mr: 1,
+                        borderColor: '#FF6F61',
+                        color: '#FF6F61',
+                        '&:hover': {
+                            backgroundColor: '#FFEBE9',
+                        },
+                    }}
                 >
-                    Cancelar
+                    Limpiar Filtros
                 </Button>
                 <Button
                     onClick={handleApply}
