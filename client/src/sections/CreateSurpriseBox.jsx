@@ -26,7 +26,7 @@ const CreateSurpriseBox = ({ open = false, handleClose }) => {
     try {
       const encodedBusinessId = encodeURIComponent(businessId);
 
-      const response = await axios.post(`http://localhost:5000/admin/businesses/${encodedBusinessId}/surprise-boxes/create-surprise-box`, surpriseBox);
+      const response = await axios.post(`http://3.144.21.138:5000/admin/businesses/${encodedBusinessId}/surprise-boxes/create-surprise-box`, surpriseBox);
       setSurpriseBox(response.data.result || []);
       console.log("Surprise Box creada con éxito:", response.data);
       toast.success('La Surprise Box ha sido creada con éxito!');

@@ -26,7 +26,7 @@ const EditProduct = ({ open = false, handleClose, productId }) => {
       const encodedProductId = encodeURIComponent(productId);
       const encodedBusinessId = encodeURIComponent(businessId);
       
-      const response = await axios.get(`http://localhost:5000/admin/businesses/${encodedBusinessId}/products/${encodedProductId}`);
+      const response = await axios.get(`http://3.144.21.138:5000/admin/businesses/${encodedBusinessId}/products/${encodedProductId}`);
       
       setProduct(response.data);
     } catch (error) {
@@ -48,7 +48,7 @@ const EditProduct = ({ open = false, handleClose, productId }) => {
       const encodedProductId = encodeURIComponent(productId);
       const encodedBusinessId = encodeURIComponent(businessId);
 
-      await axios.put(`http://localhost:5000/admin/businesses/${encodedBusinessId}/products/${encodedProductId}/edit-product`, product);
+      await axios.put(`http://3.144.21.138:5000/admin/businesses/${encodedBusinessId}/products/${encodedProductId}/edit-product`, product);
       
       toast.success('El producto ha sido editado con éxito!');
       handleClose();

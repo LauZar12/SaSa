@@ -23,7 +23,7 @@ export default function Business() {
     const encodedBusinessId = encodeURIComponent(businessId);
 
     try {
-      const response = await axios.get(`http://localhost:5000/businesses/${encodedBusinessId}/products`);
+      const response = await axios.get(`http://3.144.21.138:5000/businesses/${encodedBusinessId}/products`);
       setProducts(response.data);  // Assuming response.data contains the list of products
       console.log(response.data);
     } catch (error) {
@@ -36,7 +36,7 @@ export default function Business() {
 
     const encodedBusinessId = encodeURIComponent(businessId);
 
-    const response = await axios.get(`http://localhost:5000/admin/businesses/${encodedBusinessId}/surprise-boxes`);
+    const response = await axios.get(`http://3.144.21.138:5000/admin/businesses/${encodedBusinessId}/surprise-boxes`);
     setSurpriseBoxContent(response.data.result || []);
     console.log("Surprise boxes:", response.data.result);
   };

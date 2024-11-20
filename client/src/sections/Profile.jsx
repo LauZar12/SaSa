@@ -35,7 +35,7 @@ const Profile = () => {
 
   const fetchBusinesses = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/businesses');
+      const response = await axios.get('http://3.144.21.138:5000/businesses');
       setBusinesses(response.data);
     } catch (error) {
       console.error('Error fetching businesses:', error);
@@ -50,7 +50,7 @@ const Profile = () => {
     console.log("Obteniendo perfil del usuario");
     const encodedUserId = encodeURIComponent(userId);
     try {
-      const response = await axios.get(`http://localhost:5000/profile/${encodedUserId}`);
+      const response = await axios.get(`http://3.144.21.138:5000/profile/${encodedUserId}`);
       setUser(response.data);
       console.log(response.data);
     } catch (error) {
@@ -68,12 +68,12 @@ const Profile = () => {
   const fetchRecommendation = async () => {
     const restaurantList = businesses.map(b => `${b.Business_Name} (${b.PK})`).join(', ');
     console.log('restaurantList:', restaurantList);
-    const prompt = `Recomienda un restaurante entre la siguiente lista de restaurantes en forma de un antojo, y proporciona un link al restaurante recomendado (El link tiene el siguiente formato: "http://localhost:5173/businesses/{business.PK}", es importante que la PK elegida siempre tiene un caracter '#', cambia este caracter para su codificacion en URL la cual es '%23'). Lista de restaurantes: ${restaurantList}`;
+    const prompt = `Recomienda un restaurante entre la siguiente lista de restaurantes en forma de un antojo, y proporciona un link al restaurante recomendado (El link tiene el siguiente formato: "https://sasa-gamma.vercel.app/businesses/{business.PK}", es importante que la PK elegida siempre tiene un caracter '#', cambia este caracter para su codificacion en URL la cual es '%23'). Lista de restaurantes: ${restaurantList}`;
 
     setLoadingRecommendation(true);
 
     try {
-      const response = await axios.post('http://localhost:5000/generate-response', { prompt });
+      const response = await axios.post('http://3.144.21.138:5000/generate-response', { prompt });
       setRecommendation(response.data.response);
     } catch (error) {
       console.error('Error fetching recommendation:', error);
@@ -91,7 +91,7 @@ const Profile = () => {
 
   // Función para extraer el enlace del texto
   const renderRecommendationWithLink = (text) => {
-    const regex = /(http:\/\/localhost:5173\/businesses\/[^\s\)]+)/g; // Excluir paréntesis de cierre
+    const regex = /(https:\/\/sasa-gamma.vercel.app\/businesses\/[^\s\)]+)/g; // Excluir paréntesis de cierre
     const match = text.match(regex);
     if (match) {
       // Si encontramos un enlace, creamos un enlace clickeable

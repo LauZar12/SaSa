@@ -57,7 +57,7 @@ const CreateProduct = ({ open = false, handleClose }) => {
     const prompt = `Necesito que solo me des un numero entero de 1 a 3 dígitos. Tu respuesta no debe pasar los 3 caracteres y no debe ser menor a 1 carácter. El numero entero va a ser un descuento que me vas a dar en torno al siguiente producto que esta pronto a caducar pero aun así quiero vender por un precio mas barato para que no se pierda la comida, el descuento también tiene que dar un profit razonable al restaurante. La fecha actual es ${formattedCurrentDate} y el producto es ${product.Product_Name} con descripcion ${product.Product_Description}. Vence el ${product.ExpirationDate}, es decir, en ${timeRemaining}. Su precio es de ${product.Price} pesos colombianos. Dame el descuento que deberia darle en forma de numero entero sin el simbolo de porcentaje (0 - 100). Tu respuesta solo debe ser ese numero entero.`;
 
     try {
-        const response = await axios.post('http://localhost:5000/generate-response', { prompt });
+        const response = await axios.post('http://3.144.21.138:5000/generate-response', { prompt });
         const discount = parseInt(response.data.response, 10);
 
         if (!isNaN(discount) && discount >= 0 && discount <= 100) {
@@ -81,7 +81,7 @@ const CreateProduct = ({ open = false, handleClose }) => {
   const saveChanges = async () => {
     try {
       const encodedBusinessId = encodeURIComponent(businessId);
-      const response = await axios.post(`http://localhost:5000/admin/businesses/${encodedBusinessId}/products/create-product`, product);
+      const response = await axios.post(`http://3.144.21.138:5000/admin/businesses/${encodedBusinessId}/products/create-product`, product);
       setProduct(response.data);
       console.log('Producto creado con exito:', response.data);
       toast.success('El producto ha sido creado con éxito!');

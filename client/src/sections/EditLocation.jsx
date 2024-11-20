@@ -61,7 +61,7 @@ const EditLocation = () => {
           PK,
         };
 
-        await axios.put(`http://localhost:5000/admin/businesses/${encodedBusinessId}/edit-address`, businessData, {
+        await axios.put(`http://3.144.21.138:5000/admin/businesses/${encodedBusinessId}/edit-address`, businessData, {
           withCredentials: true,
         });
 

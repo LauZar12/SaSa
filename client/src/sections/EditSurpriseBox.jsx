@@ -24,7 +24,7 @@ const EditSurpriseBox = ({ open = false, handleClose, surpriseBoxId }) => {
       const encodedSurpriseBoxId = encodeURIComponent(surpriseBoxId);
       const encodedBusinessId = encodeURIComponent(businessId);
 
-      const response = await axios.get(`http://localhost:5000/admin/businesses/${encodedBusinessId}/surprise-boxes/${encodedSurpriseBoxId}`);
+      const response = await axios.get(`http://3.144.21.138:5000/admin/businesses/${encodedBusinessId}/surprise-boxes/${encodedSurpriseBoxId}`);
       
       setSurpriseBox(response.data.result || []);
     } catch (error) {
@@ -46,7 +46,7 @@ const EditSurpriseBox = ({ open = false, handleClose, surpriseBoxId }) => {
       const encodedSurpriseBoxId = encodeURIComponent(surpriseBoxId);
       const encodedBusinessId = encodeURIComponent(businessId);
 
-      await axios.put(`http://localhost:5000/admin/businesses/${encodedBusinessId}/surprise-boxes/${encodedSurpriseBoxId}/edit-surprise-box`, surpriseBox);
+      await axios.put(`http://3.144.21.138:5000/admin/businesses/${encodedBusinessId}/surprise-boxes/${encodedSurpriseBoxId}/edit-surprise-box`, surpriseBox);
       
       toast.success('La caja sorpresa ha sido editada con éxito!');
       handleClose();

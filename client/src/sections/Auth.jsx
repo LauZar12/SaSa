@@ -204,7 +204,7 @@ export default function Auth() {
       const dataToSend = isBusinessValid ? adminData : clientData;
   
       // Realiza la solicitud de registro
-      const response = await axios.post('http://localhost:5000/auth/register', dataToSend, {
+      const response = await axios.post('http://3.144.21.138:5000/auth/register', dataToSend, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -235,7 +235,7 @@ export default function Auth() {
 
       try {
 
-        const response = await axios.post('http://localhost:5000/auth/login', { Email: email, Password: password });
+        const response = await axios.post('http://3.144.21.138:5000/auth/login', { Email: email, Password: password });
 
         if (response.data) {
           console.log("Login Successful");

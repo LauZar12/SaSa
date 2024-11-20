@@ -27,7 +27,7 @@ const EditBusiness = ({ open = false, handleClose }) => {
     try {
       const encodedBusinessId = encodeURIComponent(businessId);
       
-      const response = await axios.get(`http://localhost:5000/admin/businesses/${encodedBusinessId}`);
+      const response = await axios.get(`http://3.144.21.138:5000/admin/businesses/${encodedBusinessId}`);
       
       setBusiness(response.data);
     } catch (error) {
@@ -53,7 +53,7 @@ const EditBusiness = ({ open = false, handleClose }) => {
 
       const businessData = { ...business, PK };
       console.log(businessData)
-      await axios.put(`http://localhost:5000/admin/businesses/${encodedBusinessId}/edit-info`, businessData, {
+      await axios.put(`http://3.144.21.138:5000/admin/businesses/${encodedBusinessId}/edit-info`, businessData, {
         withCredentials: true 
       });
       

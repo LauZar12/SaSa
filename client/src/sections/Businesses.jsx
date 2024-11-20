@@ -42,7 +42,7 @@ export default function Businesses() {
 
   const fetchBusinesses = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/businesses');
+      const response = await axios.get('http://3.144.21.138:5000/businesses');
       setBusinesses(response.data);
     } catch (error) {
       console.error('Error fetching businesses:', error);
@@ -132,7 +132,7 @@ export default function Businesses() {
       const businessIds = JSON.parse(recommendations);
       const businessPromises = businessIds.map((id) => {
         const encodedBusinessId = encodeURIComponent(id);
-        return axios.get(`http://localhost:5000/admin/businesses/${encodedBusinessId}`);
+        return axios.get(`http://3.144.21.138:5000/admin/businesses/${encodedBusinessId}`);
       });
 
       try {
@@ -147,7 +147,7 @@ export default function Businesses() {
 
   const fetchBusinessesByCategory = async (category) => {
     try {
-      const response = await axios.get(`http://localhost:5000/businesses/category/${category}`);
+      const response = await axios.get(`http://3.144.21.138:5000/businesses/category/${category}`);
       setBusinesses(response.data);  // Actualizar los restaurantes filtrados
       setSelectedCategory(category);
       setViewMode('category');

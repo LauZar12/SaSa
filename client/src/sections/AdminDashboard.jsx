@@ -67,13 +67,13 @@ export default function AdminDashboard() {
     try {
       let response;
       if (selectedOption === 'Negocio') {
-        response = await axios.get(`http://localhost:5000/admin/businesses/${businessId}`);
+        response = await axios.get(`http://3.144.21.138:5000/admin/businesses/${businessId}`);
         setBusinessContent(response.data);
       } else if (selectedOption === 'Productos') {
-        response = await axios.get(`http://localhost:5000/admin/businesses/${businessId}/products`);
+        response = await axios.get(`http://3.144.21.138:5000/admin/businesses/${businessId}/products`);
         setProductContent(response.data);
       } else if (selectedOption === 'Cajas Sorpresa') {
-        response = await axios.get(`http://localhost:5000/admin/businesses/${businessId}/surprise-boxes`);
+        response = await axios.get(`http://3.144.21.138:5000/admin/businesses/${businessId}/surprise-boxes`);
         setSurpriseBoxContent(response.data.result || []);
       }
     } catch (error) {
@@ -158,7 +158,7 @@ export default function AdminDashboard() {
   const handleProductDeleted = async (productId) => {
     try {
       const encodedProductId = encodeURIComponent(productId); 
-      await axios.delete(`http://localhost:5000/admin/businesses/${businessId}/products/${encodedProductId}/delete-product`);
+      await axios.delete(`http://3.144.21.138:5000/admin/businesses/${businessId}/products/${encodedProductId}/delete-product`);
       
       setProductContent((prevProducts) => prevProducts.filter((product) => product.GS3_PK !== productId));
       console.log(`Producto ${productId} eliminado con éxito.`);
@@ -177,7 +177,7 @@ export default function AdminDashboard() {
   const handleSurpriseBoxDeleted = async (surpriseBoxId) => {
     try {
       const encodedSurpBoxId = encodeURIComponent(surpriseBoxId); 
-      await axios.delete(`http://localhost:5000/admin/businesses/${businessId}/surprise-boxes/${encodedSurpBoxId}/delete-surprise-box`);
+      await axios.delete(`http://3.144.21.138:5000/admin/businesses/${businessId}/surprise-boxes/${encodedSurpBoxId}/delete-surprise-box`);
       
       setProductContent((prevSurpriseBoxes) => prevSurpriseBoxes.filter((surpriseBox) => surpriseBox.PK !== surpriseBoxId));
       console.log(`Caja sorpresa ${surpriseBoxId} eliminada con éxito.`);
